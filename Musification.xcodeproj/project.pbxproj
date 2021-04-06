@@ -17,6 +17,8 @@
 		366762D6261C40C200B80381 /* UIUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366762D5261C40C200B80381 /* UIUtilities.swift */; };
 		366762DA261C410800B80381 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366762D9261C410800B80381 /* UIColor+Extension.swift */; };
 		366762DD261C413600B80381 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366762DC261C413600B80381 /* UIViewController+Extension.swift */; };
+		366762E1261C455100B80381 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366762E0261C455100B80381 /* RegistrationViewController.swift */; };
+		366762E4261C458A00B80381 /* PasswordRecoveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366762E3261C458A00B80381 /* PasswordRecoveryViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		366762D5261C40C200B80381 /* UIUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIUtilities.swift; sourceTree = "<group>"; };
 		366762D9261C410800B80381 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		366762DC261C413600B80381 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
+		366762E0261C455100B80381 /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
+		366762E3261C458A00B80381 /* PasswordRecoveryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRecoveryViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,7 +68,7 @@
 		364C513C261C3919004986DE /* View */ = {
 			isa = PBXGroup;
 			children = (
-				366762D2261C409400B80381 /* LoginViewController.swift */,
+				366762DF261C44E400B80381 /* AccountScreens */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -125,6 +129,16 @@
 				365B42AC261B1EA7008474D1 /* Info.plist */,
 			);
 			path = Musification;
+			sourceTree = "<group>";
+		};
+		366762DF261C44E400B80381 /* AccountScreens */ = {
+			isa = PBXGroup;
+			children = (
+				366762D2261C409400B80381 /* LoginViewController.swift */,
+				366762E0261C455100B80381 /* RegistrationViewController.swift */,
+				366762E3261C458A00B80381 /* PasswordRecoveryViewController.swift */,
+			);
+			path = AccountScreens;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -199,10 +213,12 @@
 				366762DD261C413600B80381 /* UIViewController+Extension.swift in Sources */,
 				366762DA261C410800B80381 /* UIColor+Extension.swift in Sources */,
 				365B429F261B1E9F008474D1 /* AppDelegate.swift in Sources */,
+				366762E1261C455100B80381 /* RegistrationViewController.swift in Sources */,
 				365B42A1261B1E9F008474D1 /* SceneDelegate.swift in Sources */,
 				364C5146261C39E6004986DE /* View+Extension.swift in Sources */,
 				366762D3261C409400B80381 /* LoginViewController.swift in Sources */,
 				366762D6261C40C200B80381 /* UIUtilities.swift in Sources */,
+				366762E4261C458A00B80381 /* PasswordRecoveryViewController.swift in Sources */,
 				364C5142261C39B8004986DE /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
