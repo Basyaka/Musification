@@ -32,7 +32,7 @@ struct K {
         static let username = "Username"
     }
     
-    struct AccountScreensText {
+    struct AuthenticationScreensText {
         
         struct ButtonText {
             static let logIn = "Log In"

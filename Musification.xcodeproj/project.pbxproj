@@ -68,7 +68,7 @@
 		364C513C261C3919004986DE /* View */ = {
 			isa = PBXGroup;
 			children = (
-				366762DF261C44E400B80381 /* AccountScreens */,
+				366762DF261C44E400B80381 /* Authentication */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -131,14 +131,14 @@
 			path = Musification;
 			sourceTree = "<group>";
 		};
-		366762DF261C44E400B80381 /* AccountScreens */ = {
+		366762DF261C44E400B80381 /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
 				366762D2261C409400B80381 /* LoginViewController.swift */,
 				366762E0261C455100B80381 /* RegistrationViewController.swift */,
 				366762E3261C458A00B80381 /* PasswordRecoveryViewController.swift */,
 			);
-			path = AccountScreens;
+			path = Authentication;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

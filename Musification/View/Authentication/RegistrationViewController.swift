@@ -33,7 +33,7 @@ class RegistrationViewController: UIViewController {
     
     private let fullNameTextField = UIUtilities.textField(withPlaceholder: K.PlaceholderText.fullName)
     private let usernameTextField = UIUtilities.textField(withPlaceholder: K.PlaceholderText.username)
-    private let signUpButton = UIUtilities.mainButton(withTitle: K.AccountScreensText.ButtonText.signUp)
+    private let signUpButton = UIUtilities.mainButton(withTitle: K.AuthenticationScreensText.ButtonText.signUp)
     
     private lazy var emailContainerView: UIView = {
         let image = UIImage(systemName: K.SystemImageName.emailTextContainerView)
@@ -59,7 +59,7 @@ class RegistrationViewController: UIViewController {
         return view
     }()
     
-    private lazy var haveAccountButton = UIUtilities.additionalButton(withText: K.AccountScreensText.ButtonText.logIn, withTextSize: view.frame.height/50)
+    private lazy var haveAccountButton = UIUtilities.additionalButton(withText: K.AuthenticationScreensText.ButtonText.logIn, withTextSize: view.frame.height/50)
     
     //MARK: - Life Cycle
     override func viewDidLoad() {
@@ -95,7 +95,7 @@ class RegistrationViewController: UIViewController {
                      leading: view.leadingAnchor, paddingLeft: 32,
                      trailing: view.trailingAnchor, paddingRight: -32)
         
-        let haveAccountStack = UIUtilities.additionalStackWithLabel(withLabelText: K.AccountScreensText.LabelText.haveAccount, withTextSize: view.frame.height/50, button: haveAccountButton)
+        let haveAccountStack = UIUtilities.additionalStackWithLabel(withLabelText: K.AuthenticationScreensText.LabelText.haveAccount, withTextSize: view.frame.height/50, button: haveAccountButton)
         haveAccountStack.spacing = 3
         view.addSubview(haveAccountStack)
         haveAccountStack.centerX(inView: view, bottomAnchor: view.safeAreaLayoutGuide.bottomAnchor, paddingBottom: -16)

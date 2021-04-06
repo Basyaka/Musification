@@ -18,7 +18,7 @@ class PasswordRecoveryViewController: UIViewController {
     }()
     
     private let emailTextField = UIUtilities.textField(withPlaceholder: K.PlaceholderText.email)
-    private let resetButton = UIUtilities.mainButton(withTitle: K.AccountScreensText.ButtonText.resetButton)
+    private let resetButton = UIUtilities.mainButton(withTitle: K.AuthenticationScreensText.ButtonText.resetButton)
     
     private lazy var emailContainerView: UIView = {
         let image = UIImage(systemName: K.SystemImageName.emailTextContainerView)

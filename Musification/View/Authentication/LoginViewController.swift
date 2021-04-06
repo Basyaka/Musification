@@ -37,11 +37,32 @@ class LoginViewController: UIViewController {
         return view
     }()
     
-    private let logInButton = UIUtilities.mainButton(withTitle: K.AccountScreensText.ButtonText.logIn)
-    private lazy var forgotPasswordButton = UIUtilities.additionalButton(withText: K.AccountScreensText.ButtonText.forgotPassword, withTextSize: view.frame.height/50)
-    private lazy var toSignUpButton = UIUtilities.additionalButton(withText: K.AccountScreensText.ButtonText.signUp, withTextSize: view.frame.height/50)
-    private lazy var logInWithGoogleButton = UIUtilities.additionalButton(withText: K.AccountScreensText.ButtonText.logWithGoogle, withTextSize: view.frame.height/40)
-    private lazy var logInWithAppleButton = UIUtilities.additionalButton(withText: K.AccountScreensText.ButtonText.logWithApple, withTextSize: view.frame.height/40)
+    private let logInButton: UIButton = {
+        let bt = UIUtilities.mainButton(withTitle: K.AuthenticationScreensText.ButtonText.logIn)
+        return bt
+    }()
+    
+    private lazy var forgotPasswordButton: UIButton = {
+        let bt = UIUtilities.additionalButton(withText: K.AuthenticationScreensText.ButtonText.forgotPassword, withTextSize: view.frame.height/50)
+        bt.addTarget(self, action: #selector(forgotPasswordButtonTapped), for: .touchUpInside)
+        return bt
+    }()
+    
+    private lazy var toSignUpButton: UIButton = {
+        let bt = UIUtilities.additionalButton(withText: K.AuthenticationScreensText.ButtonText.signUp, withTextSize: view.frame.height/50)
+        bt.addTarget(self, action: #selector(toSignUpButtonTapped), for: .touchUpInside)
+        return bt
+    }()
+    
+    private lazy var logInWithGoogleButton: UIButton = {
+        let bt = UIUtilities.additionalButton(withText: K.AuthenticationScreensText.ButtonText.logWithGoogle, withTextSize: view.frame.height/40)
+        return bt
+    }()
+    
+    private lazy var logInWithAppleButton: UIButton = {
+        let bt = UIUtilities.additionalButton(withText: K.AuthenticationScreensText.ButtonText.logWithApple, withTextSize: view.frame.height/40)
+        return bt
+    }()
     
     //MARK: - Life Cycle
     override func viewDidLoad() {
@@ -50,6 +71,14 @@ class LoginViewController: UIViewController {
         
     }
     
+    //MARK: - Selectors
+    @objc private func forgotPasswordButtonTapped() {
+        
+    }
+    
+    @objc private func toSignUpButtonTapped() {
+        
+    }
     
     //MARK: - Helpers functions
     private func configureController() {
@@ -72,7 +101,7 @@ class LoginViewController: UIViewController {
                          leading: view.leadingAnchor, paddingLeft: 32,
                          trailing: view.trailingAnchor, paddingRight: -32)
         
-        let forgotPasswordStack = UIUtilities.additionalStackWithLabel(withLabelText: K.AccountScreensText.LabelText.forgotPassword, withTextSize: view.frame.height/50, button: forgotPasswordButton)
+        let forgotPasswordStack = UIUtilities.additionalStackWithLabel(withLabelText: K.AuthenticationScreensText.LabelText.forgotPassword, withTextSize: view.frame.height/50, button: forgotPasswordButton)
         view.addSubview(forgotPasswordStack)
         forgotPasswordStack.centerX(inView: view, topAnchor: mainStack.bottomAnchor, paddingTop: 24)
         
@@ -90,7 +119,7 @@ class LoginViewController: UIViewController {
         view.addSubview(logInWithAppleStack)
         logInWithAppleStack.centerX(inView: view, topAnchor: logInWithGoogleStack.bottomAnchor, paddingTop: 24)
        
-        let toSignUpStack = UIUtilities.additionalStackWithLabel(withLabelText: K.AccountScreensText.LabelText.dontHaveAccount, withTextSize: view.frame.height/50, button: toSignUpButton)
+        let toSignUpStack = UIUtilities.additionalStackWithLabel(withLabelText: K.AuthenticationScreensText.LabelText.dontHaveAccount, withTextSize: view.frame.height/50, button: toSignUpButton)
         view.addSubview(toSignUpStack)
         toSignUpStack.centerX(inView: view, bottomAnchor: view.safeAreaLayoutGuide.bottomAnchor, paddingBottom: -16)
     }
