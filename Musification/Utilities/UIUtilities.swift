@@ -61,17 +61,6 @@ class UIUtilities {
         return bt
     }
     
-    static func additionalStackWithLabel(withLabelText title: String, withTextSize size: CGFloat, button: UIButton) -> UIStackView {
-        let lb = UILabel()
-        lb.text = title
-        lb.font = UIFont.systemFont(ofSize: size)
-        lb.textColor = .white
-        
-        let stack = UIStackView(arrangedSubviews: [lb, button])
-        stack.spacing = 3
-        return stack
-    }
-    
     static func additionalStackWithImageView(withImage image: UIImage, imageWidth width: CGFloat, imageHeight height: CGFloat, button: UIButton) -> UIStackView {
         let iv = UIImageView()
         iv.image = image
@@ -88,8 +77,26 @@ class UIUtilities {
         bt.setTitle(title, for: .normal)
         bt.titleLabel?.font = UIFont.systemFont(ofSize: size, weight: .bold)
         bt.titleLabel?.textColor = .white
+        bt.titleLabel?.adjustsFontSizeToFitWidth = true
         return bt
     }
+    
+    static func attributedButton(_ firstPart: String, _ secondPart: String, withTextSize size: CGFloat) -> UIButton {
+        let bt = UIButton(type: .system)
+        
+        let attributedTitle = NSMutableAttributedString(string: firstPart, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: size), NSAttributedString.Key.foregroundColor: UIColor.white])
+        
+        attributedTitle.append(NSAttributedString(string: " "))
+        
+        attributedTitle.append(NSAttributedString(string: secondPart, attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: size), NSAttributedString.Key.foregroundColor: UIColor.white]))
+        
+        bt.setAttributedTitle(attributedTitle, for: .normal)
+        bt.titleLabel?.adjustsFontSizeToFitWidth = true
+        
+        return bt
+    }
+    
+    
     
     static func orLine(withText title: String) -> UIView {
         let view = UIView()

@@ -1,0 +1,28 @@
+/* 
+  Localizable.strings
+  Musification
+
+  Created by Vlad Novik on 6.04.21.
+  
+*/
+
+//Text Field Placeholder
+"Password" = "パスワード";
+"Email" = "Eメール";
+"Full Name" = "フルネーム";
+"Username" = "ユーザー名";
+
+//Button
+"Log In" = "ログインする";
+"Sign Up" = "サインアップ";
+"Get help signing in." = "サインインのヘルプを取得します。";
+"Log in with Google" = "Googleでログインする";
+"Log in with Apple" = "Appleでログインする";
+"Send Reset Link" = "リセットリンクを送信する";
+
+//Label
+"Already have an account?" = "すでにアカウントをお持ちですか";
+"Forgot your password?" = "パスワードをお忘れですか？";
+"Dont have an account?" = "アカウントをお持ちではありませんか";
+
+"OR" = "または";

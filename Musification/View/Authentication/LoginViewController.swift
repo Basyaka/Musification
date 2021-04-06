@@ -12,15 +12,15 @@ class LoginViewController: UIViewController {
     //MARK: - Properties
     private let logoImageView: UIImageView = {
         let iv = UIImageView()
-        iv.image = UIImage(named: K.ImageName.musificationLogo)
+        iv.image = R.image.musification()!
         iv.contentMode = .scaleAspectFit
         return iv
     }()
     
-    private let emailTextField = UIUtilities.textField(withPlaceholder: K.PlaceholderText.email)
+    private let emailTextField = UIUtilities.textField(withPlaceholder: R.string.localizable.email())
     
     private let passwordTextField: UITextField = {
-        let tf = UIUtilities.textField(withPlaceholder: K.PlaceholderText.password)
+        let tf = UIUtilities.textField(withPlaceholder: R.string.localizable.password())
         tf.isSecureTextEntry = true
         return tf
     }()
@@ -38,29 +38,31 @@ class LoginViewController: UIViewController {
     }()
     
     private let logInButton: UIButton = {
-        let bt = UIUtilities.mainButton(withTitle: K.AuthenticationScreensText.ButtonText.logIn)
+        let bt = UIUtilities.mainButton(withTitle: R.string.localizable.logIn())
         return bt
     }()
     
     private lazy var forgotPasswordButton: UIButton = {
-        let bt = UIUtilities.additionalButton(withText: K.AuthenticationScreensText.ButtonText.forgotPassword, withTextSize: view.frame.height/50)
+        let bt = UIUtilities.attributedButton(R.string.localizable.forgotYourPassword(), R.string.localizable.getHelpSigningIn(), withTextSize: view.frame.height/50)
         bt.addTarget(self, action: #selector(forgotPasswordButtonTapped), for: .touchUpInside)
         return bt
     }()
     
-    private lazy var toSignUpButton: UIButton = {
-        let bt = UIUtilities.additionalButton(withText: K.AuthenticationScreensText.ButtonText.signUp, withTextSize: view.frame.height/50)
+    private lazy var dontHaveAccountButton: UIButton = {
+        let bt = UIUtilities.attributedButton(R.string.localizable.dontHaveAnAccount(), R.string.localizable.signUp(), withTextSize: view.frame.height/50)
+            
+//            UIUtilities.additionalButton(withText: R.string.localizable.signUp(), withTextSize: view.frame.height/50)
         bt.addTarget(self, action: #selector(toSignUpButtonTapped), for: .touchUpInside)
         return bt
     }()
     
     private lazy var logInWithGoogleButton: UIButton = {
-        let bt = UIUtilities.additionalButton(withText: K.AuthenticationScreensText.ButtonText.logWithGoogle, withTextSize: view.frame.height/40)
+        let bt = UIUtilities.additionalButton(withText: R.string.localizable.logInWithGoogle(), withTextSize: view.frame.height/40)
         return bt
     }()
     
     private lazy var logInWithAppleButton: UIButton = {
-        let bt = UIUtilities.additionalButton(withText: K.AuthenticationScreensText.ButtonText.logWithApple, withTextSize: view.frame.height/40)
+        let bt = UIUtilities.additionalButton(withText: R.string.localizable.logInWithApple(), withTextSize: view.frame.height/40)
         return bt
     }()
     
@@ -101,26 +103,28 @@ class LoginViewController: UIViewController {
                          leading: view.leadingAnchor, paddingLeft: 32,
                          trailing: view.trailingAnchor, paddingRight: -32)
         
-        let forgotPasswordStack = UIUtilities.additionalStackWithLabel(withLabelText: K.AuthenticationScreensText.LabelText.forgotPassword, withTextSize: view.frame.height/50, button: forgotPasswordButton)
-        view.addSubview(forgotPasswordStack)
-        forgotPasswordStack.centerX(inView: view, topAnchor: mainStack.bottomAnchor, paddingTop: 24)
+        view.addSubview(forgotPasswordButton)
+        forgotPasswordButton.anchor(top: mainStack.bottomAnchor, paddingTop: 24,
+                                   leading: view.leadingAnchor, paddingLeft: 32,
+                                   trailing: view.trailingAnchor, paddingRight: -32)
         
-        let orLine = UIUtilities.orLine(withText: "OR")
+        let orLine = UIUtilities.orLine(withText: R.string.localizable.oR())
         view.addSubview(orLine)
-        orLine.anchor(top: forgotPasswordStack.bottomAnchor, paddingTop: 32,
+        orLine.anchor(top: forgotPasswordButton.bottomAnchor, paddingTop: 32,
                       leading: view.leadingAnchor, paddingLeft: 48,
                       trailing: view.trailingAnchor, paddingRight: -48)
         
-        let logInWithGoogleStack = UIUtilities.additionalStackWithImageView(withImage: UIImage(named: K.ImageName.googleLogo)!, imageWidth: view.frame.height/30, imageHeight: view.frame.height/30, button: logInWithGoogleButton)
+        let logInWithGoogleStack = UIUtilities.additionalStackWithImageView(withImage: R.image.googleLogo()! , imageWidth: view.frame.height/30, imageHeight: view.frame.height/30, button: logInWithGoogleButton)
         view.addSubview(logInWithGoogleStack)
         logInWithGoogleStack.centerX(inView: view, topAnchor: orLine.bottomAnchor, paddingTop: 32)
         
-        let logInWithAppleStack = UIUtilities.additionalStackWithImageView(withImage: UIImage(named: K.ImageName.appleLogo)!, imageWidth: view.frame.height/30, imageHeight: view.frame.height/30, button: logInWithAppleButton)
+        let logInWithAppleStack = UIUtilities.additionalStackWithImageView(withImage: R.image.appleLogo()!, imageWidth: view.frame.height/30, imageHeight: view.frame.height/30, button: logInWithAppleButton)
         view.addSubview(logInWithAppleStack)
         logInWithAppleStack.centerX(inView: view, topAnchor: logInWithGoogleStack.bottomAnchor, paddingTop: 24)
        
-        let toSignUpStack = UIUtilities.additionalStackWithLabel(withLabelText: K.AuthenticationScreensText.LabelText.dontHaveAccount, withTextSize: view.frame.height/50, button: toSignUpButton)
-        view.addSubview(toSignUpStack)
-        toSignUpStack.centerX(inView: view, bottomAnchor: view.safeAreaLayoutGuide.bottomAnchor, paddingBottom: -16)
+        view.addSubview(dontHaveAccountButton)
+        dontHaveAccountButton.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor, paddingBottom: -16,
+                             leading: view.leadingAnchor, paddingLeft: 32,
+                             trailing: view.trailingAnchor, paddingRight: -32)
     }
 }

@@ -12,13 +12,13 @@ class PasswordRecoveryViewController: UIViewController {
     //MARK: - Properties
     private let logoImageView: UIImageView = {
         let iv = UIImageView()
-        iv.image = UIImage(named: K.ImageName.musificationLogo)
+        iv.image = R.image.musification()
         iv.contentMode = .scaleAspectFit
         return iv
     }()
     
-    private let emailTextField = UIUtilities.textField(withPlaceholder: K.PlaceholderText.email)
-    private let resetButton = UIUtilities.mainButton(withTitle: K.AuthenticationScreensText.ButtonText.resetButton)
+    private let emailTextField = UIUtilities.textField(withPlaceholder: R.string.localizable.email())
+    private let resetButton = UIUtilities.mainButton(withTitle: R.string.localizable.sendResetLink())
     
     private lazy var emailContainerView: UIView = {
         let image = UIImage(systemName: K.SystemImageName.emailTextContainerView)

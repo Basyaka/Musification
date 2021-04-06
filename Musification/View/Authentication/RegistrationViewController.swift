@@ -23,17 +23,17 @@ class RegistrationViewController: UIViewController {
         return iv
     }()
     
-    private let emailTextField = UIUtilities.textField(withPlaceholder: K.PlaceholderText.email)
+    private let emailTextField = UIUtilities.textField(withPlaceholder: R.string.localizable.email())
     
     private let passwordTextField: UITextField = {
-        let tf = UIUtilities.textField(withPlaceholder: K.PlaceholderText.password)
+        let tf = UIUtilities.textField(withPlaceholder: R.string.localizable.password())
         tf.isSecureTextEntry = true
         return tf
     }()
     
-    private let fullNameTextField = UIUtilities.textField(withPlaceholder: K.PlaceholderText.fullName)
-    private let usernameTextField = UIUtilities.textField(withPlaceholder: K.PlaceholderText.username)
-    private let signUpButton = UIUtilities.mainButton(withTitle: K.AuthenticationScreensText.ButtonText.signUp)
+    private let fullNameTextField = UIUtilities.textField(withPlaceholder: R.string.localizable.fullName())
+    private let usernameTextField = UIUtilities.textField(withPlaceholder: R.string.localizable.username())
+    private let signUpButton = UIUtilities.mainButton(withTitle: R.string.localizable.signUp())
     
     private lazy var emailContainerView: UIView = {
         let image = UIImage(systemName: K.SystemImageName.emailTextContainerView)
@@ -59,7 +59,7 @@ class RegistrationViewController: UIViewController {
         return view
     }()
     
-    private lazy var haveAccountButton = UIUtilities.additionalButton(withText: K.AuthenticationScreensText.ButtonText.logIn, withTextSize: view.frame.height/50)
+    private lazy var haveAccountButton = UIUtilities.attributedButton(R.string.localizable.alreadyHaveAnAccount(), R.string.localizable.logIn(), withTextSize: view.frame.height/50)
     
     //MARK: - Life Cycle
     override func viewDidLoad() {
@@ -95,9 +95,9 @@ class RegistrationViewController: UIViewController {
                      leading: view.leadingAnchor, paddingLeft: 32,
                      trailing: view.trailingAnchor, paddingRight: -32)
         
-        let haveAccountStack = UIUtilities.additionalStackWithLabel(withLabelText: K.AuthenticationScreensText.LabelText.haveAccount, withTextSize: view.frame.height/50, button: haveAccountButton)
-        haveAccountStack.spacing = 3
-        view.addSubview(haveAccountStack)
-        haveAccountStack.centerX(inView: view, bottomAnchor: view.safeAreaLayoutGuide.bottomAnchor, paddingBottom: -16)
+        view.addSubview(haveAccountButton)
+        haveAccountButton.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor, paddingBottom: -16,
+                                 leading: view.leadingAnchor, paddingLeft: 32,
+                                 trailing: view.trailingAnchor, paddingRight: -32)
     }
 }

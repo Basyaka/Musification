@@ -1,0 +1,28 @@
+/* 
+  Localizable.strings
+  Musification
+
+  Created by Vlad Novik on 6.04.21.
+  
+*/
+
+//Text Field Placeholder
+"Password" = "Пароль";
+"Email" = "Электронная почта";
+"Full Name" = "Имя и фамилия";
+"Username" = "Имя пользователя";
+
+//Button
+"Log In" = "Авторизоваться";
+"Sign Up" = "Зарегистрироваться";
+"Get help signing in." = "Получить помощь при входе в систему.";
+"Log in with Google" = "Войти через Google ";
+"Log in with Apple" = "Войти через Apple";
+"Send Reset Link" = "Отправить ссылку для сброса пароля";
+
+//Label
+"Already have an account?" = "Уже есть аккаунт?";
+"Forgot your password?" = "Забыли ваш пароль?";
+"Dont have an account?" = "Нет учетной записи?";
+
+"OR" = "Или";
