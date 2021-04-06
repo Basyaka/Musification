@@ -7,15 +7,17 @@
 
 import Foundation
 
-struct K {
+// R.Swift
+
+enum K {
     
-    struct ImageName {
+    enum ImageName {
         static let googleLogo = "GoogleLogo"
         static let appleLogo = "AppleLogo"
         static let musificationLogo = "Musification"
     }
     
-    struct SystemImageName {
+    enum SystemImageName {
         static let addPhoto = "camera.circle"
         
         //container view
@@ -25,16 +27,16 @@ struct K {
         static let usernameContainerView = "person"
     }
     
-    struct PlaceholderText {
+    enum PlaceholderText {
         static let password = "Password"
         static let email = "Email"
         static let fullName = "Full Name"
         static let username = "Username"
     }
     
-    struct AuthenticationScreensText {
+    enum AuthenticationScreensText {
         
-        struct ButtonText {
+        enum ButtonText {
             static let logIn = "Log In"
             static let signUp = "Sign Up"
             static let forgotPassword = "Get help signing in."
@@ -43,7 +45,7 @@ struct K {
             static let resetButton = "Send Reset Link"
         }
         
-        struct LabelText {
+        enum LabelText {
             static let haveAccount = "Already have an account?"
             static let forgotPassword = "Forgot your password?"
             static let dontHaveAccount = "Don't have an account?"

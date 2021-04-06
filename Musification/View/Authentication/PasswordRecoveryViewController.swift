@@ -29,14 +29,17 @@ class PasswordRecoveryViewController: UIViewController {
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.isNavigationBarHidden = true
         configureController()
     }
     
     //MARK: - Helpers functions
     private func configureController() {
         configureGradientBackground()
+        setupNavigationBarItem()
         setLayout()
+    }
+    
+    private func setupNavigationBarItem() {
     }
     
     private func setLayout() {
