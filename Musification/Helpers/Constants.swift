@@ -7,8 +7,6 @@
 
 import Foundation
 
-// R.Swift
-
 enum K {
         
     enum SystemImageName {
@@ -19,5 +17,8 @@ enum K {
         static let passwordContainerView = "lock"
         static let fullNameContainerView = "person.fill"
         static let usernameContainerView = "person"
+        
+        //button
+        static let backButton = "chevron.left"
     }
 }

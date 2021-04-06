@@ -82,7 +82,7 @@ class UIUtilities {
     }
     
     static func attributedButton(_ firstPart: String, _ secondPart: String, withTextSize size: CGFloat) -> UIButton {
-        let bt = UIButton(type: .system)
+        let bt = UIButton()
         
         let attributedTitle = NSMutableAttributedString(string: firstPart, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: size), NSAttributedString.Key.foregroundColor: UIColor.white])
         

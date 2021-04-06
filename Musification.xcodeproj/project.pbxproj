@@ -68,6 +68,14 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		363903AC261C9F980038DC2E /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				364C5141261C39B8004986DE /* Constants.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		364C513A261C3900004986DE /* Application */ = {
 			isa = PBXGroup;
 			children = (
@@ -113,7 +121,6 @@
 			isa = PBXGroup;
 			children = (
 				366762D5261C40C200B80381 /* UIUtilities.swift */,
-				364C5141261C39B8004986DE /* Constants.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -145,6 +152,7 @@
 				364C513B261C390D004986DE /* ViewModel */,
 				364C513E261C3945004986DE /* Extensions */,
 				364C5140261C3969004986DE /* Utilities */,
+				363903AC261C9F980038DC2E /* Helpers */,
 				36390399261C6DB20038DC2E /* Resources */,
 				365B42A7261B1EA7008474D1 /* Assets.xcassets */,
 				365B42A9261B1EA7008474D1 /* LaunchScreen.storyboard */,

@@ -10,6 +10,14 @@ import UIKit
 class PasswordRecoveryViewController: UIViewController {
     
     //MARK: - Properties
+    private let backButton: UIButton = {
+        let bt = UIButton(type: .custom)
+        bt.setImage(UIImage(systemName: K.SystemImageName.backButton), for: .normal)
+        bt.tintColor = .white
+        bt.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        return bt
+    }()
+    
     private let logoImageView: UIImageView = {
         let iv = UIImageView()
         iv.image = R.image.musification()
@@ -32,17 +40,32 @@ class PasswordRecoveryViewController: UIViewController {
         configureController()
     }
     
+    
+    //MARK: - Selectors
+    @objc private func backButtonTapped() {
+        navigationController?.popViewController(animated: true)
+    }
+    
     //MARK: - Helpers functions
     private func configureController() {
         configureGradientBackground()
-        setupNavigationBarItem()
+        backSwipe()
         setLayout()
     }
     
-    private func setupNavigationBarItem() {
+    private func backSwipe() {
+        let swipeRight = UISwipeGestureRecognizer()
+        swipeRight.direction = .right
+        swipeRight.addTarget(self, action: #selector(backButtonTapped))
+        view.addGestureRecognizer(swipeRight)
     }
     
     private func setLayout() {
+        view.addSubview(backButton)
+        backButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 16,
+                          leading: view.leadingAnchor, paddingLeft: 16,
+                          width: 25, height: 25)
+        
         view.addSubview(logoImageView)
         logoImageView.centerX(inView: view, topAnchor: view.safeAreaLayoutGuide.topAnchor)
         logoImageView.setDimensions(width: view.frame.width/2, height: view.frame.height/5)

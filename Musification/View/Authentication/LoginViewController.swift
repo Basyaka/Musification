@@ -50,9 +50,8 @@ class LoginViewController: UIViewController {
     
     private lazy var dontHaveAccountButton: UIButton = {
         let bt = UIUtilities.attributedButton(R.string.localizable.dontHaveAnAccount(), R.string.localizable.signUp(), withTextSize: view.frame.height/50)
-            
-//            UIUtilities.additionalButton(withText: R.string.localizable.signUp(), withTextSize: view.frame.height/50)
-        bt.addTarget(self, action: #selector(toSignUpButtonTapped), for: .touchUpInside)
+        
+        bt.addTarget(self, action: #selector(dontHaveAccountButtonTapped), for: .touchUpInside)
         return bt
     }()
     
@@ -75,11 +74,11 @@ class LoginViewController: UIViewController {
     
     //MARK: - Selectors
     @objc private func forgotPasswordButtonTapped() {
-        
+        navigationController?.pushViewController(PasswordRecoveryViewController(), animated: true)
     }
     
-    @objc private func toSignUpButtonTapped() {
-        
+    @objc private func dontHaveAccountButtonTapped() {
+        navigationController?.pushViewController(RegistrationViewController(), animated: true)
     }
     
     //MARK: - Helpers functions

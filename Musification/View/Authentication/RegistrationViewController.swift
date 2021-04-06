@@ -59,12 +59,21 @@ class RegistrationViewController: UIViewController {
         return view
     }()
     
-    private lazy var haveAccountButton = UIUtilities.attributedButton(R.string.localizable.alreadyHaveAnAccount(), R.string.localizable.logIn(), withTextSize: view.frame.height/50)
+    private lazy var haveAccountButton: UIButton = {
+        let bt = UIUtilities.attributedButton(R.string.localizable.alreadyHaveAnAccount(), R.string.localizable.logIn(), withTextSize: view.frame.height/50)
+        bt.addTarget(self, action: #selector(haveAccountButtonTapped), for: .touchUpInside)
+        return bt
+    }()
     
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureController()
+    }
+    
+    //MARK: - Selectors
+    @objc private func haveAccountButtonTapped() {
+        navigationController?.popViewController(animated: true)
     }
     
     //MARK: - Helpers functions
@@ -83,17 +92,17 @@ class RegistrationViewController: UIViewController {
         photoImage.centerX(inView: view, topAnchor: view.safeAreaLayoutGuide.topAnchor, paddingTop: 16)
         
         let mainStack = UIStackView(arrangedSubviews: [emailContainerView,
-                                                   passwordContainerView,
-                                                   fullNameContainerView,
-                                                   usernameContainerView,
-                                                   signUpButton])
+                                                       passwordContainerView,
+                                                       fullNameContainerView,
+                                                       usernameContainerView,
+                                                       signUpButton])
         mainStack.axis = .vertical
         mainStack.spacing = 10
         mainStack.distribution = .fillEqually
         view.addSubview(mainStack)
         mainStack.anchor(top: photoImage.bottomAnchor, paddingTop: 32,
-                     leading: view.leadingAnchor, paddingLeft: 32,
-                     trailing: view.trailingAnchor, paddingRight: -32)
+                         leading: view.leadingAnchor, paddingLeft: 32,
+                         trailing: view.trailingAnchor, paddingRight: -32)
         
         view.addSubview(haveAccountButton)
         haveAccountButton.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor, paddingBottom: -16,
