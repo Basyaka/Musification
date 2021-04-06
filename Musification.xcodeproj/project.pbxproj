@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3639039B261C6DEA0038DC2E /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3639039A261C6DEA0038DC2E /* R.generated.swift */; };
 		364C5142261C39B8004986DE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 364C5141261C39B8004986DE /* Constants.swift */; };
 		364C5146261C39E6004986DE /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 364C5145261C39E6004986DE /* View+Extension.swift */; };
 		365B429F261B1E9F008474D1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365B429E261B1E9F008474D1 /* AppDelegate.swift */; };
@@ -24,6 +25,7 @@
 
 /* Begin PBXFileReference section */
 		074A4D7AB30B8C57385D3EF5 /* Pods-Musification.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Musification.debug.xcconfig"; path = "Target Support Files/Pods-Musification/Pods-Musification.debug.xcconfig"; sourceTree = "<group>"; };
+		3639039A261C6DEA0038DC2E /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
 		364C5141261C39B8004986DE /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		364C5145261C39E6004986DE /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
 		365B429B261B1E9F008474D1 /* Musification.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Musification.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -54,6 +56,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		36390399261C6DB20038DC2E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				3639039A261C6DEA0038DC2E /* R.generated.swift */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		364C513A261C3900004986DE /* Application */ = {
 			isa = PBXGroup;
 			children = (
@@ -131,6 +141,7 @@
 				364C513B261C390D004986DE /* ViewModel */,
 				364C513E261C3945004986DE /* Extensions */,
 				364C5140261C3969004986DE /* Utilities */,
+				36390399261C6DB20038DC2E /* Resources */,
 				365B42A7261B1EA7008474D1 /* Assets.xcassets */,
 				365B42A9261B1EA7008474D1 /* LaunchScreen.storyboard */,
 				365B42AC261B1EA7008474D1 /* Info.plist */,
@@ -162,7 +173,6 @@
 				074A4D7AB30B8C57385D3EF5 /* Pods-Musification.debug.xcconfig */,
 				F1644F84EF80DCECEFB88A61 /* Pods-Musification.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -174,6 +184,7 @@
 			buildConfigurationList = 365B42AF261B1EA7008474D1 /* Build configuration list for PBXNativeTarget "Musification" */;
 			buildPhases = (
 				C3A17334FD6A00ED1499BCE3 /* [CP] Check Pods Manifest.lock */,
+				36390397261C6C6A0038DC2E /* RSwift */,
 				365B4297261B1E9F008474D1 /* Sources */,
 				365B4298261B1E9F008474D1 /* Frameworks */,
 				365B4299261B1E9F008474D1 /* Resources */,
@@ -233,6 +244,26 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		36390397261C6C6A0038DC2E /* RSwift */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$TEMP_DIR/rswift-lastrun",
+			);
+			name = RSwift;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				$SRCROOT/R.generated.swift,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT/R.generated.swift\"\n";
+		};
 		9A1E9250EEA955C7E5177251 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -288,6 +319,7 @@
 				366762D3261C409400B80381 /* LoginViewController.swift in Sources */,
 				366762D6261C40C200B80381 /* UIUtilities.swift in Sources */,
 				366762E4261C458A00B80381 /* PasswordRecoveryViewController.swift in Sources */,
+				3639039B261C6DEA0038DC2E /* R.generated.swift in Sources */,
 				364C5142261C39B8004986DE /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
