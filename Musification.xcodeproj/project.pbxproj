@@ -21,11 +21,25 @@
 		366762DD261C413600B80381 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366762DC261C413600B80381 /* UIViewController+Extension.swift */; };
 		366762E1261C455100B80381 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366762E0261C455100B80381 /* RegistrationViewController.swift */; };
 		366762E4261C458A00B80381 /* PasswordRecoveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366762E3261C458A00B80381 /* PasswordRecoveryViewController.swift */; };
-		4C2E8C6761A05589200150B0 /* Pods_Musification.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53B24099C387AC54D8D99B2 /* Pods_Musification.framework */; };
+		3673DA67261CA4960023A2BC /* ValidateParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3673DA66261CA4960023A2BC /* ValidateParameters.swift */; };
+		3673DA6B261CA4CA0023A2BC /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3673DA6A261CA4CA0023A2BC /* LoginViewModel.swift */; };
+		3673DA6F261CA5230023A2BC /* ViewModelType+Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3673DA6E261CA5230023A2BC /* ViewModelType+Protocol.swift */; };
+		3673DA72261CA5BA0023A2BC /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3673DA71261CA5BA0023A2BC /* RegistrationViewModel.swift */; };
+		3673DA75261CA5C90023A2BC /* PasswordRecoveryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3673DA74261CA5C90023A2BC /* PasswordRecoveryViewModel.swift */; };
+		36C86167261D9F520026E696 /* Coordinator+Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C86166261D9F520026E696 /* Coordinator+Protocol.swift */; };
+		36C8616A261DA1EB0026E696 /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C86169261DA1EB0026E696 /* BaseCoordinator.swift */; };
+		36C8616D261DA2670026E696 /* LoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C8616C261DA2670026E696 /* LoginCoordinator.swift */; };
+		36E04576261DAE3300A94507 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E04575261DAE3300A94507 /* AppCoordinator.swift */; };
+		36E0457B261DB46800A94507 /* RegistrationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E0457A261DB46800A94507 /* RegistrationCoordinator.swift */; };
+		36E0457E261DE08E00A94507 /* Drawable+Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E0457D261DE08E00A94507 /* Drawable+Protocol.swift */; };
+		36E04581261DE0DF00A94507 /* Router+Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E04580261DE0DF00A94507 /* Router+Protocol.swift */; };
+		36E04585261DE12400A94507 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E04584261DE12400A94507 /* Router.swift */; };
+		36E0458A261DEE2400A94507 /* PasswordRecoveryCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E04589261DEE2400A94507 /* PasswordRecoveryCoordinator.swift */; };
+		AC0F815541DA602541B464C0 /* Pods_Musification.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 595364864E62C3CEE9AE3B9B /* Pods_Musification.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		074A4D7AB30B8C57385D3EF5 /* Pods-Musification.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Musification.debug.xcconfig"; path = "Target Support Files/Pods-Musification/Pods-Musification.debug.xcconfig"; sourceTree = "<group>"; };
+		003D93B27E1C95B7183F8AB1 /* Pods-Musification.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Musification.release.xcconfig"; path = "Target Support Files/Pods-Musification/Pods-Musification.release.xcconfig"; sourceTree = "<group>"; };
 		3639039A261C6DEA0038DC2E /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
 		363903A6261C79480038DC2E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		363903A8261C81BB0038DC2E /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -44,8 +58,22 @@
 		366762DC261C413600B80381 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		366762E0261C455100B80381 /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
 		366762E3261C458A00B80381 /* PasswordRecoveryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRecoveryViewController.swift; sourceTree = "<group>"; };
-		C53B24099C387AC54D8D99B2 /* Pods_Musification.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Musification.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F1644F84EF80DCECEFB88A61 /* Pods-Musification.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Musification.release.xcconfig"; path = "Target Support Files/Pods-Musification/Pods-Musification.release.xcconfig"; sourceTree = "<group>"; };
+		3673DA66261CA4960023A2BC /* ValidateParameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidateParameters.swift; sourceTree = "<group>"; };
+		3673DA6A261CA4CA0023A2BC /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		3673DA6E261CA5230023A2BC /* ViewModelType+Protocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewModelType+Protocol.swift"; sourceTree = "<group>"; };
+		3673DA71261CA5BA0023A2BC /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
+		3673DA74261CA5C90023A2BC /* PasswordRecoveryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRecoveryViewModel.swift; sourceTree = "<group>"; };
+		36C86166261D9F520026E696 /* Coordinator+Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Coordinator+Protocol.swift"; sourceTree = "<group>"; };
+		36C86169261DA1EB0026E696 /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
+		36C8616C261DA2670026E696 /* LoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinator.swift; sourceTree = "<group>"; };
+		36E04575261DAE3300A94507 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		36E0457A261DB46800A94507 /* RegistrationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationCoordinator.swift; sourceTree = "<group>"; };
+		36E0457D261DE08E00A94507 /* Drawable+Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Drawable+Protocol.swift"; sourceTree = "<group>"; };
+		36E04580261DE0DF00A94507 /* Router+Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Router+Protocol.swift"; sourceTree = "<group>"; };
+		36E04584261DE12400A94507 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		36E04589261DEE2400A94507 /* PasswordRecoveryCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRecoveryCoordinator.swift; sourceTree = "<group>"; };
+		595364864E62C3CEE9AE3B9B /* Pods_Musification.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Musification.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C229E8415B33EB9D145B26E3 /* Pods-Musification.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Musification.debug.xcconfig"; path = "Target Support Files/Pods-Musification/Pods-Musification.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,13 +81,31 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C2E8C6761A05589200150B0 /* Pods_Musification.framework in Frameworks */,
+				AC0F815541DA602541B464C0 /* Pods_Musification.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		172D8B4E4A9F03DB7DD188F0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				595364864E62C3CEE9AE3B9B /* Pods_Musification.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		36222C9C261DFFDE008E2C2C /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				36C8616C261DA2670026E696 /* LoginCoordinator.swift */,
+				36E0457A261DB46800A94507 /* RegistrationCoordinator.swift */,
+				36E04589261DEE2400A94507 /* PasswordRecoveryCoordinator.swift */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
 		36390399261C6DB20038DC2E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -71,6 +117,7 @@
 		363903AC261C9F980038DC2E /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				3673DA66261CA4960023A2BC /* ValidateParameters.swift */,
 				364C5141261C39B8004986DE /* Constants.swift */,
 			);
 			path = Helpers;
@@ -88,6 +135,8 @@
 		364C513B261C390D004986DE /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				3673DA6E261CA5230023A2BC /* ViewModelType+Protocol.swift */,
+				3673DA69261CA4B80023A2BC /* Authentication */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -131,7 +180,7 @@
 				365B429D261B1E9F008474D1 /* Musification */,
 				365B429C261B1E9F008474D1 /* Products */,
 				6879FF06D7EE42E51AB43422 /* Pods */,
-				3CF2A965D85875691FB26232 /* Frameworks */,
+				172D8B4E4A9F03DB7DD188F0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -147,6 +196,8 @@
 			isa = PBXGroup;
 			children = (
 				364C513A261C3900004986DE /* Application */,
+				36E04583261DE10800A94507 /* Router */,
+				36C86165261D9F100026E696 /* Coordinator */,
 				364C513D261C3925004986DE /* Model */,
 				364C513C261C3919004986DE /* View */,
 				364C513B261C390D004986DE /* ViewModel */,
@@ -172,19 +223,42 @@
 			path = Authentication;
 			sourceTree = "<group>";
 		};
-		3CF2A965D85875691FB26232 /* Frameworks */ = {
+		3673DA69261CA4B80023A2BC /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
-				C53B24099C387AC54D8D99B2 /* Pods_Musification.framework */,
+				3673DA6A261CA4CA0023A2BC /* LoginViewModel.swift */,
+				3673DA71261CA5BA0023A2BC /* RegistrationViewModel.swift */,
+				3673DA74261CA5C90023A2BC /* PasswordRecoveryViewModel.swift */,
 			);
-			name = Frameworks;
+			path = Authentication;
+			sourceTree = "<group>";
+		};
+		36C86165261D9F100026E696 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				36C86166261D9F520026E696 /* Coordinator+Protocol.swift */,
+				36C86169261DA1EB0026E696 /* BaseCoordinator.swift */,
+				36E04575261DAE3300A94507 /* AppCoordinator.swift */,
+				36222C9C261DFFDE008E2C2C /* Authentication */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		36E04583261DE10800A94507 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				36E04584261DE12400A94507 /* Router.swift */,
+				36E04580261DE0DF00A94507 /* Router+Protocol.swift */,
+				36E0457D261DE08E00A94507 /* Drawable+Protocol.swift */,
+			);
+			path = Router;
 			sourceTree = "<group>";
 		};
 		6879FF06D7EE42E51AB43422 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				074A4D7AB30B8C57385D3EF5 /* Pods-Musification.debug.xcconfig */,
-				F1644F84EF80DCECEFB88A61 /* Pods-Musification.release.xcconfig */,
+				C229E8415B33EB9D145B26E3 /* Pods-Musification.debug.xcconfig */,
+				003D93B27E1C95B7183F8AB1 /* Pods-Musification.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -196,12 +270,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 365B42AF261B1EA7008474D1 /* Build configuration list for PBXNativeTarget "Musification" */;
 			buildPhases = (
-				C3A17334FD6A00ED1499BCE3 /* [CP] Check Pods Manifest.lock */,
+				F6CFCE81D85467383564CAB9 /* [CP] Check Pods Manifest.lock */,
 				36390397261C6C6A0038DC2E /* RSwift */,
 				365B4297261B1E9F008474D1 /* Sources */,
 				365B4298261B1E9F008474D1 /* Frameworks */,
 				365B4299261B1E9F008474D1 /* Resources */,
-				9A1E9250EEA955C7E5177251 /* [CP] Embed Pods Frameworks */,
+				FC758E22F08076F0B35F6578 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -279,24 +353,7 @@
 			shellPath = /bin/sh;
 			shellScript = "\"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT/R.generated.swift\"\n";
 		};
-		9A1E9250EEA955C7E5177251 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Musification/Pods-Musification-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Musification/Pods-Musification-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Musification/Pods-Musification-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C3A17334FD6A00ED1499BCE3 /* [CP] Check Pods Manifest.lock */ = {
+		F6CFCE81D85467383564CAB9 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -318,6 +375,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		FC758E22F08076F0B35F6578 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Musification/Pods-Musification-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Musification/Pods-Musification-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Musification/Pods-Musification-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -326,16 +400,30 @@
 			buildActionMask = 2147483647;
 			files = (
 				366762DD261C413600B80381 /* UIViewController+Extension.swift in Sources */,
+				36C8616A261DA1EB0026E696 /* BaseCoordinator.swift in Sources */,
+				3673DA67261CA4960023A2BC /* ValidateParameters.swift in Sources */,
 				366762DA261C410800B80381 /* UIColor+Extension.swift in Sources */,
 				365B429F261B1E9F008474D1 /* AppDelegate.swift in Sources */,
 				366762E1261C455100B80381 /* RegistrationViewController.swift in Sources */,
 				365B42A1261B1E9F008474D1 /* SceneDelegate.swift in Sources */,
+				36C86167261D9F520026E696 /* Coordinator+Protocol.swift in Sources */,
 				364C5146261C39E6004986DE /* View+Extension.swift in Sources */,
 				366762D3261C409400B80381 /* LoginViewController.swift in Sources */,
+				3673DA75261CA5C90023A2BC /* PasswordRecoveryViewModel.swift in Sources */,
+				3673DA6B261CA4CA0023A2BC /* LoginViewModel.swift in Sources */,
+				36E04576261DAE3300A94507 /* AppCoordinator.swift in Sources */,
+				36E0457E261DE08E00A94507 /* Drawable+Protocol.swift in Sources */,
 				366762D6261C40C200B80381 /* UIUtilities.swift in Sources */,
+				36E04581261DE0DF00A94507 /* Router+Protocol.swift in Sources */,
+				36E04585261DE12400A94507 /* Router.swift in Sources */,
+				36E0457B261DB46800A94507 /* RegistrationCoordinator.swift in Sources */,
+				3673DA72261CA5BA0023A2BC /* RegistrationViewModel.swift in Sources */,
+				3673DA6F261CA5230023A2BC /* ViewModelType+Protocol.swift in Sources */,
 				366762E4261C458A00B80381 /* PasswordRecoveryViewController.swift in Sources */,
 				3639039B261C6DEA0038DC2E /* R.generated.swift in Sources */,
+				36E0458A261DEE2400A94507 /* PasswordRecoveryCoordinator.swift in Sources */,
 				364C5142261C39B8004986DE /* Constants.swift in Sources */,
+				36C8616D261DA2670026E696 /* LoginCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -483,7 +571,7 @@
 		};
 		365B42B0261B1EA7008474D1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 074A4D7AB30B8C57385D3EF5 /* Pods-Musification.debug.xcconfig */;
+			baseConfigurationReference = C229E8415B33EB9D145B26E3 /* Pods-Musification.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -503,7 +591,7 @@
 		};
 		365B42B1261B1EA7008474D1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F1644F84EF80DCECEFB88A61 /* Pods-Musification.release.xcconfig */;
+			baseConfigurationReference = 003D93B27E1C95B7183F8AB1 /* Pods-Musification.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

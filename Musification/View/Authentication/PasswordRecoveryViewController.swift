@@ -6,16 +6,26 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class PasswordRecoveryViewController: UIViewController {
+    
+    var viewModel: PasswordRecoveryViewModel!
+    private let bag = DisposeBag()
     
     //MARK: - Properties
     private let backButton: UIButton = {
         let bt = UIButton(type: .custom)
         bt.setImage(UIImage(systemName: K.SystemImageName.backButton), for: .normal)
         bt.tintColor = .white
-        bt.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         return bt
+    }()
+    
+    private let swipeRight: UISwipeGestureRecognizer = {
+        let swipe = UISwipeGestureRecognizer()
+        swipe.direction = .right
+        return swipe
     }()
     
     private let logoImageView: UIImageView = {
@@ -34,30 +44,37 @@ class PasswordRecoveryViewController: UIViewController {
         return view
     }()
     
+    var input: PasswordRecoveryViewModel.Input {
+        return PasswordRecoveryViewModel.Input(
+            emailTextDriver: emailTextField.rx.text.map { $0 ?? "" }.asDriver(onErrorJustReturn: ""),
+            backTap: backButton.rx.tap.asDriver(),
+            backSwipe: swipeRight.rx.event.asDriver()
+        )
+    }
+    
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureController()
-    }
-    
-    
-    //MARK: - Selectors
-    @objc private func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
+        bind(output: viewModel.transform(input))
     }
     
     //MARK: - Helpers functions
     private func configureController() {
+        view.addGestureRecognizer(swipeRight)
         configureGradientBackground()
-        backSwipe()
         setLayout()
     }
     
-    private func backSwipe() {
-        let swipeRight = UISwipeGestureRecognizer()
-        swipeRight.direction = .right
-        swipeRight.addTarget(self, action: #selector(backButtonTapped))
-        view.addGestureRecognizer(swipeRight)
+    private func bind(output: PasswordRecoveryViewModel.Output) {
+        output.isButtonEnabled
+            .drive(resetButton.rx.isEnabled)
+            .disposed(by: bag)
+        
+        output.isButtonEnabled
+            .map { $0 ? 1 : 0.1 }
+            .drive(resetButton.rx.alpha)
+            .disposed(by: bag)
     }
     
     private func setLayout() {

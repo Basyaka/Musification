@@ -6,8 +6,13 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class RegistrationViewController: UIViewController {
+    
+    var viewModel: RegistrationViewModel!
+    private let bag = DisposeBag()
     
     //MARK: - Properties
     private let photoButton: UIButton = {
@@ -33,7 +38,6 @@ class RegistrationViewController: UIViewController {
     
     private let fullNameTextField = UIUtilities.textField(withPlaceholder: R.string.localizable.fullName())
     private let usernameTextField = UIUtilities.textField(withPlaceholder: R.string.localizable.username())
-    private let signUpButton = UIUtilities.mainButton(withTitle: R.string.localizable.signUp())
     
     private lazy var emailContainerView: UIView = {
         let image = UIImage(systemName: K.SystemImageName.emailTextContainerView)
@@ -59,24 +63,42 @@ class RegistrationViewController: UIViewController {
         return view
     }()
     
+    private let signUpButton = UIUtilities.mainButton(withTitle: R.string.localizable.signUp())
+    
     private lazy var haveAccountButton: UIButton = {
         let bt = UIUtilities.attributedButton(R.string.localizable.alreadyHaveAnAccount(), R.string.localizable.logIn(), withTextSize: view.frame.height/50)
-        bt.addTarget(self, action: #selector(haveAccountButtonTapped), for: .touchUpInside)
         return bt
     }()
+    
+    var input: RegistrationViewModel.Input {
+        return RegistrationViewModel.Input(
+            emailTextDriver: emailTextField.rx.text.map { $0 ?? "" }.asDriver(onErrorJustReturn: ""),
+            passwordTextDriver: passwordTextField.rx.text.map { $0 ?? "" }.asDriver(onErrorJustReturn: ""),
+            fullNameTextDriver: fullNameTextField.rx.text.map {$0 ?? ""}.asDriver(onErrorJustReturn: ""),
+            usernameTextDriver: usernameTextField.rx.text.map {$0 ?? ""}.asDriver(onErrorJustReturn: ""),
+            haveAccountTapDriver: haveAccountButton.rx.tap.asDriver()
+        )
+    }
     
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureController()
-    }
-    
-    //MARK: - Selectors
-    @objc private func haveAccountButtonTapped() {
-        navigationController?.popViewController(animated: true)
+        bind(output: viewModel.transform(input))
     }
     
     //MARK: - Helpers functions
+    private func bind(output: RegistrationViewModel.Output) {
+        output.isButtonEnabled
+            .drive(signUpButton.rx.isEnabled)
+            .disposed(by: bag)
+        
+        output.isButtonEnabled
+            .map { $0 ? 1 : 0.1 }
+            .drive(signUpButton.rx.alpha)
+            .disposed(by: bag)
+    }
+    
     private func configureController() {
         configureGradientBackground()
         setLayout()

@@ -6,8 +6,14 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class LoginViewController: UIViewController {
+    
+    var viewModel: LoginViewModel!
+    
+    private let bag = DisposeBag()
     
     //MARK: - Properties
     private let logoImageView: UIImageView = {
@@ -42,16 +48,13 @@ class LoginViewController: UIViewController {
         return bt
     }()
     
-    private lazy var forgotPasswordButton: UIButton = {
+    private lazy var passwordRecoveryButton: UIButton = {
         let bt = UIUtilities.attributedButton(R.string.localizable.forgotYourPassword(), R.string.localizable.getHelpSigningIn(), withTextSize: view.frame.height/50)
-        bt.addTarget(self, action: #selector(forgotPasswordButtonTapped), for: .touchUpInside)
         return bt
     }()
     
     private lazy var dontHaveAccountButton: UIButton = {
         let bt = UIUtilities.attributedButton(R.string.localizable.dontHaveAnAccount(), R.string.localizable.signUp(), withTextSize: view.frame.height/50)
-        
-        bt.addTarget(self, action: #selector(dontHaveAccountButtonTapped), for: .touchUpInside)
         return bt
     }()
     
@@ -65,27 +68,37 @@ class LoginViewController: UIViewController {
         return bt
     }()
     
+    var input: LoginViewModel.Input {
+        return LoginViewModel.Input(
+            emailTextDriver: emailTextField.rx.text.map { $0 ?? "" }.asDriver(onErrorJustReturn: ""),
+            passwordTextDriver: passwordTextField.rx.text.map { $0 ?? "" }.asDriver(onErrorJustReturn: ""),
+            signUpTapDriver: dontHaveAccountButton.rx.tap.asDriver(),
+            passwordRecoveryTap: passwordRecoveryButton.rx.tap.asDriver()
+        )
+    }
+    
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureController()
-        
-    }
-    
-    //MARK: - Selectors
-    @objc private func forgotPasswordButtonTapped() {
-        navigationController?.pushViewController(PasswordRecoveryViewController(), animated: true)
-    }
-    
-    @objc private func dontHaveAccountButtonTapped() {
-        navigationController?.pushViewController(RegistrationViewController(), animated: true)
+        configureController()        
+        bind(output: viewModel.transform(input))
     }
     
     //MARK: - Helpers functions
     private func configureController() {
         configureGradientBackground()
-        navigationController?.isNavigationBarHidden = true
         setLayout()
+    }
+    
+    private func bind(output: LoginViewModel.Output) {
+        output.isButtonEnabled
+            .drive(logInButton.rx.isEnabled)
+            .disposed(by: bag)
+
+        output.isButtonEnabled
+            .map { $0 ? 1 : 0.1 }
+            .drive(logInButton.rx.alpha)
+            .disposed(by: bag)
     }
     
     private func setLayout() {
@@ -102,14 +115,14 @@ class LoginViewController: UIViewController {
                          leading: view.leadingAnchor, paddingLeft: 32,
                          trailing: view.trailingAnchor, paddingRight: -32)
         
-        view.addSubview(forgotPasswordButton)
-        forgotPasswordButton.anchor(top: mainStack.bottomAnchor, paddingTop: 24,
-                                   leading: view.leadingAnchor, paddingLeft: 32,
-                                   trailing: view.trailingAnchor, paddingRight: -32)
+        view.addSubview(passwordRecoveryButton)
+        passwordRecoveryButton.anchor(top: mainStack.bottomAnchor, paddingTop: 24,
+                                    leading: view.leadingAnchor, paddingLeft: 32,
+                                    trailing: view.trailingAnchor, paddingRight: -32)
         
         let orLine = UIUtilities.orLine(withText: R.string.localizable.oR())
         view.addSubview(orLine)
-        orLine.anchor(top: forgotPasswordButton.bottomAnchor, paddingTop: 32,
+        orLine.anchor(top: passwordRecoveryButton.bottomAnchor, paddingTop: 32,
                       leading: view.leadingAnchor, paddingLeft: 48,
                       trailing: view.trailingAnchor, paddingRight: -48)
         
@@ -120,10 +133,10 @@ class LoginViewController: UIViewController {
         let logInWithAppleStack = UIUtilities.additionalStackWithImageView(withImage: R.image.appleLogo()!, imageWidth: view.frame.height/30, imageHeight: view.frame.height/30, button: logInWithAppleButton)
         view.addSubview(logInWithAppleStack)
         logInWithAppleStack.centerX(inView: view, topAnchor: logInWithGoogleStack.bottomAnchor, paddingTop: 24)
-       
+        
         view.addSubview(dontHaveAccountButton)
         dontHaveAccountButton.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor, paddingBottom: -16,
-                             leading: view.leadingAnchor, paddingLeft: 32,
-                             trailing: view.trailingAnchor, paddingRight: -32)
+                                     leading: view.leadingAnchor, paddingLeft: 32,
+                                     trailing: view.trailingAnchor, paddingRight: -32)
     }
 }

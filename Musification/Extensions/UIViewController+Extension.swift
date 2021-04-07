@@ -17,3 +17,8 @@ extension UIViewController {
     gradient.frame = view.frame
   }
 }
+
+//MARK: - Drawable
+extension UIViewController: Drawable {
+    var viewController: UIViewController? { return self }
+}
