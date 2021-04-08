@@ -11,7 +11,7 @@ import RxCocoa
 
 final class PasswordRecoveryViewModel: ViewModelType {
     
-    private let bag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     let backTapPublishSubject = PublishSubject<Void>()
     let backSwipePublishSubject = PublishSubject<UISwipeGestureRecognizer>()
@@ -20,12 +20,12 @@ final class PasswordRecoveryViewModel: ViewModelType {
         input.backTap.asObservable()
             .subscribe(onNext: { [self] in
                 backTapPublishSubject.onNext($0)
-            }).disposed(by: bag)
+            }).disposed(by: disposeBag)
         
         input.backSwipe.asObservable()
             .subscribe(onNext: { [self] in
                 backSwipePublishSubject.onNext($0)
-            }).disposed(by: bag)
+            }).disposed(by: disposeBag)
         
         let isButtonEnabled = Driver
             .asDriver(input.emailTextDriver)()
@@ -46,7 +46,7 @@ extension PasswordRecoveryViewModel {
     struct Input {
         let emailTextDriver: Driver<String>
         let backTap: Driver<Void>
-        let backSwipe: Driver<UISwipeGestureRecognizer>
+        let backSwipe: ControlEvent<UISwipeGestureRecognizer>
     }
     
     struct Output {

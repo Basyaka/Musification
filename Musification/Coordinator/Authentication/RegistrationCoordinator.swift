@@ -9,7 +9,7 @@ import RxSwift
 
 class RegistrationCoordinator: BaseCoordinator {
     
-    private let bag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     private let router: RouterProtocol
     
@@ -27,6 +27,6 @@ class RegistrationCoordinator: BaseCoordinator {
         //Back to login
         viewModel.haveAccountTapPublishSubject.subscribe(onNext: {
             self.router.pop(true)
-        }).disposed(by: bag)
+        }).disposed(by: disposeBag)
     }
 }

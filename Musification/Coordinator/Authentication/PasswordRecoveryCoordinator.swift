@@ -9,7 +9,7 @@ import RxSwift
 
 class PasswordRecoveryCoordinator: BaseCoordinator {
     
-    private let bag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     private let router: RouterProtocol
     
@@ -27,11 +27,11 @@ class PasswordRecoveryCoordinator: BaseCoordinator {
         //Back to login
         viewModel.backTapPublishSubject.subscribe(onNext: {_ in
             self.router.pop(true)
-        }).disposed(by: bag)
+        }).disposed(by: disposeBag)
         
         viewModel.backSwipePublishSubject.subscribe(onNext: {_ in
             self.router.pop(true)
-        }).disposed(by: bag)
+        }).disposed(by: disposeBag)
         
     }
 }

@@ -11,7 +11,7 @@ import RxCocoa
 
 final class LoginViewModel: ViewModelType {
     
-    private let bag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     let signUpTapPublishSubject = PublishSubject<Void>()
     let passwordRecoveryTap = PublishSubject<Void>()
@@ -20,12 +20,12 @@ final class LoginViewModel: ViewModelType {
         input.passwordRecoveryTap.asObservable()
             .subscribe(onNext: { [self] in
                 passwordRecoveryTap.onNext($0)
-            }).disposed(by: bag)
+            }).disposed(by: disposeBag)
         
         input.signUpTapDriver.asObservable()
             .subscribe(onNext: { [self] in
                 signUpTapPublishSubject.onNext($0)
-            }).disposed(by: bag)
+            }).disposed(by: disposeBag)
         
         let isButtonEnabled = Driver
             .combineLatest(input.emailTextDriver,
@@ -49,8 +49,8 @@ extension LoginViewModel {
     struct Input {
         let emailTextDriver: Driver<String>
         let passwordTextDriver: Driver<String>
-        let signUpTapDriver: Driver<Void>
-        let passwordRecoveryTap: Driver<Void>
+        let signUpTapDriver: ControlEvent<Void>
+        let passwordRecoveryTap: ControlEvent<Void>
     }
     
     struct Output {

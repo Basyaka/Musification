@@ -11,7 +11,7 @@ import RxCocoa
 
 final class RegistrationViewModel: ViewModelType {
     
-    private let bag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     let haveAccountTapPublishSubject = PublishSubject<Void>()
     
@@ -19,7 +19,7 @@ final class RegistrationViewModel: ViewModelType {
         input.haveAccountTapDriver.asObservable()
             .subscribe(onNext: { [self] in
                 haveAccountTapPublishSubject.onNext($0)
-            }).disposed(by: bag)
+            }).disposed(by: disposeBag)
         
         let isButtonEnabled = Driver
             .combineLatest(input.emailTextDriver,
@@ -49,7 +49,7 @@ extension RegistrationViewModel {
         let passwordTextDriver: Driver<String>
         let fullNameTextDriver: Driver<String>
         let usernameTextDriver: Driver<String>
-        let haveAccountTapDriver: Driver<Void>
+        let haveAccountTapDriver: ControlEvent<Void>
     }
     
     struct Output {

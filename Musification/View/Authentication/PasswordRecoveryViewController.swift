@@ -12,7 +12,7 @@ import RxCocoa
 class PasswordRecoveryViewController: UIViewController {
     
     var viewModel: PasswordRecoveryViewModel!
-    private let bag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     //MARK: - Properties
     private let backButton: UIButton = {
@@ -48,7 +48,7 @@ class PasswordRecoveryViewController: UIViewController {
         return PasswordRecoveryViewModel.Input(
             emailTextDriver: emailTextField.rx.text.map { $0 ?? "" }.asDriver(onErrorJustReturn: ""),
             backTap: backButton.rx.tap.asDriver(),
-            backSwipe: swipeRight.rx.event.asDriver()
+            backSwipe: swipeRight.rx.event
         )
     }
     
@@ -60,27 +60,27 @@ class PasswordRecoveryViewController: UIViewController {
     }
     
     //MARK: - Helpers functions
+    private func bind(output: PasswordRecoveryViewModel.Output) {
+        output.isButtonEnabled
+            .drive(resetButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
+        output.isButtonEnabled
+            .map { $0 ? 1 : 0.1 }
+            .drive(resetButton.rx.alpha)
+            .disposed(by: disposeBag)
+    }
+    
     private func configureController() {
         view.addGestureRecognizer(swipeRight)
         configureGradientBackground()
         setLayout()
     }
     
-    private func bind(output: PasswordRecoveryViewModel.Output) {
-        output.isButtonEnabled
-            .drive(resetButton.rx.isEnabled)
-            .disposed(by: bag)
-        
-        output.isButtonEnabled
-            .map { $0 ? 1 : 0.1 }
-            .drive(resetButton.rx.alpha)
-            .disposed(by: bag)
-    }
-    
     private func setLayout() {
         view.addSubview(backButton)
         backButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 16,
-                          leading: view.leadingAnchor, paddingLeft: 16,
+                          leading: view.safeAreaLayoutGuide.leadingAnchor, paddingLeft: 16,
                           width: 25, height: 25)
         
         view.addSubview(logoImageView)
@@ -93,8 +93,8 @@ class PasswordRecoveryViewController: UIViewController {
         mainStack.spacing = 10
         view.addSubview(mainStack)
         mainStack.anchor(top: logoImageView.bottomAnchor,
-                         leading: view.leadingAnchor, paddingLeft: 32,
-                         trailing: view.trailingAnchor, paddingRight: -32)
+                         leading: view.safeAreaLayoutGuide.leadingAnchor, paddingLeft: 32,
+                         trailing: view.safeAreaLayoutGuide.trailingAnchor, paddingRight: -32)
     }
 }
 

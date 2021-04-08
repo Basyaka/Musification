@@ -6,7 +6,8 @@ target 'Musification' do
   use_frameworks!
 
   pod 'RxSwift', '6.1.0'
-  pod 'RxCocoa', '6.1.0'
+  pod 'RxCocoa', '6.1.0' 
+  pod 'RxKeyboard'
   pod 'R.swift'
 
 end

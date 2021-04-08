@@ -8,13 +8,16 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import RxKeyboard
 
 class RegistrationViewController: UIViewController {
     
     var viewModel: RegistrationViewModel!
-    private let bag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     //MARK: - Properties
+    private let scrollView = UIScrollView()
+    
     private let photoButton: UIButton = {
         let bt = UIButton()
         return bt
@@ -76,7 +79,7 @@ class RegistrationViewController: UIViewController {
             passwordTextDriver: passwordTextField.rx.text.map { $0 ?? "" }.asDriver(onErrorJustReturn: ""),
             fullNameTextDriver: fullNameTextField.rx.text.map {$0 ?? ""}.asDriver(onErrorJustReturn: ""),
             usernameTextDriver: usernameTextField.rx.text.map {$0 ?? ""}.asDriver(onErrorJustReturn: ""),
-            haveAccountTapDriver: haveAccountButton.rx.tap.asDriver()
+            haveAccountTapDriver: haveAccountButton.rx.tap
         )
     }
     
@@ -91,27 +94,51 @@ class RegistrationViewController: UIViewController {
     private func bind(output: RegistrationViewModel.Output) {
         output.isButtonEnabled
             .drive(signUpButton.rx.isEnabled)
-            .disposed(by: bag)
+            .disposed(by: disposeBag)
         
         output.isButtonEnabled
             .map { $0 ? 1 : 0.1 }
             .drive(signUpButton.rx.alpha)
-            .disposed(by: bag)
+            .disposed(by: disposeBag)
     }
     
     private func configureController() {
         configureGradientBackground()
+        setKeyboardNotifications()
         setLayout()
     }
     
+    private func setKeyboardNotifications() {
+        RxKeyboard.instance.visibleHeight
+          .drive(onNext: { [scrollView] keyboardVisibleHeight in
+            scrollView.contentInset.bottom = keyboardVisibleHeight
+          })
+          .disposed(by: disposeBag)
+    }
+    
     private func setLayout() {
-        view.addSubview(photoButton)
-        photoButton.setDimensions(width: view.frame.width/3, height: view.frame.width/3)
-        photoButton.centerX(inView: view, topAnchor: view.safeAreaLayoutGuide.topAnchor, paddingTop: 16)
+        view.addSubview(scrollView)
+        scrollView.anchor(top: view.safeAreaLayoutGuide.topAnchor,
+                          bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                          leading: view.safeAreaLayoutGuide.leadingAnchor,
+                          trailing: view.safeAreaLayoutGuide.trailingAnchor)
         
-        view.addSubview(photoImage)
+        let presentationView = UIView()
+        scrollView.addSubview(presentationView)
+        presentationView.anchor(top: scrollView.contentLayoutGuide.topAnchor,
+                                bottom: scrollView.contentLayoutGuide.bottomAnchor,
+                                leading: scrollView.contentLayoutGuide.leadingAnchor,
+                                trailing: scrollView.contentLayoutGuide.trailingAnchor)
+        presentationView.heightAnchor.constraint(equalTo: scrollView.frameLayoutGuide.heightAnchor).isActive = true
+        presentationView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor).isActive = true
+        
+        presentationView.addSubview(photoButton)
+        photoButton.setDimensions(width: view.frame.width/3, height: view.frame.width/3)
+        photoButton.centerX(inView: presentationView, topAnchor: presentationView.topAnchor, paddingTop: 16)
+        
+        presentationView.addSubview(photoImage)
         photoImage.setDimensions(width: view.frame.width/3, height: view.frame.width/3)
-        photoImage.centerX(inView: view, topAnchor: view.safeAreaLayoutGuide.topAnchor, paddingTop: 16)
+        photoImage.centerX(inView: presentationView, topAnchor: presentationView.topAnchor, paddingTop: 16)
         
         let mainStack = UIStackView(arrangedSubviews: [emailContainerView,
                                                        passwordContainerView,
@@ -121,14 +148,14 @@ class RegistrationViewController: UIViewController {
         mainStack.axis = .vertical
         mainStack.spacing = 10
         mainStack.distribution = .fillEqually
-        view.addSubview(mainStack)
+        presentationView.addSubview(mainStack)
         mainStack.anchor(top: photoImage.bottomAnchor, paddingTop: 32,
-                         leading: view.leadingAnchor, paddingLeft: 32,
-                         trailing: view.trailingAnchor, paddingRight: -32)
+                         leading: presentationView.leadingAnchor, paddingLeft: 32,
+                         trailing: presentationView.trailingAnchor, paddingRight: -32)
         
-        view.addSubview(haveAccountButton)
-        haveAccountButton.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor, paddingBottom: -16,
-                                 leading: view.leadingAnchor, paddingLeft: 32,
-                                 trailing: view.trailingAnchor, paddingRight: -32)
+        presentationView.addSubview(haveAccountButton)
+        haveAccountButton.anchor(bottom: presentationView.bottomAnchor, paddingBottom: -16,
+                                 leading: presentationView.leadingAnchor, paddingLeft: 32,
+                                 trailing: presentationView.trailingAnchor, paddingRight: -32)
     }
 }

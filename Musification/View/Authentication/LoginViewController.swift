@@ -8,14 +8,17 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import RxKeyboard
 
 class LoginViewController: UIViewController {
     
     var viewModel: LoginViewModel!
     
-    private let bag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     //MARK: - Properties
+    private let scrollView = UIScrollView()
+    
     private let logoImageView: UIImageView = {
         let iv = UIImageView()
         iv.image = R.image.musification()!
@@ -72,8 +75,8 @@ class LoginViewController: UIViewController {
         return LoginViewModel.Input(
             emailTextDriver: emailTextField.rx.text.map { $0 ?? "" }.asDriver(onErrorJustReturn: ""),
             passwordTextDriver: passwordTextField.rx.text.map { $0 ?? "" }.asDriver(onErrorJustReturn: ""),
-            signUpTapDriver: dontHaveAccountButton.rx.tap.asDriver(),
-            passwordRecoveryTap: passwordRecoveryButton.rx.tap.asDriver()
+            signUpTapDriver: dontHaveAccountButton.rx.tap,
+            passwordRecoveryTap: passwordRecoveryButton.rx.tap
         )
     }
     
@@ -84,59 +87,84 @@ class LoginViewController: UIViewController {
         bind(output: viewModel.transform(input))
     }
     
-    //MARK: - Helpers functions
-    private func configureController() {
-        configureGradientBackground()
-        setLayout()
-    }
     
+    //MARK: - Helpers functions
     private func bind(output: LoginViewModel.Output) {
         output.isButtonEnabled
             .drive(logInButton.rx.isEnabled)
-            .disposed(by: bag)
-
+            .disposed(by: disposeBag)
+        
         output.isButtonEnabled
             .map { $0 ? 1 : 0.1 }
             .drive(logInButton.rx.alpha)
-            .disposed(by: bag)
+            .disposed(by: disposeBag)
+    }
+    
+    private func configureController() {
+        configureGradientBackground()
+        setKeyboardNotifications()
+        setLayout()
+    }
+    
+    private func setKeyboardNotifications() {
+        RxKeyboard.instance.visibleHeight
+          .drive(onNext: { [scrollView] keyboardVisibleHeight in
+            scrollView.contentInset.bottom = keyboardVisibleHeight
+          })
+          .disposed(by: disposeBag)
     }
     
     private func setLayout() {
-        view.addSubview(logoImageView)
-        logoImageView.centerX(inView: view, topAnchor: view.safeAreaLayoutGuide.topAnchor)
+        view.addSubview(scrollView)
+        scrollView.anchor(top: view.safeAreaLayoutGuide.topAnchor,
+                          bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                          leading: view.safeAreaLayoutGuide.leadingAnchor,
+                          trailing: view.safeAreaLayoutGuide.trailingAnchor)
+        
+        let presentationView = UIView()
+        scrollView.addSubview(presentationView)
+        presentationView.anchor(top: scrollView.contentLayoutGuide.topAnchor,
+                                bottom: scrollView.contentLayoutGuide.bottomAnchor,
+                                leading: scrollView.contentLayoutGuide.leadingAnchor,
+                                trailing: scrollView.contentLayoutGuide.trailingAnchor)
+        presentationView.heightAnchor.constraint(equalTo: scrollView.frameLayoutGuide.heightAnchor).isActive = true
+        presentationView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor).isActive = true
+        
+        presentationView.addSubview(logoImageView)
+        logoImageView.centerX(inView: presentationView, topAnchor: presentationView.topAnchor)
         logoImageView.setDimensions(width: view.frame.width/2, height: view.frame.height/5)
         
         let mainStack = UIStackView(arrangedSubviews: [emailContainerView, passwordContainerView, logInButton])
         mainStack.axis = .vertical
         mainStack.spacing = 10
         mainStack.distribution = .fillEqually
-        view.addSubview(mainStack)
+        presentationView.addSubview(mainStack)
         mainStack.anchor(top: logoImageView.bottomAnchor,
-                         leading: view.leadingAnchor, paddingLeft: 32,
-                         trailing: view.trailingAnchor, paddingRight: -32)
+                         leading: presentationView.leadingAnchor, paddingLeft: 32,
+                         trailing: presentationView.trailingAnchor, paddingRight: -32)
         
-        view.addSubview(passwordRecoveryButton)
+        presentationView.addSubview(passwordRecoveryButton)
         passwordRecoveryButton.anchor(top: mainStack.bottomAnchor, paddingTop: 24,
-                                    leading: view.leadingAnchor, paddingLeft: 32,
-                                    trailing: view.trailingAnchor, paddingRight: -32)
+                                      leading: presentationView.leadingAnchor, paddingLeft: 32,
+                                      trailing: presentationView.trailingAnchor, paddingRight: -32)
         
         let orLine = UIUtilities.orLine(withText: R.string.localizable.oR())
-        view.addSubview(orLine)
+        presentationView.addSubview(orLine)
         orLine.anchor(top: passwordRecoveryButton.bottomAnchor, paddingTop: 32,
-                      leading: view.leadingAnchor, paddingLeft: 48,
-                      trailing: view.trailingAnchor, paddingRight: -48)
+                      leading: presentationView.leadingAnchor, paddingLeft: 48,
+                      trailing: presentationView.trailingAnchor, paddingRight: -48)
         
         let logInWithGoogleStack = UIUtilities.additionalStackWithImageView(withImage: R.image.googleLogo()! , imageWidth: view.frame.height/30, imageHeight: view.frame.height/30, button: logInWithGoogleButton)
-        view.addSubview(logInWithGoogleStack)
-        logInWithGoogleStack.centerX(inView: view, topAnchor: orLine.bottomAnchor, paddingTop: 32)
+        presentationView.addSubview(logInWithGoogleStack)
+        logInWithGoogleStack.centerX(inView: presentationView, topAnchor: orLine.bottomAnchor, paddingTop: 32)
         
         let logInWithAppleStack = UIUtilities.additionalStackWithImageView(withImage: R.image.appleLogo()!, imageWidth: view.frame.height/30, imageHeight: view.frame.height/30, button: logInWithAppleButton)
-        view.addSubview(logInWithAppleStack)
-        logInWithAppleStack.centerX(inView: view, topAnchor: logInWithGoogleStack.bottomAnchor, paddingTop: 24)
+        presentationView.addSubview(logInWithAppleStack)
+        logInWithAppleStack.centerX(inView: presentationView, topAnchor: logInWithGoogleStack.bottomAnchor, paddingTop: 24)
         
-        view.addSubview(dontHaveAccountButton)
-        dontHaveAccountButton.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor, paddingBottom: -16,
-                                     leading: view.leadingAnchor, paddingLeft: 32,
-                                     trailing: view.trailingAnchor, paddingRight: -32)
+        presentationView.addSubview(dontHaveAccountButton)
+        dontHaveAccountButton.anchor(bottom: presentationView.bottomAnchor, paddingBottom: -16,
+                                     leading: presentationView.leadingAnchor, paddingLeft: 32,
+                                     trailing: presentationView.trailingAnchor, paddingRight: -32)
     }
 }
