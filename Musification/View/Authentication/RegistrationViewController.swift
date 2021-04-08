@@ -9,6 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxKeyboard
+import RxGesture
 
 class RegistrationViewController: UIViewController {
     
@@ -17,6 +18,7 @@ class RegistrationViewController: UIViewController {
     
     //MARK: - Properties
     private let scrollView = UIScrollView()
+    private let presentationView = UIView()
     
     private let photoButton: UIButton = {
         let bt = UIButton()
@@ -104,16 +106,25 @@ class RegistrationViewController: UIViewController {
     
     private func configureController() {
         configureGradientBackground()
+        setGestures()
         setKeyboardNotifications()
         setLayout()
     }
     
+    private func setGestures() {
+        presentationView.rx.tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [self] _ in
+                presentationView.endEditing(true)
+            }).disposed(by: disposeBag)
+    }
+    
     private func setKeyboardNotifications() {
         RxKeyboard.instance.visibleHeight
-          .drive(onNext: { [scrollView] keyboardVisibleHeight in
-            scrollView.contentInset.bottom = keyboardVisibleHeight
-          })
-          .disposed(by: disposeBag)
+            .drive(onNext: { [scrollView] keyboardVisibleHeight in
+                scrollView.contentInset.bottom = keyboardVisibleHeight
+            })
+            .disposed(by: disposeBag)
     }
     
     private func setLayout() {
@@ -123,7 +134,6 @@ class RegistrationViewController: UIViewController {
                           leading: view.safeAreaLayoutGuide.leadingAnchor,
                           trailing: view.safeAreaLayoutGuide.trailingAnchor)
         
-        let presentationView = UIView()
         scrollView.addSubview(presentationView)
         presentationView.anchor(top: scrollView.contentLayoutGuide.topAnchor,
                                 bottom: scrollView.contentLayoutGuide.bottomAnchor,

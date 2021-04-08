@@ -9,6 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxKeyboard
+import RxGesture
 
 class LoginViewController: UIViewController {
     
@@ -18,6 +19,7 @@ class LoginViewController: UIViewController {
     
     //MARK: - Properties
     private let scrollView = UIScrollView()
+    private let presentationView = UIView()
     
     private let logoImageView: UIImageView = {
         let iv = UIImageView()
@@ -83,10 +85,9 @@ class LoginViewController: UIViewController {
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureController()        
+        configureController()
         bind(output: viewModel.transform(input))
     }
-    
     
     //MARK: - Helpers functions
     private func bind(output: LoginViewModel.Output) {
@@ -102,16 +103,25 @@ class LoginViewController: UIViewController {
     
     private func configureController() {
         configureGradientBackground()
+        setGestures()
         setKeyboardNotifications()
         setLayout()
     }
     
+    private func setGestures() {
+        presentationView.rx.tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [self] _ in
+                presentationView.endEditing(true)
+            }).disposed(by: disposeBag)
+    }
+    
     private func setKeyboardNotifications() {
         RxKeyboard.instance.visibleHeight
-          .drive(onNext: { [scrollView] keyboardVisibleHeight in
-            scrollView.contentInset.bottom = keyboardVisibleHeight
-          })
-          .disposed(by: disposeBag)
+            .drive(onNext: { [scrollView] keyboardVisibleHeight in
+                scrollView.contentInset.bottom = keyboardVisibleHeight
+            })
+            .disposed(by: disposeBag)
     }
     
     private func setLayout() {
@@ -121,7 +131,6 @@ class LoginViewController: UIViewController {
                           leading: view.safeAreaLayoutGuide.leadingAnchor,
                           trailing: view.safeAreaLayoutGuide.trailingAnchor)
         
-        let presentationView = UIView()
         scrollView.addSubview(presentationView)
         presentationView.anchor(top: scrollView.contentLayoutGuide.topAnchor,
                                 bottom: scrollView.contentLayoutGuide.bottomAnchor,

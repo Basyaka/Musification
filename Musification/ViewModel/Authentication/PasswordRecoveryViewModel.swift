@@ -5,9 +5,9 @@
 //  Created by Vlad Novik on 6.04.21.
 //
 
-import Foundation
 import RxSwift
 import RxCocoa
+import RxGesture
 
 final class PasswordRecoveryViewModel: ViewModelType {
     
@@ -23,6 +23,7 @@ final class PasswordRecoveryViewModel: ViewModelType {
             }).disposed(by: disposeBag)
         
         input.backSwipe.asObservable()
+            .when(.recognized)
             .subscribe(onNext: { [self] in
                 backSwipePublishSubject.onNext($0)
             }).disposed(by: disposeBag)

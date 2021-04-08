@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import RxGesture
 
 class PasswordRecoveryViewController: UIViewController {
     
@@ -20,12 +21,6 @@ class PasswordRecoveryViewController: UIViewController {
         bt.setImage(UIImage(systemName: K.SystemImageName.backButton), for: .normal)
         bt.tintColor = .white
         return bt
-    }()
-    
-    private let swipeRight: UISwipeGestureRecognizer = {
-        let swipe = UISwipeGestureRecognizer()
-        swipe.direction = .right
-        return swipe
     }()
     
     private let logoImageView: UIImageView = {
@@ -48,7 +43,7 @@ class PasswordRecoveryViewController: UIViewController {
         return PasswordRecoveryViewModel.Input(
             emailTextDriver: emailTextField.rx.text.map { $0 ?? "" }.asDriver(onErrorJustReturn: ""),
             backTap: backButton.rx.tap.asDriver(),
-            backSwipe: swipeRight.rx.event
+            backSwipe: view.rx.swipeGesture(.right)
         )
     }
     
@@ -72,7 +67,6 @@ class PasswordRecoveryViewController: UIViewController {
     }
     
     private func configureController() {
-        view.addGestureRecognizer(swipeRight)
         configureGradientBackground()
         setLayout()
     }
