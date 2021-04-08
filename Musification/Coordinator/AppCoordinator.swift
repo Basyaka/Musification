@@ -8,6 +8,7 @@
 import UIKit
 
 class AppCoordinator: BaseCoordinator {
+    
     private let window: UIWindow
     
     private let navigationController: UINavigationController = {
@@ -23,12 +24,23 @@ class AppCoordinator: BaseCoordinator {
     override func start() {
         let router = Router(navigationController: self.navigationController)
         
+        showLoginFlow(router: router)
+        
+        window.rootViewController = navigationController
+        window.makeKeyAndVisible()
+    }
+        
+    func showLoginFlow(router: Router) {
         let loginCoordinator = LoginCoordinator(router: router)
         self.add(coordinator: loginCoordinator)
         
         loginCoordinator.start()
+    }
+    
+    func showMainFlow(router: Router) {
+        let tabCoordinator = TabCoordinator.init(router: router)
+        self.add(coordinator: tabCoordinator)
         
-        window.rootViewController = navigationController
-        window.makeKeyAndVisible()
+        tabCoordinator.start()
     }
 }

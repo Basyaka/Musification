@@ -5,13 +5,12 @@
 //  Created by Vlad Novik on 7.04.21.
 //
 
-import Foundation
-
 typealias NavigationBackClosure = (() -> ())
 
 protocol RouterProtocol: class {
     func push(_ drawable: Drawable, isAnimated: Bool, onNavigateBack: NavigationBackClosure?)
     func pop(_ isAnimated: Bool)
     func popToRoot(_ isAnimated: Bool)
-    func present(_ drawable: Drawable, isAnimated: Bool, onDismiss: NavigationBackClosure? )
+    func present(_ drawable: Drawable, isAnimated: Bool, onDismiss: NavigationBackClosure?)
+    func viewControllers(controllers drawables: [Drawable])
 }

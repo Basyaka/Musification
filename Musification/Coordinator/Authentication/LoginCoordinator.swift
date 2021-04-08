@@ -24,19 +24,28 @@ class LoginCoordinator: BaseCoordinator {
         
         router.push(view, isAnimated: false, onNavigateBack: isCompeted)
         
+        moveScreenLogic(viewModel: viewModel)
+    }
+}
+
+private extension LoginCoordinator {
+    func moveScreenLogic(viewModel: LoginViewModel) {
         //Tap to Registration
         viewModel.signUpTapPublishSubject.subscribe(onNext: {
             self.showRegistration()
         }).disposed(by: disposeBag)
         
         //Tap to PasswordRecovery
-        viewModel.passwordRecoveryTap.subscribe(onNext: {
+        viewModel.passwordRecoveryTapPublishSubject.subscribe(onNext: {
             self.showPasswordRecovery()
         }).disposed(by: disposeBag)
+        
+        //Tap to TabBar
+        viewModel.loginInTapPublishSubject.subscribe(onNext: {
+            self.showTabBar()
+        }).disposed(by: disposeBag)
     }
-}
-
-private extension LoginCoordinator {
+    
     func showRegistration() -> Void {
         let coordinator = RegistrationCoordinator(router: router)
         add(coordinator: coordinator)
@@ -58,4 +67,13 @@ private extension LoginCoordinator {
         }
         coordinator.start()
     }
+    
+    func showTabBar() -> Void {
+        let coordinator = TabCoordinator(router: router)
+        add(coordinator: coordinator)
+        finish()
+        coordinator.start()
+    }
+    
+    
 }

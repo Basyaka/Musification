@@ -7,7 +7,6 @@
 
 import RxSwift
 import RxCocoa
-import RxGesture
 
 final class PasswordRecoveryViewModel: ViewModelType {
     

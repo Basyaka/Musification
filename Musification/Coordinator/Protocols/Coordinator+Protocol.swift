@@ -5,7 +5,8 @@
 //  Created by Vlad Novik on 7.04.21.
 //
 
-protocol Coordinator: class {
+
+protocol Coordinator: class {    
     var childCoordinators: [Coordinator] { get set }
     
     func start()
@@ -20,4 +21,10 @@ extension Coordinator {
     func remove(coordinator: Coordinator) -> Void {
         childCoordinators = childCoordinators.filter ({ $0 !== coordinator })
     }
+    
+    func finish() {
+        childCoordinators.removeAll()
+    }
 }
+
+

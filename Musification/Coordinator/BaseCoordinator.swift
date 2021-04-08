@@ -5,7 +5,9 @@
 //  Created by Vlad Novik on 7.04.21.
 //
 
-class BaseCoordinator: Coordinator {
+import UIKit
+
+class BaseCoordinator: NSObject, Coordinator {
     var childCoordinators: [Coordinator] = []
     var isCompeted: (() -> ())?
     

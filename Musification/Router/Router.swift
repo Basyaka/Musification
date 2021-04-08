@@ -25,6 +25,7 @@ class Router: NSObject {
 }
 
 extension Router: RouterProtocol {
+    
     func push(_ drawable: Drawable, isAnimated: Bool, onNavigateBack closure: NavigationBackClosure?) {
         guard let viewController = drawable.viewController else { return }
         
@@ -51,6 +52,16 @@ extension Router: RouterProtocol {
         
         navigationController.present(viewController, animated: isAnimated, completion: nil)
         viewController.presentationController?.delegate = self
+    }
+    
+    //To tab bar
+    func viewControllers(controllers drawables: [Drawable]) {
+        var viewControllers = [UIViewController]()
+        drawables.forEach { (drawable) in
+            guard let viewController = drawable.viewController else { return }
+            viewControllers.append(viewController)
+        }
+        navigationController.viewControllers = viewControllers
     }
 }
 
