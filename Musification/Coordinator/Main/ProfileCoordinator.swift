@@ -23,6 +23,19 @@ class ProfileCoordinator: BaseCoordinator {
         view.viewModel = viewModel
         
         router.push(view, isAnimated: true, onNavigateBack: nil)
+        
+        moveScreenLogic(viewModel: viewModel)
     }
 }
 
+//MARK: - Move Screen Logic
+private extension ProfileCoordinator {
+    func moveScreenLogic(viewModel: ProfileViewModel) {
+        
+    }
+}
+
+//MARK: - Navigation Flow
+private extension ProfileCoordinator {
+    
+}

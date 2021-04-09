@@ -23,5 +23,19 @@ class ArtistsCoordinator: BaseCoordinator {
         view.viewModel = viewModel
         
         router.push(view, isAnimated: true, onNavigateBack: nil)
+        
+        moveScreenLogic(viewModel: viewModel)
     }
+}
+
+//MARK: - Move Screen Logic
+private extension ArtistsCoordinator {
+    func moveScreenLogic(viewModel: ArtistsViewModel) {
+        
+    }
+}
+
+//MARK: - Navigation Flow
+private extension ArtistsCoordinator {
+    
 }

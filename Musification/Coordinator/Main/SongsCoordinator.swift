@@ -23,7 +23,21 @@ class SongsCoordinator: BaseCoordinator {
         view.viewModel = viewModel
         
         router.push(view, isAnimated: true, onNavigateBack: nil)
+        
+        moveScreenLogic(viewModel: viewModel)
     }
+}
+
+//MARK: - Move Screen Logic
+private extension SongsCoordinator {
+    func moveScreenLogic(viewModel: SongsViewModel) {
+        
+    }
+}
+
+//MARK: - Navigation Flow
+private extension SongsCoordinator {
+    
 }
 
 
