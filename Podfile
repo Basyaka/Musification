@@ -10,5 +10,6 @@ target 'Musification' do
   pod 'RxKeyboard'
   pod "RxGesture"
   pod 'R.swift'
+  pod 'Firebase/Analytics'
 
 end
