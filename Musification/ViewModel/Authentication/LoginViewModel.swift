@@ -17,17 +17,17 @@ final class LoginViewModel: ViewModelType {
     let loginInTapPublishSubject = PublishSubject<Void>()
     
     func transform(_ input: Input) -> Output {
-        input.loginButton.asObservable()
+        input.loginButtonTapControlEvent.asObservable()
             .subscribe(onNext: { [self] in
                 loginInTapPublishSubject.onNext($0)
             }).disposed(by: disposeBag)
         
-        input.passwordRecoveryTap.asObservable()
+        input.passwordRecoveryTapControlEvent.asObservable()
             .subscribe(onNext: { [self] in
                 passwordRecoveryTapPublishSubject.onNext($0)
             }).disposed(by: disposeBag)
         
-        input.signUpTapDriver.asObservable()
+        input.signUpTapControlEvent.asObservable()
             .subscribe(onNext: { [self] in
                 signUpTapPublishSubject.onNext($0)
             }).disposed(by: disposeBag)
@@ -54,9 +54,9 @@ extension LoginViewModel {
     struct Input {
         let emailTextDriver: Driver<String>
         let passwordTextDriver: Driver<String>
-        let signUpTapDriver: ControlEvent<Void>
-        let passwordRecoveryTap: ControlEvent<Void>
-        let loginButton: ControlEvent<Void>
+        let signUpTapControlEvent: ControlEvent<Void>
+        let passwordRecoveryTapControlEvent: ControlEvent<Void>
+        let loginButtonTapControlEvent: ControlEvent<Void>
     }
     
     struct Output {

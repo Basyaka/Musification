@@ -46,7 +46,7 @@ private extension LoginCoordinator {
         }).disposed(by: disposeBag)
     }
     
-    func showRegistration() -> Void {
+    func showRegistration() {
         let coordinator = RegistrationCoordinator(router: router)
         add(coordinator: coordinator)
         
@@ -57,7 +57,7 @@ private extension LoginCoordinator {
         coordinator.start()
     }
     
-    func showPasswordRecovery() -> Void {
+    func showPasswordRecovery() {
         let coordinator = PasswordRecoveryCoordinator(router: router)
         add(coordinator: coordinator)
         
@@ -68,12 +68,10 @@ private extension LoginCoordinator {
         coordinator.start()
     }
     
-    func showTabBar() -> Void {
+    func showTabBar() {
         let coordinator = TabCoordinator(router: router)
         add(coordinator: coordinator)
         finish()
         coordinator.start()
     }
-    
-    
 }

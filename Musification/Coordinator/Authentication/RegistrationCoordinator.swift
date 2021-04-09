@@ -23,10 +23,28 @@ class RegistrationCoordinator: BaseCoordinator {
         view.viewModel = viewModel
         
         router.push(view, isAnimated: true, onNavigateBack: isCompeted)
-        
+        moveScreenLogic(viewModel: viewModel)
+    }
+}
+
+private extension RegistrationCoordinator {
+    func moveScreenLogic(viewModel: RegistrationViewModel) {
         //Back to login
         viewModel.haveAccountTapPublishSubject.subscribe(onNext: {
             self.router.pop(true)
         }).disposed(by: disposeBag)
+        
+        //Tap to TabBar
+        viewModel.registrationButtonTapPublishSubject.subscribe(onNext: {
+            self.showTabBar()
+        }).disposed(by: disposeBag)
+
+    }
+    
+    func showTabBar() {
+        let coordinator = TabCoordinator(router: router)
+        add(coordinator: coordinator)
+        finish()
+        coordinator.start()
     }
 }

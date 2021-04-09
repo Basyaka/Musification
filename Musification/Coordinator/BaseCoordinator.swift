@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BaseCoordinator: NSObject, Coordinator {
+class BaseCoordinator: Coordinator {
     var childCoordinators: [Coordinator] = []
     var isCompeted: (() -> ())?
     

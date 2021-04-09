@@ -5,11 +5,12 @@
 //  Created by Vlad Novik on 8.04.21.
 //
 
-import Foundation
+import UIKit
 
 enum TabBarPage {
     case songs
     case artists
+    case albums
     case profile
     
     init?(index: Int) {
@@ -19,6 +20,8 @@ enum TabBarPage {
         case 1:
             self = .artists
         case 2:
+            self = .albums
+        case 3:
             self = .profile
         default:
             return nil
@@ -31,6 +34,8 @@ enum TabBarPage {
             return "Songs"
         case .artists:
             return "Artists"
+        case .albums:
+            return "Albums"
         case .profile:
             return "Profile"
         }
@@ -42,12 +47,30 @@ enum TabBarPage {
             return 0
         case .artists:
             return 1
-        case .profile:
+        case .albums:
             return 2
+        case .profile:
+            return 3
         }
     }
     
     // Add tab icon value
+    func pageIconValue() -> UIImage {
+        switch self {
+        case .songs:
+            return UIImage(systemName: "play.circle")!
+            
+        case .artists:
+            return UIImage(systemName: "person.crop.circle.badge.questionmark")!
+            
+        case .albums:
+            return UIImage(systemName: "rectangle.stack.person.crop")!
+            
+        case .profile:
+            return UIImage(systemName: "person")!
+        
+        }
+    }
     
     // Add tab icon selected / deselected color
     

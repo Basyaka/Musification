@@ -81,7 +81,8 @@ class RegistrationViewController: UIViewController {
             passwordTextDriver: passwordTextField.rx.text.map { $0 ?? "" }.asDriver(onErrorJustReturn: ""),
             fullNameTextDriver: fullNameTextField.rx.text.map {$0 ?? ""}.asDriver(onErrorJustReturn: ""),
             usernameTextDriver: usernameTextField.rx.text.map {$0 ?? ""}.asDriver(onErrorJustReturn: ""),
-            haveAccountTapDriver: haveAccountButton.rx.tap
+            haveAccountTapControlEvent: haveAccountButton.rx.tap,
+            registrationButtonTapControlEvent: signUpButton.rx.tap
         )
     }
     

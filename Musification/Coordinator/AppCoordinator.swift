@@ -24,7 +24,7 @@ class AppCoordinator: BaseCoordinator {
     override func start() {
         let router = Router(navigationController: self.navigationController)
         
-        showLoginFlow(router: router)
+        showMainFlow(router: router)
         
         window.rootViewController = navigationController
         window.makeKeyAndVisible()

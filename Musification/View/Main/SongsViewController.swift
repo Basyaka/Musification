@@ -8,8 +8,6 @@
 import UIKit
 
 class SongsViewController: UIViewController {
-    
-    var didSendEventClosure: ((SongsViewController.Event) -> Void)?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,8 +30,3 @@ class SongsViewController: UIViewController {
 
 }
 
-extension SongsViewController {
-    enum Event {
-        case songs
-    }
-}

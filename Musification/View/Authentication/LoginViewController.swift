@@ -77,9 +77,9 @@ class LoginViewController: UIViewController {
         return LoginViewModel.Input(
             emailTextDriver: emailTextField.rx.text.map { $0 ?? "" }.asDriver(onErrorJustReturn: ""),
             passwordTextDriver: passwordTextField.rx.text.map { $0 ?? "" }.asDriver(onErrorJustReturn: ""),
-            signUpTapDriver: dontHaveAccountButton.rx.tap,
-            passwordRecoveryTap: passwordRecoveryButton.rx.tap,
-            loginButton: logInButton.rx.tap
+            signUpTapControlEvent: dontHaveAccountButton.rx.tap,
+            passwordRecoveryTapControlEvent: passwordRecoveryButton.rx.tap,
+            loginButtonTapControlEvent: logInButton.rx.tap
         )
     }
     

@@ -9,7 +9,6 @@ import UIKit
 
 class ArtistsViewController: UIViewController {
     
-    var didSendEventClosure: ((ArtistsViewController.Event) -> Void)?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,8 +30,3 @@ class ArtistsViewController: UIViewController {
 
 }
 
-extension ArtistsViewController {
-    enum Event {
-        case artists
-    }
-}

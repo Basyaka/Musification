@@ -8,8 +8,6 @@
 import UIKit
 
 class ProfileViewController: UIViewController {
-    
-    var didSendEventClosure: ((ProfileViewController.Event) -> Void)?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,8 +29,3 @@ class ProfileViewController: UIViewController {
 
 }
 
-extension ProfileViewController {
-    enum Event {
-        case profile
-    }
-}

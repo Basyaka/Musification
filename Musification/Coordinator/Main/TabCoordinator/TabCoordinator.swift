@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol TabCoordinatorProtocol {
+protocol TabCoordinatorProtocol: Coordinator {
     var tabBarController: UITabBarController { get set }
     
     func selectPage(_ page: TabBarPage)
@@ -17,9 +17,13 @@ protocol TabCoordinatorProtocol {
     func currentPage() -> TabBarPage?
 }
 
-class TabCoordinator: BaseCoordinator, TabCoordinatorProtocol {
+class TabCoordinator: NSObject, TabCoordinatorProtocol {
     
-    private let router: RouterProtocol
+    var childCoordinators: [Coordinator] = []
+    
+    var isCompeted: (() -> ())?
+    
+    var router: RouterProtocol
     
     var tabBarController: UITabBarController
     
@@ -28,8 +32,8 @@ class TabCoordinator: BaseCoordinator, TabCoordinatorProtocol {
         self.tabBarController = .init()
     }
     
-    override func start() {
-        let pages: [TabBarPage] = [.songs, .artists, .profile]
+    func start() {
+        let pages: [TabBarPage] = [.songs, .artists, .albums, .profile]
             .sorted(by: { $0.pageOrderNumber() < $1.pageOrderNumber() })
         
         let controllers: [UINavigationController] = pages.map({ getTabController($0) })
@@ -52,47 +56,32 @@ class TabCoordinator: BaseCoordinator, TabCoordinatorProtocol {
     }
     
     private func getTabController(_ page: TabBarPage) -> UINavigationController {
+        //Nav controller
         let navController = UINavigationController()
-        navController.setNavigationBarHidden(false, animated: false)
+        navController.isNavigationBarHidden = true
         
+        //Create router
+        let mainRouter = Router(navigationController: navController)
+        
+        //Set BarItem settings
         navController.tabBarItem = UITabBarItem.init(title: page.pageTitleValue(),
-                                                     image: nil,
+                                                     image: page.pageIconValue(),
                                                      tag: page.pageOrderNumber())
         
         switch page {
         case .songs:
-            // If needed: Each tab bar flow can have it's own Coordinator.
-            let songsVC = SongsViewController()
-            songsVC.didSendEventClosure = { [weak self] event in
-                switch event {
-                case .songs:
-                    self?.selectPage(.songs)
-                }
-            }
-            
-            navController.pushViewController(songsVC, animated: true)
+            showSongsFlow(router: mainRouter)
             
         case .artists:
-            let artistsVC = ArtistsViewController()
-            artistsVC.didSendEventClosure = { [weak self] event in
-                switch event {
-                case .artists:
-                    self?.selectPage(.artists)
-                }
-            }
+            showArtistsFlow(router: mainRouter)
             
-            navController.pushViewController(artistsVC, animated: true)
+        case .albums:
+            showAlbumsFlow(router: mainRouter)
             
         case .profile:
-            let profileVC = ProfileViewController()
-            profileVC.didSendEventClosure = { [weak self] event in
-                switch event {
-                case .profile:
-                    self?.selectPage(.profile)                }
-            }
-            navController.pushViewController(profileVC, animated: true)
+            showProfileFlow(router: mainRouter)
+            
         }
-        
         return navController
     }
     
@@ -114,5 +103,32 @@ extension TabCoordinator: UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController,
                           didSelect viewController: UIViewController) {
         // Some implementation
+    }
+}
+
+//MARK: - Navigation Flow
+private extension TabCoordinator {
+    func showSongsFlow(router: Router) {
+        let coordinator = SongsCoordinator(router: router)
+        self.add(coordinator: coordinator)
+        coordinator.start()
+    }
+    
+    func showArtistsFlow(router: Router) {
+        let coordinator = ArtistsCoordinator(router: router)
+        self.add(coordinator: coordinator)
+        coordinator.start()
+    }
+    
+    func showAlbumsFlow(router: Router) {
+        let coordinator = AlbumsCoordinator(router: router)
+        self.add(coordinator: coordinator)
+        coordinator.start()
+    }
+    
+    func showProfileFlow(router: Router) {
+        let coordinator = ProfileCoordinator(router: router)
+        self.add(coordinator: coordinator)
+        coordinator.start()
     }
 }

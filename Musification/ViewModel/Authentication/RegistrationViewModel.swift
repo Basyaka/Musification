@@ -13,9 +13,15 @@ final class RegistrationViewModel: ViewModelType {
     private let disposeBag = DisposeBag()
     
     let haveAccountTapPublishSubject = PublishSubject<Void>()
+    let registrationButtonTapPublishSubject = PublishSubject<Void>()
     
     func transform(_ input: Input) -> Output {
-        input.haveAccountTapDriver.asObservable()
+        input.registrationButtonTapControlEvent.asObservable()
+            .subscribe(onNext: { [self] in
+                registrationButtonTapPublishSubject.onNext($0)
+            }).disposed(by: disposeBag)
+        
+        input.haveAccountTapControlEvent.asObservable()
             .subscribe(onNext: { [self] in
                 haveAccountTapPublishSubject.onNext($0)
             }).disposed(by: disposeBag)
@@ -48,7 +54,8 @@ extension RegistrationViewModel {
         let passwordTextDriver: Driver<String>
         let fullNameTextDriver: Driver<String>
         let usernameTextDriver: Driver<String>
-        let haveAccountTapDriver: ControlEvent<Void>
+        let haveAccountTapControlEvent: ControlEvent<Void>
+        let registrationButtonTapControlEvent: ControlEvent<Void>
     }
     
     struct Output {
