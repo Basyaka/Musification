@@ -41,7 +41,6 @@ class RegistrationViewController: UIViewController {
         return tf
     }()
     
-    private let fullNameTextField = UIUtilities.textField(withPlaceholder: R.string.localizable.fullName())
     private let usernameTextField = UIUtilities.textField(withPlaceholder: R.string.localizable.username())
     
     private lazy var emailContainerView: UIView = {
@@ -53,12 +52,6 @@ class RegistrationViewController: UIViewController {
     private lazy var passwordContainerView: UIView = {
         let image = UIImage(systemName: K.SystemImageName.passwordContainerView)
         let view = UIUtilities.inputContainerView1(withImage: image!, textField: passwordTextField)
-        return view
-    }()
-    
-    private lazy var fullNameContainerView: UIView = {
-        let image = UIImage(systemName: K.SystemImageName.fullNameContainerView)
-        let view = UIUtilities.inputContainerView1(withImage: image!, textField: fullNameTextField)
         return view
     }()
     
@@ -79,7 +72,6 @@ class RegistrationViewController: UIViewController {
         return RegistrationViewModel.Input(
             emailTextDriver: emailTextField.rx.text.map { $0 ?? "" }.asDriver(onErrorJustReturn: ""),
             passwordTextDriver: passwordTextField.rx.text.map { $0 ?? "" }.asDriver(onErrorJustReturn: ""),
-            fullNameTextDriver: fullNameTextField.rx.text.map {$0 ?? ""}.asDriver(onErrorJustReturn: ""),
             usernameTextDriver: usernameTextField.rx.text.map {$0 ?? ""}.asDriver(onErrorJustReturn: ""),
             haveAccountTapControlEvent: haveAccountButton.rx.tap,
             registrationButtonTapControlEvent: signUpButton.rx.tap
@@ -153,7 +145,6 @@ class RegistrationViewController: UIViewController {
         
         let mainStack = UIStackView(arrangedSubviews: [emailContainerView,
                                                        passwordContainerView,
-                                                       fullNameContainerView,
                                                        usernameContainerView,
                                                        signUpButton])
         mainStack.axis = .vertical

@@ -5,7 +5,6 @@
 //  Created by Vlad Novik on 7.04.21.
 //
 
-
 protocol Coordinator: class {    
     var childCoordinators: [Coordinator] { get set }
     

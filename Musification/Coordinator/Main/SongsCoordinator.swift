@@ -19,6 +19,8 @@ class SongsCoordinator: BaseCoordinator {
     
     override func start() {
         let view = SongsViewController()
+        let viewModel = SongsViewModel()
+        view.viewModel = viewModel
         
         router.push(view, isAnimated: true, onNavigateBack: nil)
     }

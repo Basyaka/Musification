@@ -6,27 +6,29 @@
 //
 
 import UIKit
+import RxSwift
 
 class ArtistsViewController: UIViewController {
     
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        view.backgroundColor = .purple
-        // Do any additional setup after loading the view.
+    var viewModel: ArtistsViewModel!
+    
+    private let disposeBag = DisposeBag()
+    
+    //MARK: - Properties
+    var input: ArtistsViewModel.Input {
+        return ArtistsViewModel.Input()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    //MARK: - Life Cycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .purple
+        bind(output: viewModel.transform(input))
     }
-    */
-
+    
+    //MARK: - Helpers functions
+    private func bind(output: ArtistsViewModel.Output) {
+        
+    }
 }
 

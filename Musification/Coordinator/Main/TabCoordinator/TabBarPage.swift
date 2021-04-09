@@ -31,13 +31,13 @@ enum TabBarPage {
     func pageTitleValue() -> String {
         switch self {
         case .songs:
-            return "Songs"
+            return R.string.localizable.songs()
         case .artists:
-            return "Artists"
+            return R.string.localizable.artists()
         case .albums:
-            return "Albums"
+            return R.string.localizable.albums()
         case .profile:
-            return "Profile"
+            return R.string.localizable.profile()
         }
     }
     

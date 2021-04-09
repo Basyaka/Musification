@@ -19,6 +19,8 @@ class ArtistsCoordinator: BaseCoordinator {
     
     override func start() {
         let view = ArtistsViewController()
+        let viewModel = ArtistsViewModel()
+        view.viewModel = viewModel
         
         router.push(view, isAnimated: true, onNavigateBack: nil)
     }

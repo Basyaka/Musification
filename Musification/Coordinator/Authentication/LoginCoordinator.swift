@@ -28,6 +28,7 @@ class LoginCoordinator: BaseCoordinator {
     }
 }
 
+//MARK: - Move Screen Logic
 private extension LoginCoordinator {
     func moveScreenLogic(viewModel: LoginViewModel) {
         //Tap to Registration
@@ -45,7 +46,10 @@ private extension LoginCoordinator {
             self.showTabBar()
         }).disposed(by: disposeBag)
     }
-    
+}
+
+//MARK: - Navigation Flow
+private extension LoginCoordinator {
     func showRegistration() {
         let coordinator = RegistrationCoordinator(router: router)
         add(coordinator: coordinator)
@@ -69,7 +73,7 @@ private extension LoginCoordinator {
     }
     
     func showTabBar() {
-        let coordinator = TabCoordinator(router: router)
+        let coordinator = TabCoordinator.init(router: router)
         add(coordinator: coordinator)
         finish()
         coordinator.start()

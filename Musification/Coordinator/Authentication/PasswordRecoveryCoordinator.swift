@@ -24,14 +24,21 @@ class PasswordRecoveryCoordinator: BaseCoordinator {
         
         router.push(view, isAnimated: true, onNavigateBack: isCompeted)
         
-        //Back to login
+        moveScreenLogic(viewModel: viewModel)
+    }
+}
+
+//MARK: - Move Screen Logic
+private extension PasswordRecoveryCoordinator {
+    func moveScreenLogic(viewModel: PasswordRecoveryViewModel) {
+        //Back to login with button
         viewModel.backTapPublishSubject.subscribe(onNext: {_ in
             self.router.pop(true)
         }).disposed(by: disposeBag)
         
+        //Back to login with right swipe
         viewModel.backSwipePublishSubject.subscribe(onNext: {_ in
             self.router.pop(true)
         }).disposed(by: disposeBag)
-        
     }
 }

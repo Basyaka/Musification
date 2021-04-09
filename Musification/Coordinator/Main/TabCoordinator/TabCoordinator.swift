@@ -50,7 +50,7 @@ class TabCoordinator: NSObject, TabCoordinatorProtocol {
         tabBarController.selectedIndex = TabBarPage.songs.pageOrderNumber()
         /// Styling
         tabBarController.tabBar.isTranslucent = false
-        
+
         /// In this step, we attach tabBarController to navigation controller associated with this coordanator
         router.viewControllers(controllers: [tabBarController])
     }

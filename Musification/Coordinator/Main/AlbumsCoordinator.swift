@@ -19,6 +19,8 @@ class AlbumsCoordinator: BaseCoordinator {
     
     override func start() {
         let view = AlbumsViewController()
+        let viewModel = AlbumsViewModel()
+        view.viewModel = viewModel
         
         router.push(view, isAnimated: true, onNavigateBack: nil)
     }

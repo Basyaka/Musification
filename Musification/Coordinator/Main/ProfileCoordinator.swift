@@ -19,6 +19,8 @@ class ProfileCoordinator: BaseCoordinator {
     
     override func start() {
         let view = ProfileViewController()
+        let viewModel = ProfileViewModel()
+        view.viewModel = viewModel
         
         router.push(view, isAnimated: true, onNavigateBack: nil)
     }

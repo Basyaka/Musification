@@ -9,7 +9,6 @@
 //Text Field Placeholder
 "Password" = "Password";
 "Email" = "Email";
-"Full Name" = "Full Name";
 "Username" = "Username";
 
 //Button
@@ -26,3 +25,9 @@
 "Dont have an account?" = "Don't have an account?";
 
 "OR" = "OR";
+
+//TabBar Item name
+"Songs" = "Songs";
+"Artists" = "Artists";
+"Albums" = "Albums";
+"Profile" = "Profile";

@@ -29,18 +29,21 @@ class AppCoordinator: BaseCoordinator {
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
     }
-        
+}
+
+//MARK: - Navigation Flow
+private extension AppCoordinator {
     func showLoginFlow(router: Router) {
-        let loginCoordinator = LoginCoordinator(router: router)
-        self.add(coordinator: loginCoordinator)
+        let coordinator = LoginCoordinator(router: router)
+        self.add(coordinator: coordinator)
         
-        loginCoordinator.start()
+        coordinator.start()
     }
     
     func showMainFlow(router: Router) {
-        let tabCoordinator = TabCoordinator.init(router: router)
-        self.add(coordinator: tabCoordinator)
+        let coordinator = TabCoordinator.init(router: router)
+        self.add(coordinator: coordinator)
         
-        tabCoordinator.start()
+        coordinator.start()
     }
 }

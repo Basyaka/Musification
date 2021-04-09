@@ -29,13 +29,11 @@ final class RegistrationViewModel: ViewModelType {
         let isButtonEnabled = Driver
             .combineLatest(input.emailTextDriver,
                            input.passwordTextDriver,
-                           input.fullNameTextDriver,
                            input.usernameTextDriver)
             
-            .map { (email, password, fullName, username) -> Bool in
+            .map { (email, password, username) -> Bool in
                 if ValidateParameters.isEmailValid(email) == true &&
                     ValidateParameters.isPasswordValid(password) == true &&
-                    ValidateParameters.isPasswordValid(fullName) == true &&
                     ValidateParameters.isPasswordValid(username) == true {
                     return true
                 } else {
@@ -52,7 +50,6 @@ extension RegistrationViewModel {
     struct Input {
         let emailTextDriver: Driver<String>
         let passwordTextDriver: Driver<String>
-        let fullNameTextDriver: Driver<String>
         let usernameTextDriver: Driver<String>
         let haveAccountTapControlEvent: ControlEvent<Void>
         let registrationButtonTapControlEvent: ControlEvent<Void>

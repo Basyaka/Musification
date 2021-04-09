@@ -9,7 +9,6 @@
 //Text Field Placeholder
 "Password" = "パスワード";
 "Email" = "Eメール";
-"Full Name" = "フルネーム";
 "Username" = "ユーザー名";
 
 //Button
@@ -26,3 +25,9 @@
 "Dont have an account?" = "アカウントをお持ちではありませんか";
 
 "OR" = "または";
+
+//TabBar Item name
+"Songs" = "曲";
+"Artists" = "アーティスト";
+"Albums" = "アルバム";
+"Profile" = "プロフィール";
