@@ -16,6 +16,8 @@
 		3618D52A2620499B00F9F339 /* AlbumsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3618D5292620499B00F9F339 /* AlbumsViewModel.swift */; };
 		3618D52D262049A800F9F339 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3618D52C262049A800F9F339 /* ProfileViewModel.swift */; };
 		3618D5302620588400F9F339 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3618D52F2620588400F9F339 /* GoogleService-Info.plist */; };
+		3618D562262065FA00F9F339 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3618D561262065FA00F9F339 /* FirebaseService.swift */; };
+		3618D56626206B7200F9F339 /* FirebaseAuthModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3618D56526206B7200F9F339 /* FirebaseAuthModel.swift */; };
 		3639039B261C6DEA0038DC2E /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3639039A261C6DEA0038DC2E /* R.generated.swift */; };
 		363903A3261C79450038DC2E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 363903A5261C79450038DC2E /* Localizable.strings */; };
 		364C5142261C39B8004986DE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 364C5141261C39B8004986DE /* Constants.swift */; };
@@ -64,6 +66,8 @@
 		3618D5292620499B00F9F339 /* AlbumsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsViewModel.swift; sourceTree = "<group>"; };
 		3618D52C262049A800F9F339 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		3618D52F2620588400F9F339 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		3618D561262065FA00F9F339 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
+		3618D56526206B7200F9F339 /* FirebaseAuthModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthModel.swift; sourceTree = "<group>"; };
 		3639039A261C6DEA0038DC2E /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
 		363903A6261C79480038DC2E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		363903A8261C81BB0038DC2E /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -149,6 +153,14 @@
 			path = Main;
 			sourceTree = "<group>";
 		};
+		3618D560262060ED00F9F339 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				3618D561262065FA00F9F339 /* FirebaseService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		36222C9C261DFFDE008E2C2C /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
@@ -208,6 +220,7 @@
 		364C513D261C3925004986DE /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				3618D56526206B7200F9F339 /* FirebaseAuthModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -257,6 +270,7 @@
 				364C513D261C3925004986DE /* Model */,
 				364C513C261C3919004986DE /* View */,
 				364C513B261C390D004986DE /* ViewModel */,
+				3618D560262060ED00F9F339 /* Services */,
 				364C513E261C3945004986DE /* Extensions */,
 				364C5140261C3969004986DE /* Utilities */,
 				363903AC261C9F980038DC2E /* Helpers */,
@@ -500,6 +514,7 @@
 				366762E1261C455100B80381 /* RegistrationViewController.swift in Sources */,
 				365B42A1261B1E9F008474D1 /* SceneDelegate.swift in Sources */,
 				36C86167261D9F520026E696 /* Coordinator+Protocol.swift in Sources */,
+				3618D56626206B7200F9F339 /* FirebaseAuthModel.swift in Sources */,
 				36F666DE261F16F300126898 /* ProfileViewController.swift in Sources */,
 				364C5146261C39E6004986DE /* View+Extension.swift in Sources */,
 				366762D3261C409400B80381 /* LoginViewController.swift in Sources */,
@@ -511,6 +526,7 @@
 				36F666E7261F1D3400126898 /* TabBarPage.swift in Sources */,
 				36E04581261DE0DF00A94507 /* Router+Protocol.swift in Sources */,
 				36E04585261DE12400A94507 /* Router.swift in Sources */,
+				3618D562262065FA00F9F339 /* FirebaseService.swift in Sources */,
 				3618D50F26202E3C00F9F339 /* ArtistsCoordinator.swift in Sources */,
 				36E0457B261DB46800A94507 /* RegistrationCoordinator.swift in Sources */,
 				3673DA72261CA5BA0023A2BC /* RegistrationViewModel.swift in Sources */,

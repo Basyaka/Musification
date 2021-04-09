@@ -20,6 +20,8 @@ class RegistrationCoordinator: BaseCoordinator {
     override func start() {
         let view = RegistrationViewController()
         let viewModel = RegistrationViewModel()
+        viewModel.firebaseService = FirebaseService()
+        viewModel.model = FirebaseAuthModel()
         view.viewModel = viewModel
         
         router.push(view, isAnimated: true, onNavigateBack: isCompeted)

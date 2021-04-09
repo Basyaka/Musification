@@ -20,6 +20,8 @@ class LoginCoordinator: BaseCoordinator {
     override func start() {
         let view = LoginViewController()
         let viewModel = LoginViewModel()
+        viewModel.firebaseService = FirebaseService()
+        viewModel.model = FirebaseAuthModel()
         view.viewModel = viewModel
         
         router.push(view, isAnimated: false, onNavigateBack: isCompeted)

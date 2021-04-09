@@ -12,15 +12,22 @@ final class RegistrationViewModel: ViewModelType {
     
     private let disposeBag = DisposeBag()
     
+    var model: FirebaseAuthModel!
+    var firebaseService: FirebaseService!
+    
+    //MARK: - Publish Subject to Coordinator
     let haveAccountTapPublishSubject = PublishSubject<Void>()
     let registrationButtonTapPublishSubject = PublishSubject<Void>()
     
     func transform(_ input: Input) -> Output {
+        //Reg event
         input.registrationButtonTapControlEvent.asObservable()
             .subscribe(onNext: { [self] in
-                registrationButtonTapPublishSubject.onNext($0)
+                firebaseService.createAccount(email: model.email!, password: model.password!)
+                firebaseResponse()
             }).disposed(by: disposeBag)
         
+        //Event for return to login screen
         input.haveAccountTapControlEvent.asObservable()
             .subscribe(onNext: { [self] in
                 haveAccountTapPublishSubject.onNext($0)
@@ -32,17 +39,31 @@ final class RegistrationViewModel: ViewModelType {
                            input.usernameTextDriver)
             
             .map { (email, password, username) -> Bool in
-                if ValidateParameters.isEmailValid(email) == true &&
-                    ValidateParameters.isPasswordValid(password) == true &&
-                    ValidateParameters.isPasswordValid(username) == true {
-                    return true
-                } else {
+                if ValidateParameters.isEmailValid(email.trimmingCharacters(in: .whitespacesAndNewlines)) == true &&
+                    ValidateParameters.isPasswordValid(password) == true {
+                        
+                        //transfer textfileds text to model
+                        self.model.email = email.trimmingCharacters(in: .whitespacesAndNewlines)
+                        self.model.password = password
+                        
+                        return true
+                    } else {
                     return false
                 }
             }
             .startWith(false)
         
         return Output(isButtonEnabled: isButtonEnabled)
+    }
+    
+    //MARK: - Firebase response logic
+    private func firebaseResponse() {
+        //if success
+        firebaseService.successfulEventPublishSubject.subscribe(onNext: {
+            self.registrationButtonTapPublishSubject.onNext($0)
+        }).disposed(by: disposeBag)
+        
+        //if failure
     }
 }
 

@@ -12,6 +12,7 @@ final class PasswordRecoveryViewModel: ViewModelType {
     
     private let disposeBag = DisposeBag()
     
+    //MARK: - Publish Subject to Coordinator
     let backTapPublishSubject = PublishSubject<Void>()
     let backSwipePublishSubject = PublishSubject<UISwipeGestureRecognizer>()
     
