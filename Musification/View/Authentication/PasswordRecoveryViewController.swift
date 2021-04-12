@@ -35,7 +35,7 @@ class PasswordRecoveryViewController: UIViewController {
     
     private lazy var emailContainerView: UIView = {
         let image = UIImage(systemName: K.SystemImageName.emailTextContainerView)
-        let view = UIUtilities.inputContainerView1(withImage: image!, textField: emailTextField)
+        let view = UIUtilities.inputContainerView(withImage: image!, textField: emailTextField)
         return view
     }()
     

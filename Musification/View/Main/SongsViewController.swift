@@ -25,6 +25,7 @@ class SongsViewController: UIViewController {
         view.backgroundColor = .white
         
         bind(output: viewModel.transform(input))
+        
     }
     
     //MARK: - Helpers functions
@@ -32,4 +33,6 @@ class SongsViewController: UIViewController {
         
     }
 }
+
+
 

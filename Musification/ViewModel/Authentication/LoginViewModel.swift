@@ -37,6 +37,7 @@ final class LoginViewModel: ViewModelType {
         input.loginButtonTapControlEvent.asObservable()
             .subscribe(onNext: { [self] in
                 firebaseService.signIn(email: model.email!, password: model.password!)
+                //MARK: - !
                 firebaseResponse()
             }).disposed(by: disposeBag)
         

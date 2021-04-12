@@ -10,6 +10,7 @@ import RxSwift
 import RxCocoa
 import RxKeyboard
 import RxGesture
+import GoogleSignIn
 
 class LoginViewController: UIViewController {
     
@@ -23,7 +24,7 @@ class LoginViewController: UIViewController {
     
     private let logoImageView: UIImageView = {
         let iv = UIImageView()
-        iv.image = R.image.musification()!
+        let image = R.image.musification()!
         iv.contentMode = .scaleAspectFit
         return iv
     }()
@@ -38,13 +39,13 @@ class LoginViewController: UIViewController {
     
     private lazy var emailContainerView: UIView = {
         let image = UIImage(systemName: K.SystemImageName.emailTextContainerView)
-        let view = UIUtilities.inputContainerView1(withImage: image!, textField: emailTextField)
+        let view = UIUtilities.inputContainerView(withImage: image!, textField: emailTextField)
         return view
     }()
     
     private lazy var passwordContainerView: UIView = {
         let image = UIImage(systemName: K.SystemImageName.passwordContainerView)
-        let view = UIUtilities.inputContainerView1(withImage: image!, textField: passwordTextField)
+        let view = UIUtilities.inputContainerView(withImage: image!, textField: passwordTextField)
         return view
     }()
     
@@ -63,13 +64,13 @@ class LoginViewController: UIViewController {
         return bt
     }()
     
+    //MARK: - !!!
     private lazy var logInWithGoogleButton: UIButton = {
+        //Custom Button
         let bt = UIUtilities.additionalButton(withText: R.string.localizable.logInWithGoogle(), withTextSize: view.frame.height/40)
-        return bt
-    }()
-    
-    private lazy var logInWithAppleButton: UIButton = {
-        let bt = UIUtilities.additionalButton(withText: R.string.localizable.logInWithApple(), withTextSize: view.frame.height/40)
+        
+        //        let bt = GIDSignInButton()
+        
         return bt
     }()
     
@@ -88,7 +89,11 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         configureController()
         bind(output: viewModel.transform(input))
+        
+        
+        GIDSignIn.sharedInstance()?.presentingViewController = self
     }
+    
     
     //MARK: - Helpers functions
     private func bind(output: LoginViewModel.Output) {
@@ -164,13 +169,14 @@ class LoginViewController: UIViewController {
                       leading: presentationView.leadingAnchor, paddingLeft: 48,
                       trailing: presentationView.trailingAnchor, paddingRight: -48)
         
+        //MARK: - !!!
+        //MARK: - Custom stack with image
         let logInWithGoogleStack = UIUtilities.additionalStackWithImageView(withImage: R.image.googleLogo()! , imageWidth: view.frame.height/30, imageHeight: view.frame.height/30, button: logInWithGoogleButton)
         presentationView.addSubview(logInWithGoogleStack)
         logInWithGoogleStack.centerX(inView: presentationView, topAnchor: orLine.bottomAnchor, paddingTop: 32)
-        
-        let logInWithAppleStack = UIUtilities.additionalStackWithImageView(withImage: R.image.appleLogo()!, imageWidth: view.frame.height/30, imageHeight: view.frame.height/30, button: logInWithAppleButton)
-        presentationView.addSubview(logInWithAppleStack)
-        logInWithAppleStack.centerX(inView: presentationView, topAnchor: logInWithGoogleStack.bottomAnchor, paddingTop: 24)
+//        logInWithGoogleButton.anchor(top: orLine.bottomAnchor, paddingTop: 32,
+//                                     leading: presentationView.leadingAnchor, paddingLeft: 32,
+//                                     trailing: presentationView.trailingAnchor, paddingRight: -32)
         
         presentationView.addSubview(dontHaveAccountButton)
         dontHaveAccountButton.anchor(bottom: presentationView.bottomAnchor, paddingBottom: -16,

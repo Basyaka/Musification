@@ -13,4 +13,5 @@ protocol RouterProtocol: class {
     func popToRoot(_ isAnimated: Bool)
     func present(_ drawable: Drawable, isAnimated: Bool, onDismiss: NavigationBackClosure?)
     func viewControllers(controllers drawables: [Drawable])
+    func removeAllViewControllers()
 }

@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import RxSwift
 
-protocol TabCoordinatorProtocol: Coordinator {
+protocol TabCoordinatorProtocol: BaseCoordinator {
     var tabBarController: UITabBarController { get set }
     
     func selectPage(_ page: TabBarPage)
@@ -19,15 +20,19 @@ protocol TabCoordinatorProtocol: Coordinator {
 
 class TabCoordinator: NSObject, TabCoordinatorProtocol {
     
+    private let disposeBag = DisposeBag()
+    
+    weak var finishDelegate: CoordinatorFinishDelegate?
+    
     var childCoordinators: [Coordinator] = []
     
-    var isCompeted: (() -> ())?
-    
-    var router: RouterProtocol
+    private var router: RouterProtocol
     
     var tabBarController: UITabBarController
     
-    init(router: RouterProtocol) {
+    var type: CoordinatorType { .tab }
+    
+    required init(_ router: RouterProtocol) {
         self.router = router
         self.tabBarController = .init()
     }
@@ -50,7 +55,7 @@ class TabCoordinator: NSObject, TabCoordinatorProtocol {
         tabBarController.selectedIndex = TabBarPage.songs.pageOrderNumber()
         /// Styling
         tabBarController.tabBar.isTranslucent = false
-
+        
         /// In this step, we attach tabBarController to navigation controller associated with this coordanator
         router.viewControllers(controllers: [tabBarController])
     }
@@ -61,7 +66,7 @@ class TabCoordinator: NSObject, TabCoordinatorProtocol {
         navController.isNavigationBarHidden = true
         
         //Create router
-        let mainRouter = Router(navigationController: navController)
+        let TabBarRouter = Router(navigationController: navController)
         
         //Set BarItem settings
         navController.tabBarItem = UITabBarItem.init(title: page.pageTitleValue(),
@@ -70,18 +75,18 @@ class TabCoordinator: NSObject, TabCoordinatorProtocol {
         
         switch page {
         case .songs:
-            showSongsFlow(router: mainRouter)
+            showSongsFlow(router: TabBarRouter)
             
         case .artists:
-            showArtistsFlow(router: mainRouter)
+            showArtistsFlow(router: TabBarRouter)
             
         case .albums:
-            showAlbumsFlow(router: mainRouter)
+            showAlbumsFlow(router: TabBarRouter)
             
         case .profile:
-            showProfileFlow(router: mainRouter)
-            
+            showProfileFlow(router: TabBarRouter)
         }
+        
         return navController
     }
     
@@ -127,8 +132,11 @@ private extension TabCoordinator {
     }
     
     func showProfileFlow(router: Router) {
-        let coordinator = ProfileCoordinator(router: router)
+        let coordinator = ProfileCoordinator(router)
         self.add(coordinator: coordinator)
         coordinator.start()
+        coordinator.signOutTapPublishSubject.subscribe(onNext: {
+            self.finish()
+        }).disposed(by: disposeBag)
     }
 }

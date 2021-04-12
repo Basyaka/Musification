@@ -45,19 +45,19 @@ class RegistrationViewController: UIViewController {
     
     private lazy var emailContainerView: UIView = {
         let image = UIImage(systemName: K.SystemImageName.emailTextContainerView)
-        let view = UIUtilities.inputContainerView1(withImage: image!, textField: emailTextField)
+        let view = UIUtilities.inputContainerView(withImage: image!, textField: emailTextField)
         return view
     }()
     
     private lazy var passwordContainerView: UIView = {
         let image = UIImage(systemName: K.SystemImageName.passwordContainerView)
-        let view = UIUtilities.inputContainerView1(withImage: image!, textField: passwordTextField)
+        let view = UIUtilities.inputContainerView(withImage: image!, textField: passwordTextField)
         return view
     }()
     
     private lazy var usernameContainerView: UIView = {
         let image = UIImage(systemName: K.SystemImageName.usernameContainerView)
-        let view = UIUtilities.inputContainerView1(withImage: image!, textField: usernameTextField)
+        let view = UIUtilities.inputContainerView(withImage: image!, textField: usernameTextField)
         return view
     }()
     

@@ -7,23 +7,29 @@
 
 import RxSwift
 
-class PasswordRecoveryCoordinator: BaseCoordinator {
+class PasswordRecoveryCoordinator: Coordinator {
     
+    var childCoordinators: [Coordinator] = []
+    
+    var type: CoordinatorType { .passwordRecovery }
+
     private let disposeBag = DisposeBag()
-    
+
     private let router: RouterProtocol
     
+    var isCompeted: (() -> ())?
+
     init(router: RouterProtocol) {
         self.router = router
     }
-    
-    override func start() {
+
+    func start() {
         let view = PasswordRecoveryViewController()
         let viewModel = PasswordRecoveryViewModel()
         view.viewModel = viewModel
-        
+
         router.push(view, isAnimated: true, onNavigateBack: isCompeted)
-        
+
         moveScreenLogic(viewModel: viewModel)
     }
 }
@@ -35,7 +41,7 @@ private extension PasswordRecoveryCoordinator {
         viewModel.backTapPublishSubject.subscribe(onNext: {_ in
             self.router.pop(true)
         }).disposed(by: disposeBag)
-        
+
         //Back to login with right swipe
         viewModel.backSwipePublishSubject.subscribe(onNext: {_ in
             self.router.pop(true)

@@ -7,22 +7,27 @@
 
 import RxSwift
 
-class ProfileCoordinator: BaseCoordinator {
+class ProfileCoordinator: Coordinator {
+    var childCoordinators: [Coordinator] = []
+    
+    var type: CoordinatorType { .profile }
     
     private let disposeBag = DisposeBag()
     
-    private let router: RouterProtocol
+    let signOutTapPublishSubject = PublishSubject<Void>()
     
-    init(router: RouterProtocol) {
+    private let router: RouterProtocol
+        
+    required init(_ router: RouterProtocol) {
         self.router = router
     }
     
-    override func start() {
+    func start() {
         let view = ProfileViewController()
         let viewModel = ProfileViewModel()
         view.viewModel = viewModel
         
-        router.push(view, isAnimated: true, onNavigateBack: nil)
+        router.push(view, isAnimated: false, onNavigateBack: nil)
         
         moveScreenLogic(viewModel: viewModel)
     }
@@ -31,11 +36,8 @@ class ProfileCoordinator: BaseCoordinator {
 //MARK: - Move Screen Logic
 private extension ProfileCoordinator {
     func moveScreenLogic(viewModel: ProfileViewModel) {
-        
+        viewModel.signOutTapPublishSubject.subscribe(onNext: {
+            self.signOutTapPublishSubject.onNext($0)
+        }).disposed(by: disposeBag)
     }
-}
-
-//MARK: - Navigation Flow
-private extension ProfileCoordinator {
-    
 }

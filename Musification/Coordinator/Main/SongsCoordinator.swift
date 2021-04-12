@@ -7,8 +7,12 @@
 
 import RxSwift
 
-class SongsCoordinator: BaseCoordinator {
-        
+class SongsCoordinator: Coordinator {
+    
+    var childCoordinators: [Coordinator] = []
+    
+    var type: CoordinatorType { .songs }
+
     private let disposeBag = DisposeBag()
     
     private let router: RouterProtocol
@@ -17,7 +21,7 @@ class SongsCoordinator: BaseCoordinator {
         self.router = router
     }
     
-    override func start() {
+    func start() {
         let view = SongsViewController()
         let viewModel = SongsViewModel()
         view.viewModel = viewModel

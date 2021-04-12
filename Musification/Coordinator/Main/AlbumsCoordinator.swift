@@ -7,7 +7,11 @@
 
 import RxSwift
 
-class AlbumsCoordinator: BaseCoordinator {
+class AlbumsCoordinator: Coordinator {
+    
+    var childCoordinators: [Coordinator] = []
+    
+    var type: CoordinatorType { .albums }
     
     private let disposeBag = DisposeBag()
     
@@ -17,7 +21,7 @@ class AlbumsCoordinator: BaseCoordinator {
         self.router = router
     }
     
-    override func start() {
+   func start() {
         let view = AlbumsViewController()
         let viewModel = AlbumsViewModel()
         view.viewModel = viewModel

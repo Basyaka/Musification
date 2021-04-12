@@ -18,9 +18,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         self.window = UIWindow(windowScene: windowScene)
         
-        self.appCoordinator = AppCoordinator(window: self.window!)
+        let navigationController: UINavigationController = .init()
+        navigationController.setNavigationBarHidden(true, animated: true)
+        
+        let router = Router(navigationController: navigationController)
+        
+        window?.rootViewController = navigationController
+        window?.makeKeyAndVisible()
+        
+        appCoordinator = AppCoordinator(router: router)
         appCoordinator?.start()
-
+        
     }
     
     func sceneDidDisconnect(_ scene: UIScene) {

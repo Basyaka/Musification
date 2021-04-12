@@ -23,7 +23,7 @@ final class RegistrationViewModel: ViewModelType {
         //Reg event
         input.registrationButtonTapControlEvent.asObservable()
             .subscribe(onNext: { [self] in
-                firebaseService.createAccount(email: model.email!, password: model.password!)
+                firebaseService.createAccount(email: model.email!, password: model.password!, username: model.username!)
                 firebaseResponse()
             }).disposed(by: disposeBag)
         
@@ -40,14 +40,16 @@ final class RegistrationViewModel: ViewModelType {
             
             .map { (email, password, username) -> Bool in
                 if ValidateParameters.isEmailValid(email.trimmingCharacters(in: .whitespacesAndNewlines)) == true &&
-                    ValidateParameters.isPasswordValid(password) == true {
-                        
-                        //transfer textfileds text to model
-                        self.model.email = email.trimmingCharacters(in: .whitespacesAndNewlines)
-                        self.model.password = password
-                        
-                        return true
-                    } else {
+                    ValidateParameters.isPasswordValid(password) == true &&
+                    ValidateParameters.isUsernameValid(username) == true {
+                    
+                    //transfer textfileds text to model
+                    self.model.email = email.trimmingCharacters(in: .whitespacesAndNewlines)
+                    self.model.password = password
+                    self.model.username = username.trimmingCharacters(in: .whitespacesAndNewlines)
+                    
+                    return true
+                } else {
                     return false
                 }
             }

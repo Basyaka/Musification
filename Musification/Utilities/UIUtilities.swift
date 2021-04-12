@@ -9,7 +9,7 @@ import UIKit
 
 class UIUtilities {
     
-    static func inputContainerView1(withImage image: UIImage, textField: UITextField) -> UIView {
+    static func inputContainerView(withImage image: UIImage, textField: UITextField) -> UIView {
         
         let view = UIView()
         view.tintColor = .white

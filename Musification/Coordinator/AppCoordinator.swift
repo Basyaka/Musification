@@ -5,45 +5,64 @@
 //  Created by Vlad Novik on 7.04.21.
 //
 
-import UIKit
+protocol AppCoordinatorProtocol: BaseCoordinator {
+    func showLoginFlow()
+    func showMainFlow()
+}
 
-class AppCoordinator: BaseCoordinator {
+class AppCoordinator {
     
-    private let window: UIWindow
+    weak var finishDelegate: CoordinatorFinishDelegate? = nil
     
-    private let navigationController: UINavigationController = {
-        let navController = UINavigationController()
-        navController.isNavigationBarHidden = true
-        return navController
-    }()
+    var router: RouterProtocol
     
-    init(window: UIWindow) {
-        self.window = window
+    var childCoordinators = [Coordinator]()
+    
+    var type: CoordinatorType { .app }
+    
+    init(router: RouterProtocol) {
+        self.router = router
     }
     
-    override func start() {
-        let router = Router(navigationController: self.navigationController)
-        
-        showLoginFlow(router: router)
-        
-        window.rootViewController = navigationController
-        window.makeKeyAndVisible()
+    func start() {
+        showMainFlow()
     }
 }
 
 //MARK: - Navigation Flow
-private extension AppCoordinator {
-    func showLoginFlow(router: Router) {
-        let coordinator = LoginCoordinator(router: router)
-        self.add(coordinator: coordinator)
-        
-        coordinator.start()
+extension AppCoordinator: AppCoordinatorProtocol {
+    func showLoginFlow() {
+        let loginCoordinator = LoginCoordinator(router)
+        loginCoordinator.finishDelegate = self
+        loginCoordinator.start()
+        add(coordinator: loginCoordinator)
     }
     
-    func showMainFlow(router: Router) {
-        let coordinator = TabCoordinator.init(router: router)
-        self.add(coordinator: coordinator)
-        
-        coordinator.start()
+    func showMainFlow() {
+        let tabCoordinator = TabCoordinator(router)
+        tabCoordinator.finishDelegate = self
+        tabCoordinator.start()
+        add(coordinator: tabCoordinator)
+    }
+}
+
+extension AppCoordinator: CoordinatorFinishDelegate {
+    func coordinatorDidFinish(childCoordinator: Coordinator) {
+        childCoordinators = childCoordinators.filter({ $0.type != childCoordinator.type })
+
+        switch childCoordinator.type {
+        case .tab:
+            router.removeAllViewControllers()
+            
+            showLoginFlow()
+            
+        case .login:
+            router.removeAllViewControllers()
+            
+            showMainFlow()
+            
+        default:
+            break
+        }
     }
 }

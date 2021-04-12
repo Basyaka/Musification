@@ -54,6 +54,10 @@ extension Router: RouterProtocol {
         viewController.presentationController?.delegate = self
     }
     
+    func removeAllViewControllers() {
+        navigationController.viewControllers.removeAll()
+    }
+    
     //To tab bar
     func viewControllers(controllers drawables: [Drawable]) {
         var viewControllers = [UIViewController]()

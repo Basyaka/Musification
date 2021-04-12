@@ -11,20 +11,26 @@ class LoginCoordinator: BaseCoordinator {
     
     private let disposeBag = DisposeBag()
     
-    private let router: RouterProtocol
+    weak var finishDelegate: CoordinatorFinishDelegate?
     
-    init(router: RouterProtocol) {
+    var childCoordinators: [Coordinator] = []
+    
+    var type: CoordinatorType { .login }
+    
+    private var router: RouterProtocol
+    
+    init(_ router: RouterProtocol) {
         self.router = router
     }
     
-    override func start() {
+    func start() {
         let view = LoginViewController()
         let viewModel = LoginViewModel()
         viewModel.firebaseService = FirebaseService()
         viewModel.model = FirebaseAuthModel()
         view.viewModel = viewModel
         
-        router.push(view, isAnimated: false, onNavigateBack: isCompeted)
+        router.push(view, isAnimated: false, onNavigateBack: nil)
         
         moveScreenLogic(viewModel: viewModel)
     }
@@ -45,7 +51,7 @@ private extension LoginCoordinator {
         
         //Tap to TabBar
         viewModel.loginInTapPublishSubject.subscribe(onNext: {
-            self.showTabBar()
+            self.finish()
         }).disposed(by: disposeBag)
     }
 }
@@ -55,7 +61,6 @@ private extension LoginCoordinator {
     func showRegistration() {
         let coordinator = RegistrationCoordinator(router: router)
         add(coordinator: coordinator)
-        
         coordinator.isCompeted = { [weak self, weak coordinator] in
             guard let coordinator = coordinator else { return }
             self?.remove(coordinator: coordinator)
@@ -66,18 +71,10 @@ private extension LoginCoordinator {
     func showPasswordRecovery() {
         let coordinator = PasswordRecoveryCoordinator(router: router)
         add(coordinator: coordinator)
-        
         coordinator.isCompeted = { [weak self, weak coordinator] in
             guard let coordinator = coordinator else { return }
             self?.remove(coordinator: coordinator)
         }
-        coordinator.start()
-    }
-    
-    func showTabBar() {
-        let coordinator = TabCoordinator.init(router: router)
-        add(coordinator: coordinator)
-        finish()
         coordinator.start()
     }
 }
