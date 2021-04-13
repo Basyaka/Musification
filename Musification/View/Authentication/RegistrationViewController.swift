@@ -10,6 +10,7 @@ import RxSwift
 import RxCocoa
 import RxKeyboard
 import RxGesture
+import JGProgressHUD
 
 class RegistrationViewController: UIViewController {
     
@@ -63,6 +64,14 @@ class RegistrationViewController: UIViewController {
     
     private let signUpButton = UIUtilities.mainButton(withTitle: R.string.localizable.signUp())
     
+    private let signUpHUD: JGProgressHUD = {
+        let hud = JGProgressHUD()
+        hud.textLabel.text = R.string.localizable.hugRegAccount()
+        hud.style = .light
+        hud.interactionType = .blockAllTouches
+        return hud
+    }()
+    
     private lazy var haveAccountButton: UIButton = {
         let bt = UIUtilities.attributedButton(R.string.localizable.alreadyHaveAnAccount(), R.string.localizable.logIn(), withTextSize: view.frame.height/50)
         return bt
@@ -95,6 +104,22 @@ class RegistrationViewController: UIViewController {
             .map { $0 ? 1 : 0.1 }
             .drive(signUpButton.rx.alpha)
             .disposed(by: disposeBag)
+        
+        //Progress view show
+        output.registrationButtonTapControlEvent.subscribe(onNext: {
+            self.signUpHUD.show(in: self.view, animated: true)
+        }).disposed(by: disposeBag)
+        
+        //Progress view dissmiss
+        output.successRegistrationResponseObservable.subscribe(onNext: {
+            self.signUpHUD.dismiss(animated: true)
+        }).disposed(by: disposeBag)
+        
+        output.failureRegistrationResponseObservable.subscribe(onNext: {
+            self.signUpHUD.dismiss(animated: true)
+            //Present error ...
+            self.showErrorAlert()
+        }).disposed(by: disposeBag)
     }
     
     private func configureController() {
@@ -159,5 +184,14 @@ class RegistrationViewController: UIViewController {
         haveAccountButton.anchor(bottom: presentationView.bottomAnchor, paddingBottom: -16,
                                  leading: presentationView.leadingAnchor, paddingLeft: 32,
                                  trailing: presentationView.trailingAnchor, paddingRight: -32)
+    }
+}
+
+//MARK: - Registration Error
+private extension RegistrationViewController {
+    func showErrorAlert() {
+        let alert = UIAlertController(title: R.string.localizable.error(), message: R.string.localizable.errorMessage(), preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: R.string.localizable.ok(), style: .cancel, handler: nil))
+        self.present(alert, animated: true)
     }
 }

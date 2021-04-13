@@ -20,11 +20,9 @@ final class LoginViewModel: ViewModelType {
     let passwordRecoveryTapPublishSubject = PublishSubject<Void>()
     let loginInTapPublishSubject = PublishSubject<Void>()
     
-    //MARK: - PublishSubject to View Controller
+    //MARK: - PublishRelay to View Controller
     private let successLoginResponsePublishRelay = PublishRelay<Void>()
     private let failureLoginResponsePublishRelay = PublishRelay<Void>()
-    
-    let publishRelayEvent: () = PublishRelay<Void>.Element()
     
     func transform(_ input: Input) -> Output {
         //Event for password recovery screen
@@ -73,7 +71,10 @@ final class LoginViewModel: ViewModelType {
         //Login button tap event to vc
         let loginButtonTapControlEvent = input.loginButtonTapControlEvent
         
-        return Output(isButtonEnabled: isButtonEnabled, successLoginResponseObservable: successLoginResponseObservable, failureLoginResponseObservable: failureLoginResponseObservable, loginButtonTapControlEvent: loginButtonTapControlEvent)
+        return Output(isButtonEnabled: isButtonEnabled,
+                      successLoginResponseObservable: successLoginResponseObservable,
+                      failureLoginResponseObservable: failureLoginResponseObservable,
+                      loginButtonTapControlEvent: loginButtonTapControlEvent)
     }
     
     //MARK: - Firebase response logic
@@ -81,12 +82,12 @@ final class LoginViewModel: ViewModelType {
         //if success
         firebaseService.successfulEventPublishSubject.subscribe(onNext: {
             self.loginInTapPublishSubject.onNext($0)
-            self.successLoginResponsePublishRelay.accept(self.publishRelayEvent)
+            self.successLoginResponsePublishRelay.accept($0)
         }).disposed(by: disposeBag)
         
         //if failure
         firebaseService.failureEventPublishSubject.subscribe(onNext: {
-            self.failureLoginResponsePublishRelay.accept(self.publishRelayEvent)
+            self.failureLoginResponsePublishRelay.accept($0)
         }).disposed(by: disposeBag)
     }
 }

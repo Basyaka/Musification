@@ -35,6 +35,10 @@
 
 //Alert
 "Cancel" = "キャンセル";
+"Ok" = "OK";
+"Error" = "エラー";
+"ErrorMessage" = "エラー";
 
 //HUD
 "HudLogin" = "ログインする...";
+"HugRegAccount" = "アカウントの登録...";

@@ -35,6 +35,10 @@
 
 //Alert
 "Cancel" = "Cancel";
+"Ok" = "Ok";
+"Error" = "Error";
+"ErrorMessage" = "Error";
 
 //HUD
 "HudLogin" = "Login...";
+"HugRegAccount" = "Account registration...";

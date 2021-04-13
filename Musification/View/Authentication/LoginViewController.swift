@@ -25,7 +25,7 @@ class LoginViewController: UIViewController {
     
     private let logoImageView: UIImageView = {
         let iv = UIImageView()
-        let image = R.image.musification()!
+        iv.image = R.image.musificationLogo()
         iv.contentMode = .scaleAspectFit
         return iv
     }()
@@ -55,9 +55,10 @@ class LoginViewController: UIViewController {
         return bt
     }()
     
+    //MARK: - To extension???
     private let loginHUD: JGProgressHUD = {
         let hud = JGProgressHUD()
-        hud.textLabel.text = "Login..."
+        hud.textLabel.text = R.string.localizable.hudLogin()
         hud.style = .light
         hud.interactionType = .blockAllTouches
         return hud
@@ -98,7 +99,6 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         configureController()
         bind(output: viewModel.transform(input))
-        
         GIDSignIn.sharedInstance()?.presentingViewController = self
     }
     
@@ -213,8 +213,8 @@ class LoginViewController: UIViewController {
 //MARK: - Login Error
 private extension LoginViewController {
     func showErrorAlert() {
-        let alert = UIAlertController(title: "Error", message: "LoginError", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+        let alert = UIAlertController(title: R.string.localizable.error(), message: R.string.localizable.errorMessage(), preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: R.string.localizable.ok(), style: .cancel, handler: nil))
         self.present(alert, animated: true)
     }
 }

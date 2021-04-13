@@ -19,6 +19,10 @@ final class RegistrationViewModel: ViewModelType {
     let haveAccountTapPublishSubject = PublishSubject<Void>()
     let registrationButtonTapPublishSubject = PublishSubject<Void>()
     
+    //MARK: - Publish Relay to View Controller
+    private let successRegistrationResponsePublishRelay = PublishRelay<Void>()
+    private let failureRegistrationResponsePublishRelay = PublishRelay<Void>()
+    
     func transform(_ input: Input) -> Output {
         //Reg event
         input.registrationButtonTapControlEvent.asObservable()
@@ -55,7 +59,17 @@ final class RegistrationViewModel: ViewModelType {
             }
             .startWith(false)
         
-        return Output(isButtonEnabled: isButtonEnabled)
+        //firebase response to VC
+        let successRegistrationResponseObservable = successRegistrationResponsePublishRelay.asObservable()
+        let failureRegistrationResponseObservable = failureRegistrationResponsePublishRelay.asObservable()
+        
+        //Registration button tap event to vc
+        let registrationButtonTapControlEvent = input.registrationButtonTapControlEvent
+        
+        return Output(isButtonEnabled: isButtonEnabled,
+                      successRegistrationResponseObservable: successRegistrationResponseObservable,
+                      failureRegistrationResponseObservable: failureRegistrationResponseObservable,
+                      registrationButtonTapControlEvent: registrationButtonTapControlEvent)
     }
     
     //MARK: - Firebase response logic
@@ -63,9 +77,13 @@ final class RegistrationViewModel: ViewModelType {
         //if success
         firebaseService.successfulEventPublishSubject.subscribe(onNext: {
             self.registrationButtonTapPublishSubject.onNext($0)
+            self.successRegistrationResponsePublishRelay.accept($0)
         }).disposed(by: disposeBag)
         
         //if failure
+        firebaseService.failureEventPublishSubject.subscribe(onNext: {
+            self.failureRegistrationResponsePublishRelay.accept($0)
+        }).disposed(by: disposeBag)
     }
 }
 
@@ -80,5 +98,8 @@ extension RegistrationViewModel {
     
     struct Output {
         let isButtonEnabled: Driver<Bool>
+        let successRegistrationResponseObservable: Observable<Void>
+        let failureRegistrationResponseObservable: Observable<Void>
+        let registrationButtonTapControlEvent: ControlEvent<Void>
     }
 }

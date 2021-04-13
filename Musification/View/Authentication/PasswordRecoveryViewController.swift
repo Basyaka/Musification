@@ -25,7 +25,7 @@ class PasswordRecoveryViewController: UIViewController {
     
     private let logoImageView: UIImageView = {
         let iv = UIImageView()
-        iv.image = R.image.musification()
+        iv.image = R.image.musificationLogo()
         iv.contentMode = .scaleAspectFit
         return iv
     }()
