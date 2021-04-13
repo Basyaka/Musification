@@ -8,7 +8,7 @@
 import UIKit
 import RxSwift
 
-protocol TabCoordinatorProtocol: BaseCoordinator {
+protocol TabCoordinatorProtocol: RootCoordinator {
     var tabBarController: UITabBarController { get set }
     
     func selectPage(_ page: TabBarPage)
@@ -135,7 +135,8 @@ private extension TabCoordinator {
         let coordinator = ProfileCoordinator(router)
         self.add(coordinator: coordinator)
         coordinator.start()
-        coordinator.signOutTapPublishSubject.subscribe(onNext: {
+        //Log Out
+        coordinator.finishMainFlowPublishSubject.subscribe(onNext: {
             self.finish()
         }).disposed(by: disposeBag)
     }

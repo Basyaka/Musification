@@ -9,12 +9,12 @@ import RxSwift
 
 class SongsCoordinator: Coordinator {
     
+    private let disposeBag = DisposeBag()
+    
     var childCoordinators: [Coordinator] = []
     
     var type: CoordinatorType { .songs }
 
-    private let disposeBag = DisposeBag()
-    
     private let router: RouterProtocol
     
     init(router: RouterProtocol) {

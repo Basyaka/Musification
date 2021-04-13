@@ -7,7 +7,7 @@
 
 import RxSwift
 
-class LoginCoordinator: BaseCoordinator {
+class LoginCoordinator: RootCoordinator {
     
     private let disposeBag = DisposeBag()
     

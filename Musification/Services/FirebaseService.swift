@@ -49,4 +49,14 @@ class FirebaseService {
             }
         }
     }
+    
+    func signOut() -> Bool {
+        do {
+            try Auth.auth().signOut()
+            return true
+        } catch let error {
+            print(error.localizedDescription)
+            return false
+        }
+    }
 }

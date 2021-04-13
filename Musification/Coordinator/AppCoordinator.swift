@@ -5,7 +5,7 @@
 //  Created by Vlad Novik on 7.04.21.
 //
 
-protocol AppCoordinatorProtocol: BaseCoordinator {
+protocol AppCoordinatorProtocol: RootCoordinator {
     func showLoginFlow()
     func showMainFlow()
 }
@@ -25,7 +25,7 @@ class AppCoordinator {
     }
     
     func start() {
-        showMainFlow()
+        showLoginFlow()
     }
 }
 

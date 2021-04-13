@@ -15,5 +15,6 @@ target 'Musification' do
   pod 'GoogleSignIn'
   pod 'Firebase/Database'
   pod 'Firebase/Storage'
+  pod 'JGProgressHUD'
 
 end

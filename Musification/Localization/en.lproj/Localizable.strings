@@ -14,7 +14,7 @@
 //Button
 "Log In" = "Log In";
 "Sign Up" = "Sign Up";
-"Log Out" = "Log Out";
+"Sign Out" = "Sign Out";
 "Get help signing in." = "Get help signing in.";
 "Log in with Google" = "Log in with Google";
 "Log in with Apple" = "Log in with Apple";
@@ -32,3 +32,9 @@
 "Artists" = "Artists";
 "Albums" = "Albums";
 "Profile" = "Profile";
+
+//Alert
+"Cancel" = "Cancel";
+
+//HUD
+"HudLogin" = "Login...";

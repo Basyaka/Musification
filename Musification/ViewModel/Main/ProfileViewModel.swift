@@ -10,37 +10,35 @@ import RxCocoa
 
 final class ProfileViewModel: ViewModelType {
     
-//    var didSendEventClosure: ((ProfileViewModel.Event) -> Void)?
-    
     private var disposeBag = DisposeBag()
     
-    let signOutTapPublishSubject = PublishSubject<Void>()
+    var firebaseService: FirebaseService!
+    
+    let signOutEventPublishSubject = PublishSubject<Void>()
     
     func transform(_ input: Input) -> Output {
-        //Log Out
-        input.signOutTapControlEvent.asObservable()
+        //Sign Out
+        input.confiredSignOutDriver.asObservable()
             .subscribe(onNext: { [self] in
-                signOutTapPublishSubject.onNext($0)
-//                didSendEventClosure?(.profile)
+                if firebaseService.signOut() == true {
+                    signOutEventPublishSubject.onNext($0)
+                }
             }).disposed(by: disposeBag)
         
-        return Output.init()
+        //Sign Out Button tap
+        let signOutTapControlEvent = input.signOutTapControlEvent
+        
+        return Output.init(signOutTapControlEvent: signOutTapControlEvent)
     }
 }
 
 extension ProfileViewModel {
     struct Input {
         let signOutTapControlEvent: ControlEvent<Void>
+        let confiredSignOutDriver: Driver<Void>
     }
     
     struct Output {
-        
+        let signOutTapControlEvent: ControlEvent<Void>
     }
 }
-
-
-//extension ProfileViewModel {
-//    enum Event {
-//        case profile
-//    }
-//}

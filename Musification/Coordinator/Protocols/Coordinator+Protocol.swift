@@ -14,7 +14,7 @@ protocol Coordinator: class {
     func start()
 }
 
-protocol BaseCoordinator: Coordinator {
+protocol RootCoordinator: Coordinator {
     var finishDelegate: CoordinatorFinishDelegate? { get set }
     /// A place to put logic to finish the flow, to clean all children coordinators, and to notify the parent that this coordinator is ready to be deallocated
     func finish()
@@ -31,7 +31,7 @@ extension Coordinator {
     }
 }
 
-extension BaseCoordinator {
+extension RootCoordinator {
     func finish() {
         childCoordinators.removeAll()
         finishDelegate?.coordinatorDidFinish(childCoordinator: self)
@@ -47,7 +47,7 @@ protocol CoordinatorFinishDelegate: class {
 // MARK: - CoordinatorType
 /// Using this structure we can define what type of flow we can use in-app.
 enum CoordinatorType {
-    case app
+    case base, app
     case login, tab
     case registration, passwordRecovery
     case songs, artists, albums, profile

@@ -14,7 +14,7 @@
 //Button
 "Log In" = "ログインする";
 "Sign Up" = "サインアップ";
-"Log Out" = "ログアウト";
+"Sign Out" = "ログアウト";
 "Get help signing in." = "サインインのヘルプを取得します。";
 "Log in with Google" = "Googleでログインする";
 "Log in with Apple" = "Appleでログインする";
@@ -32,3 +32,9 @@
 "Artists" = "アーティスト";
 "Albums" = "アルバム";
 "Profile" = "プロフィール";
+
+//Alert
+"Cancel" = "キャンセル";
+
+//HUD
+"HudLogin" = "ログインする...";

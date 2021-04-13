@@ -8,15 +8,16 @@
 import RxSwift
 
 class ProfileCoordinator: Coordinator {
+    
+    private let disposeBag = DisposeBag()
+    
     var childCoordinators: [Coordinator] = []
     
     var type: CoordinatorType { .profile }
     
-    private let disposeBag = DisposeBag()
-    
-    let signOutTapPublishSubject = PublishSubject<Void>()
-    
     private let router: RouterProtocol
+    
+    let finishMainFlowPublishSubject = PublishSubject<Void>()
         
     required init(_ router: RouterProtocol) {
         self.router = router
@@ -25,6 +26,7 @@ class ProfileCoordinator: Coordinator {
     func start() {
         let view = ProfileViewController()
         let viewModel = ProfileViewModel()
+        viewModel.firebaseService = FirebaseService()
         view.viewModel = viewModel
         
         router.push(view, isAnimated: false, onNavigateBack: nil)
@@ -36,8 +38,9 @@ class ProfileCoordinator: Coordinator {
 //MARK: - Move Screen Logic
 private extension ProfileCoordinator {
     func moveScreenLogic(viewModel: ProfileViewModel) {
-        viewModel.signOutTapPublishSubject.subscribe(onNext: {
-            self.signOutTapPublishSubject.onNext($0)
+        //Log Out: Event -> Event to TabController
+        viewModel.signOutEventPublishSubject.subscribe(onNext: {
+            self.finishMainFlowPublishSubject.onNext($0)
         }).disposed(by: disposeBag)
     }
 }

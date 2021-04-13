@@ -9,11 +9,11 @@ import RxSwift
 
 class PasswordRecoveryCoordinator: Coordinator {
     
+    private let disposeBag = DisposeBag()
+    
     var childCoordinators: [Coordinator] = []
     
     var type: CoordinatorType { .passwordRecovery }
-
-    private let disposeBag = DisposeBag()
 
     private let router: RouterProtocol
     

@@ -20,6 +20,12 @@ final class LoginViewModel: ViewModelType {
     let passwordRecoveryTapPublishSubject = PublishSubject<Void>()
     let loginInTapPublishSubject = PublishSubject<Void>()
     
+    //MARK: - PublishSubject to View Controller
+    private let successLoginResponsePublishRelay = PublishRelay<Void>()
+    private let failureLoginResponsePublishRelay = PublishRelay<Void>()
+    
+    let publishRelayEvent: () = PublishRelay<Void>.Element()
+    
     func transform(_ input: Input) -> Output {
         //Event for password recovery screen
         input.passwordRecoveryTapControlEvent.asObservable()
@@ -37,7 +43,6 @@ final class LoginViewModel: ViewModelType {
         input.loginButtonTapControlEvent.asObservable()
             .subscribe(onNext: { [self] in
                 firebaseService.signIn(email: model.email!, password: model.password!)
-                //MARK: - !
                 firebaseResponse()
             }).disposed(by: disposeBag)
         
@@ -61,7 +66,14 @@ final class LoginViewModel: ViewModelType {
             }
             .startWith(false)
         
-        return Output(isButtonEnabled: isButtonEnabled)
+        //firebase response to VC
+        let successLoginResponseObservable = successLoginResponsePublishRelay.asObservable()
+        let failureLoginResponseObservable = failureLoginResponsePublishRelay.asObservable()
+        
+        //Login button tap event to vc
+        let loginButtonTapControlEvent = input.loginButtonTapControlEvent
+        
+        return Output(isButtonEnabled: isButtonEnabled, successLoginResponseObservable: successLoginResponseObservable, failureLoginResponseObservable: failureLoginResponseObservable, loginButtonTapControlEvent: loginButtonTapControlEvent)
     }
     
     //MARK: - Firebase response logic
@@ -69,9 +81,13 @@ final class LoginViewModel: ViewModelType {
         //if success
         firebaseService.successfulEventPublishSubject.subscribe(onNext: {
             self.loginInTapPublishSubject.onNext($0)
+            self.successLoginResponsePublishRelay.accept(self.publishRelayEvent)
         }).disposed(by: disposeBag)
         
         //if failure
+        firebaseService.failureEventPublishSubject.subscribe(onNext: {
+            self.failureLoginResponsePublishRelay.accept(self.publishRelayEvent)
+        }).disposed(by: disposeBag)
     }
 }
 
@@ -86,6 +102,9 @@ extension LoginViewModel {
     
     struct Output {
         let isButtonEnabled: Driver<Bool>
+        let successLoginResponseObservable: Observable<Void>
+        let failureLoginResponseObservable: Observable<Void>
+        let loginButtonTapControlEvent: ControlEvent<Void>
     }
 }
 

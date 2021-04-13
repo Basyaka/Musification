@@ -11,6 +11,7 @@ import RxCocoa
 import RxKeyboard
 import RxGesture
 import GoogleSignIn
+import JGProgressHUD
 
 class LoginViewController: UIViewController {
     
@@ -54,6 +55,14 @@ class LoginViewController: UIViewController {
         return bt
     }()
     
+    private let loginHUD: JGProgressHUD = {
+        let hud = JGProgressHUD()
+        hud.textLabel.text = "Login..."
+        hud.style = .light
+        hud.interactionType = .blockAllTouches
+        return hud
+    }()
+    
     private lazy var passwordRecoveryButton: UIButton = {
         let bt = UIUtilities.attributedButton(R.string.localizable.forgotYourPassword(), R.string.localizable.getHelpSigningIn(), withTextSize: view.frame.height/50)
         return bt
@@ -90,13 +99,13 @@ class LoginViewController: UIViewController {
         configureController()
         bind(output: viewModel.transform(input))
         
-        
         GIDSignIn.sharedInstance()?.presentingViewController = self
     }
     
     
     //MARK: - Helpers functions
     private func bind(output: LoginViewModel.Output) {
+        //Button enabled
         output.isButtonEnabled
             .drive(logInButton.rx.isEnabled)
             .disposed(by: disposeBag)
@@ -105,6 +114,22 @@ class LoginViewController: UIViewController {
             .map { $0 ? 1 : 0.1 }
             .drive(logInButton.rx.alpha)
             .disposed(by: disposeBag)
+        
+        //Progress view show
+        output.loginButtonTapControlEvent.subscribe(onNext: {
+            self.loginHUD.show(in: self.view, animated: true)
+        }).disposed(by: disposeBag)
+        
+        //Progress view dissmiss
+        output.successLoginResponseObservable.subscribe(onNext: {
+            self.loginHUD.dismiss(animated: true)
+        }).disposed(by: disposeBag)
+        
+        output.failureLoginResponseObservable.subscribe(onNext: {
+            self.loginHUD.dismiss(animated: true)
+            //Present error ...
+            self.showErrorAlert()
+        }).disposed(by: disposeBag)
     }
     
     private func configureController() {
@@ -174,13 +199,22 @@ class LoginViewController: UIViewController {
         let logInWithGoogleStack = UIUtilities.additionalStackWithImageView(withImage: R.image.googleLogo()! , imageWidth: view.frame.height/30, imageHeight: view.frame.height/30, button: logInWithGoogleButton)
         presentationView.addSubview(logInWithGoogleStack)
         logInWithGoogleStack.centerX(inView: presentationView, topAnchor: orLine.bottomAnchor, paddingTop: 32)
-//        logInWithGoogleButton.anchor(top: orLine.bottomAnchor, paddingTop: 32,
-//                                     leading: presentationView.leadingAnchor, paddingLeft: 32,
-//                                     trailing: presentationView.trailingAnchor, paddingRight: -32)
+        //        logInWithGoogleButton.anchor(top: orLine.bottomAnchor, paddingTop: 32,
+        //                                     leading: presentationView.leadingAnchor, paddingLeft: 32,
+        //                                     trailing: presentationView.trailingAnchor, paddingRight: -32)
         
         presentationView.addSubview(dontHaveAccountButton)
         dontHaveAccountButton.anchor(bottom: presentationView.bottomAnchor, paddingBottom: -16,
                                      leading: presentationView.leadingAnchor, paddingLeft: 32,
                                      trailing: presentationView.trailingAnchor, paddingRight: -32)
+    }
+}
+
+//MARK: - Login Error
+private extension LoginViewController {
+    func showErrorAlert() {
+        let alert = UIAlertController(title: "Error", message: "LoginError", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+        self.present(alert, animated: true)
     }
 }
