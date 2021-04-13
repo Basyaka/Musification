@@ -81,12 +81,15 @@ final class LoginViewModel: ViewModelType {
     private func firebaseResponse() {
         //if success
         firebaseService.successfulEventPublishSubject.subscribe(onNext: {
+            //Event to coordinator
             self.loginInTapPublishSubject.onNext($0)
+            //Event to VC
             self.successLoginResponsePublishRelay.accept($0)
         }).disposed(by: disposeBag)
         
         //if failure
         firebaseService.failureEventPublishSubject.subscribe(onNext: {
+            //Event to VC
             self.failureLoginResponsePublishRelay.accept($0)
         }).disposed(by: disposeBag)
     }

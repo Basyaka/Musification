@@ -63,7 +63,7 @@ final class RegistrationViewModel: ViewModelType {
         let successRegistrationResponseObservable = successRegistrationResponsePublishRelay.asObservable()
         let failureRegistrationResponseObservable = failureRegistrationResponsePublishRelay.asObservable()
         
-        //Registration button tap event to vc
+        //Registration button tap event to VC
         let registrationButtonTapControlEvent = input.registrationButtonTapControlEvent
         
         return Output(isButtonEnabled: isButtonEnabled,
@@ -76,12 +76,15 @@ final class RegistrationViewModel: ViewModelType {
     private func firebaseResponse() {
         //if success
         firebaseService.successfulEventPublishSubject.subscribe(onNext: {
+            //Event to coordinator
             self.registrationButtonTapPublishSubject.onNext($0)
+            //Event to VC
             self.successRegistrationResponsePublishRelay.accept($0)
         }).disposed(by: disposeBag)
         
         //if failure
         firebaseService.failureEventPublishSubject.subscribe(onNext: {
+            //Event to VC
             self.failureRegistrationResponsePublishRelay.accept($0)
         }).disposed(by: disposeBag)
     }

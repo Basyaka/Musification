@@ -20,10 +20,8 @@ class FirebaseService {
     func signIn(email: String, password: String) {
         FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
             if error != nil {
-                print(error!.localizedDescription)
                 self.failureEventPublishSubject.onNext(self.event)
             } else {
-                print("LogIn")
                 self.successfulEventPublishSubject.onNext(self.event)
             }
         }
@@ -33,19 +31,18 @@ class FirebaseService {
         FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
             guard let uid = result?.user.uid else { return }
             if error != nil {
-                print(error!.localizedDescription)
                 self.failureEventPublishSubject.onNext(self.event)
             } else {
+                
                 let usersReference = self.ref.child("users").child(uid)
                 let values = ["email" : email, "username" : username]
                 usersReference.updateChildValues(values) { (error, ref) in
                     if error != nil {
-                        print(error!.localizedDescription)
                     } else {
-                        print("Saved user info successfully")
+                        self.successfulEventPublishSubject.onNext(self.event)
                     }
                 }
-                self.successfulEventPublishSubject.onNext(self.event)
+                
             }
         }
     }
@@ -54,9 +51,23 @@ class FirebaseService {
         do {
             try Auth.auth().signOut()
             return true
-        } catch let error {
-            print(error.localizedDescription)
+        } catch {
             return false
+        }
+    }
+    
+    //MARK: - !!!!!!!!!
+    func getUserInfo()  {
+        if Auth.auth().currentUser?.uid != nil {
+            let uid = Auth.auth().currentUser?.uid
+            let userReference = self.ref.child("users").child(uid!)
+            userReference.observeSingleEvent(of: .value, with: { (snapshot) in
+                
+                if let dictionary = snapshot.value as? [String: AnyObject] {
+                    print(dictionary["username"] as? String)
+                }
+                
+            }, withCancel: nil)
         }
     }
 }

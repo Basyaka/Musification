@@ -5,6 +5,8 @@
 //  Created by Vlad Novik on 7.04.21.
 //
 
+import FirebaseAuth
+
 protocol AppCoordinatorProtocol: RootCoordinator {
     func showLoginFlow()
     func showMainFlow()
@@ -25,7 +27,11 @@ class AppCoordinator {
     }
     
     func start() {
-        showLoginFlow()
+        if Auth.auth().currentUser?.uid == nil {
+            showLoginFlow()
+        } else {
+            showMainFlow()
+        }
     }
 }
 

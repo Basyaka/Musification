@@ -7,6 +7,7 @@
 
 import UIKit
 import RxSwift
+import RxCocoa
 
 class ProfileViewController: UIViewController {
     
@@ -15,6 +16,8 @@ class ProfileViewController: UIViewController {
     private let disposeBag = DisposeBag()
     
     private let confirmedSignOutPublishSubject = PublishSubject<Void>()
+
+    private let relayEvent: () = PublishRelay<Void>.Element()
     
     //MARK: - Properties
     private lazy var profileImageView: UIImageView = {
@@ -77,7 +80,7 @@ class ProfileViewController: UIViewController {
         
         view.addSubview(stack)
         profileImageView.setDimensions(width: view.frame.height/5, height: view.frame.height/5)
-        stack.centerX(inView: view, topAnchor: view.safeAreaLayoutGuide.topAnchor, paddingTop: 16)
+        stack.centerX(inView: view, topAnchor: view.safeAreaLayoutGuide.topAnchor, paddingTop: 24)
         
         view.addSubview(signOutButton)
         signOutButton.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor, paddingBottom: -56,
