@@ -26,8 +26,12 @@ class ProfileCoordinator: Coordinator {
     func start() {
         let view = ProfileViewController()
         let viewModel = ProfileViewModel()
-        viewModel.firebaseService = FirebaseService()
+        let firebaseService = FirebaseService()
+        viewModel.firebaseService = firebaseService
+        viewModel.model = UserInfo()
         view.viewModel = viewModel
+        
+        firebaseService.getUserInfo()
         
         router.push(view, isAnimated: false, onNavigateBack: nil)
         

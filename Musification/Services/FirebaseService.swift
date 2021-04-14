@@ -17,6 +17,9 @@ class FirebaseService {
     
     private let event: () = PublishSubject<Void>.Element()
     
+    let getUserInfoReplaySubject = ReplaySubject<UserInfo>.create(bufferSize: 1)
+    
+    
     func signIn(email: String, password: String) {
         FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
             if error != nil {
@@ -55,16 +58,17 @@ class FirebaseService {
             return false
         }
     }
-    
-    //MARK: - !!!!!!!!!
-    func getUserInfo()  {
+
+    func getUserInfo() {
         if Auth.auth().currentUser?.uid != nil {
             let uid = Auth.auth().currentUser?.uid
             let userReference = self.ref.child("users").child(uid!)
             userReference.observeSingleEvent(of: .value, with: { (snapshot) in
                 
                 if let dictionary = snapshot.value as? [String: AnyObject] {
-                    print(dictionary["username"] as? String)
+                    let username = dictionary["username"] as? String
+                    let userInfo = UserInfo(username: username)
+                    self.getUserInfoReplaySubject.onNext(userInfo)
                 }
                 
             }, withCancel: nil)

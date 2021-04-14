@@ -68,13 +68,9 @@ final class LoginViewModel: ViewModelType {
         let successLoginResponseObservable = successLoginResponsePublishRelay.asObservable()
         let failureLoginResponseObservable = failureLoginResponsePublishRelay.asObservable()
         
-        //Login button tap event to vc
-        let loginButtonTapControlEvent = input.loginButtonTapControlEvent
-        
         return Output(isButtonEnabled: isButtonEnabled,
                       successLoginResponseObservable: successLoginResponseObservable,
-                      failureLoginResponseObservable: failureLoginResponseObservable,
-                      loginButtonTapControlEvent: loginButtonTapControlEvent)
+                      failureLoginResponseObservable: failureLoginResponseObservable)
     }
     
     //MARK: - Firebase response logic
@@ -108,7 +104,6 @@ extension LoginViewModel {
         let isButtonEnabled: Driver<Bool>
         let successLoginResponseObservable: Observable<Void>
         let failureLoginResponseObservable: Observable<Void>
-        let loginButtonTapControlEvent: ControlEvent<Void>
     }
 }
 

@@ -16,7 +16,7 @@ class ProfileViewController: UIViewController {
     private let disposeBag = DisposeBag()
     
     private let confirmedSignOutPublishSubject = PublishSubject<Void>()
-
+    
     private let relayEvent: () = PublishRelay<Void>.Element()
     
     //MARK: - Properties
@@ -34,7 +34,6 @@ class ProfileViewController: UIViewController {
     
     private lazy var usernameLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "Username"
         lb.font = UIFont.systemFont(ofSize: view.frame.height/25, weight: .bold)
         lb.textColor = .white
         lb.textAlignment = .center
@@ -49,7 +48,6 @@ class ProfileViewController: UIViewController {
     
     var input: ProfileViewModel.Input {
         return ProfileViewModel.Input(
-            signOutTapControlEvent: signOutButton.rx.tap,
             confiredSignOutDriver: confirmedSignOutPublishSubject.asDriver(onErrorJustReturn: ())
         )
     }
@@ -63,12 +61,13 @@ class ProfileViewController: UIViewController {
     
     //MARK: - Helpers functions
     private func bind(output: ProfileViewModel.Output) {
-        output.signOutTapControlEvent.subscribe(onNext: {
-            self.showActionSheet()
-        }).disposed(by: disposeBag)
+        output.usernameTextDriver
+            .drive(usernameLabel.rx.text)
+            .disposed(by: disposeBag)
     }
     
     private func configureController() {
+        setActions()
         configureGradientBackground()
         setLayout()
     }
@@ -90,8 +89,21 @@ class ProfileViewController: UIViewController {
     }
 }
 
-//MARK: - Actions
-extension ProfileViewController {
+//MARK: - UI Actions
+private extension ProfileViewController {
+    func setActions() {
+        subsribeToSignOutButton()
+    }
+    
+    func subsribeToSignOutButton() {
+        signOutButton.rx.tap.subscribe(onNext: {
+            self.showActionSheet()
+        }).disposed(by: disposeBag)
+    }
+}
+
+//MARK: - Presentation UI
+private extension ProfileViewController {
     func showActionSheet() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: R.string.localizable.signOut(), style: .destructive, handler: { _ in

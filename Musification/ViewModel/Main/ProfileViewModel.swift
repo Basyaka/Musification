@@ -13,8 +13,11 @@ final class ProfileViewModel: ViewModelType {
     private var disposeBag = DisposeBag()
     
     var firebaseService: FirebaseService!
+    var model: UserInfo!
     
     let signOutEventPublishSubject = PublishSubject<Void>()
+    
+    let usernameTextReplaySubject = ReplaySubject<String>.create(bufferSize: 1)
     
     func transform(_ input: Input) -> Output {
         //Sign Out
@@ -24,21 +27,29 @@ final class ProfileViewModel: ViewModelType {
                     signOutEventPublishSubject.onNext($0)
                 }
             }).disposed(by: disposeBag)
+
+        getUserInfo()
         
-        //Sign Out Button tap
-        let signOutTapControlEvent = input.signOutTapControlEvent
+        let usernameTextDriver = usernameTextReplaySubject.asDriver(onErrorJustReturn: "")
         
-        return Output.init(signOutTapControlEvent: signOutTapControlEvent)
+        return Output.init(usernameTextDriver: usernameTextDriver)
+    }
+    
+    //MARK: - Work with User Data
+    private func getUserInfo() {
+        firebaseService.getUserInfoReplaySubject.subscribe(onNext: { [self] userInfo in
+            model = userInfo
+            usernameTextReplaySubject.onNext(model.username ?? "Username")
+        }).disposed(by: disposeBag)
     }
 }
 
 extension ProfileViewModel {
     struct Input {
-        let signOutTapControlEvent: ControlEvent<Void>
         let confiredSignOutDriver: Driver<Void>
     }
     
     struct Output {
-        let signOutTapControlEvent: ControlEvent<Void>
+        let usernameTextDriver: Driver<String>
     }
 }

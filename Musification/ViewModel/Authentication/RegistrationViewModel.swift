@@ -63,13 +63,9 @@ final class RegistrationViewModel: ViewModelType {
         let successRegistrationResponseObservable = successRegistrationResponsePublishRelay.asObservable()
         let failureRegistrationResponseObservable = failureRegistrationResponsePublishRelay.asObservable()
         
-        //Registration button tap event to VC
-        let registrationButtonTapControlEvent = input.registrationButtonTapControlEvent
-        
         return Output(isButtonEnabled: isButtonEnabled,
                       successRegistrationResponseObservable: successRegistrationResponseObservable,
-                      failureRegistrationResponseObservable: failureRegistrationResponseObservable,
-                      registrationButtonTapControlEvent: registrationButtonTapControlEvent)
+                      failureRegistrationResponseObservable: failureRegistrationResponseObservable)
     }
     
     //MARK: - Firebase response logic
@@ -103,6 +99,5 @@ extension RegistrationViewModel {
         let isButtonEnabled: Driver<Bool>
         let successRegistrationResponseObservable: Observable<Void>
         let failureRegistrationResponseObservable: Observable<Void>
-        let registrationButtonTapControlEvent: ControlEvent<Void>
     }
 }

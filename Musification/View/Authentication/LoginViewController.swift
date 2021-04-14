@@ -115,12 +115,7 @@ class LoginViewController: UIViewController {
             .drive(logInButton.rx.alpha)
             .disposed(by: disposeBag)
         
-        //Progress view show
-        output.loginButtonTapControlEvent.subscribe(onNext: {
-            self.loginHUD.show(in: self.view, animated: true)
-        }).disposed(by: disposeBag)
-        
-        //Progress view dissmiss
+        //Progress view dismiss
         output.successLoginResponseObservable.subscribe(onNext: {
             self.loginHUD.dismiss(animated: true)
         }).disposed(by: disposeBag)
@@ -133,6 +128,7 @@ class LoginViewController: UIViewController {
     }
     
     private func configureController() {
+        setActions()
         configureGradientBackground()
         setGestures()
         setKeyboardNotifications()
@@ -210,7 +206,20 @@ class LoginViewController: UIViewController {
     }
 }
 
-//MARK: - Login Error
+//MARK: - UI Actions
+private extension LoginViewController {
+    func setActions() {
+        subsribeToLogInButton()
+    }
+    
+    func subsribeToLogInButton() {
+        logInButton.rx.tap.subscribe(onNext: {
+            self.loginHUD.show(in: self.view, animated: true)
+        }).disposed(by: disposeBag)
+    }
+}
+
+//MARK: - Presentation UI
 private extension LoginViewController {
     func showErrorAlert() {
         let alert = UIAlertController(title: R.string.localizable.error(), message: R.string.localizable.errorMessage(), preferredStyle: .alert)

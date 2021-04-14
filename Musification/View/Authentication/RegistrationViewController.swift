@@ -105,12 +105,7 @@ class RegistrationViewController: UIViewController {
             .drive(signUpButton.rx.alpha)
             .disposed(by: disposeBag)
         
-        //Progress view show
-        output.registrationButtonTapControlEvent.subscribe(onNext: {
-            self.signUpHUD.show(in: self.view, animated: true)
-        }).disposed(by: disposeBag)
-        
-        //Progress view dissmiss
+        //Progress view dismiss
         output.successRegistrationResponseObservable.subscribe(onNext: {
             self.signUpHUD.dismiss(animated: true)
         }).disposed(by: disposeBag)
@@ -123,6 +118,7 @@ class RegistrationViewController: UIViewController {
     }
     
     private func configureController() {
+        setActions()
         configureGradientBackground()
         setGestures()
         setKeyboardNotifications()
@@ -187,7 +183,20 @@ class RegistrationViewController: UIViewController {
     }
 }
 
-//MARK: - Registration Error
+//MARK: - UI Actions
+private extension RegistrationViewController {
+    func setActions() {
+        subsribeToLogInButton()
+    }
+    
+    func subsribeToLogInButton() {
+        signUpButton.rx.tap.subscribe(onNext: {
+            self.signUpHUD.show(in: self.view, animated: true)
+        }).disposed(by: disposeBag)
+    }
+}
+
+//MARK: - Presentation UI
 private extension RegistrationViewController {
     func showErrorAlert() {
         let alert = UIAlertController(title: R.string.localizable.error(), message: R.string.localizable.errorMessage(), preferredStyle: .alert)
