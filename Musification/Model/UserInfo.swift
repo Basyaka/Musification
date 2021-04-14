@@ -7,4 +7,5 @@
 
 struct UserInfo {
     var username: String?
+    var userPhotoLink: String?
 }

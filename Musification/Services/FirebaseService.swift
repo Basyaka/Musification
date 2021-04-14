@@ -10,7 +10,7 @@ import RxSwift
 
 class FirebaseService {
     
-    private let ref = Database.database().reference(fromURL: "https://musification-85862-default-rtdb.firebaseio.com/")
+    private let databaseRef = Database.database().reference(fromURL: "https://musification-85862-default-rtdb.firebaseio.com/")
     
     let successfulEventPublishSubject = PublishSubject<Void>()
     let failureEventPublishSubject = PublishSubject<Void>()
@@ -19,7 +19,7 @@ class FirebaseService {
     
     let getUserInfoReplaySubject = ReplaySubject<UserInfo>.create(bufferSize: 1)
     
-    
+    //MARK: - Sign In
     func signIn(email: String, password: String) {
         FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
             if error != nil {
@@ -30,19 +30,40 @@ class FirebaseService {
         }
     }
     
-    func createAccount(email: String, password: String, username: String) {
+    //MARK: - Create User
+    func createAccount(email: String, password: String, username: String, image: Data) {
         FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
             guard let uid = result?.user.uid else { return }
             if error != nil {
+                //Error
                 self.failureEventPublishSubject.onNext(self.event)
             } else {
-                
-                let usersReference = self.ref.child("users").child(uid)
-                let values = ["email" : email, "username" : username]
-                usersReference.updateChildValues(values) { (error, ref) in
+                self.registerUserIntoStorage(uid: uid, email: email, password: password, username: username, image: image)
+            }
+        }
+    }
+    
+    //Upload users photo into storage
+    private func registerUserIntoStorage(uid: String, email: String, password: String, username: String, image: Data) {
+        let imageName = NSUUID().uuidString
+        let storageRef = Storage.storage().reference().child("images/\(imageName).png")
+        
+        //Upload to storage
+        storageRef.putData(image, metadata: nil) { (metadata, error) in
+            if error != nil {
+                //Error
+                self.failureEventPublishSubject.onNext(self.event)
+            } else {
+                storageRef.downloadURL { (url, error) in
                     if error != nil {
+                        //Error
+                        self.failureEventPublishSubject.onNext(self.event)
                     } else {
-                        self.successfulEventPublishSubject.onNext(self.event)
+                        guard let url = url else { return }
+                        let urlString = url.absoluteString
+                        let values = ["email" : email, "username" : username, "profileImageUrl" : urlString]
+                        //Writing users info to realtime database
+                        self.registerUserIntoDatabase(uid: uid, values: values)
                     }
                 }
                 
@@ -50,6 +71,21 @@ class FirebaseService {
         }
     }
     
+    //Writing users info into realtime database
+    private func registerUserIntoDatabase(uid: String, values: [String : String]) {
+        //Upload to realtime database
+        let usersReference = self.databaseRef.child("users").child(uid)
+        usersReference.updateChildValues(values) { (error, ref) in
+            if error != nil {
+                //Error
+                self.failureEventPublishSubject.onNext(self.event)
+            } else {
+                self.successfulEventPublishSubject.onNext(self.event)
+            }
+        }
+    }
+    
+    //MARK: - Sign Out Check
     func signOut() -> Bool {
         do {
             try Auth.auth().signOut()
@@ -58,19 +94,20 @@ class FirebaseService {
             return false
         }
     }
-
+    
+    //MARK: - Get User Info
     func getUserInfo() {
         if Auth.auth().currentUser?.uid != nil {
             let uid = Auth.auth().currentUser?.uid
-            let userReference = self.ref.child("users").child(uid!)
+            let userReference = self.databaseRef.child("users").child(uid!)
             userReference.observeSingleEvent(of: .value, with: { (snapshot) in
                 
                 if let dictionary = snapshot.value as? [String: AnyObject] {
                     let username = dictionary["username"] as? String
-                    let userInfo = UserInfo(username: username)
+                    let userPhotoLink = dictionary["profileImageUrl"] as? String
+                    let userInfo = UserInfo(username: username, userPhotoLink: userPhotoLink)
                     self.getUserInfoReplaySubject.onNext(userInfo)
                 }
-                
             }, withCancel: nil)
         }
     }

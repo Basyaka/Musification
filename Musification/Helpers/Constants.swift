@@ -10,7 +10,7 @@ import Foundation
 enum K {
         
     enum SystemImageName {
-        static let addPhoto = "camera.circle"
+        static let addPhoto = "camera.circle.fill"
         
         //container view
         static let emailTextContainerView = "envelope.open"

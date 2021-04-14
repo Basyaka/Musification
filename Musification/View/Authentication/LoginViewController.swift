@@ -130,17 +130,8 @@ class LoginViewController: UIViewController {
     private func configureController() {
         setActions()
         configureGradientBackground()
-        setGestures()
         setKeyboardNotifications()
         setLayout()
-    }
-    
-    private func setGestures() {
-        presentationView.rx.tapGesture()
-            .when(.recognized)
-            .subscribe(onNext: { [self] _ in
-                presentationView.endEditing(true)
-            }).disposed(by: disposeBag)
     }
     
     private func setKeyboardNotifications() {
@@ -210,12 +201,21 @@ class LoginViewController: UIViewController {
 private extension LoginViewController {
     func setActions() {
         subsribeToLogInButton()
+        subscribeToPresentationViewTapGesture()
     }
     
     func subsribeToLogInButton() {
-        logInButton.rx.tap.subscribe(onNext: {
-            self.loginHUD.show(in: self.view, animated: true)
+        logInButton.rx.tap.subscribe(onNext: { [self] _ in
+            loginHUD.show(in: view, animated: true)
         }).disposed(by: disposeBag)
+    }
+    
+    func subscribeToPresentationViewTapGesture() {
+        presentationView.rx.tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [self] _ in
+                presentationView.endEditing(true)
+            }).disposed(by: disposeBag)
     }
 }
 

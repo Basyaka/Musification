@@ -22,13 +22,13 @@ class ProfileViewController: UIViewController {
     //MARK: - Properties
     private lazy var profileImageView: UIImageView = {
         let iv = UIImageView()
-        iv.image = R.image.profileimage()
+//        iv.image = R.image.profileimage()
         iv.contentMode = .scaleAspectFill
         iv.layer.borderColor = UIColor.white.cgColor
         iv.layer.borderWidth = 4
         iv.layer.masksToBounds = false
         iv.clipsToBounds = true
-        iv.layer.cornerRadius = (view.frame.height/5) / 2
+        iv.layer.cornerRadius = (view.frame.width/3) / 2
         return iv
     }()
     
@@ -78,7 +78,7 @@ class ProfileViewController: UIViewController {
         stack.spacing = 8
         
         view.addSubview(stack)
-        profileImageView.setDimensions(width: view.frame.height/5, height: view.frame.height/5)
+        profileImageView.setDimensions(width: view.frame.width/3, height: view.frame.width/3)
         stack.centerX(inView: view, topAnchor: view.safeAreaLayoutGuide.topAnchor, paddingTop: 24)
         
         view.addSubview(signOutButton)

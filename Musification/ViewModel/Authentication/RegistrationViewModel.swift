@@ -27,7 +27,7 @@ final class RegistrationViewModel: ViewModelType {
         //Reg event
         input.registrationButtonTapControlEvent.asObservable()
             .subscribe(onNext: { [self] in
-                firebaseService.createAccount(email: model.email!, password: model.password!, username: model.username!)
+                firebaseService.createAccount(email: model.email!, password: model.password!, username: model.username!, image: model.image!)
                 firebaseResponse()
             }).disposed(by: disposeBag)
         
@@ -40,17 +40,19 @@ final class RegistrationViewModel: ViewModelType {
         let isButtonEnabled = Driver
             .combineLatest(input.emailTextDriver,
                            input.passwordTextDriver,
-                           input.usernameTextDriver)
+                           input.usernameTextDriver,
+                           input.imageDriver)
             
-            .map { (email, password, username) -> Bool in
+            .map { (email, password, username, image) -> Bool in
                 if ValidateParameters.isEmailValid(email.trimmingCharacters(in: .whitespacesAndNewlines)) == true &&
                     ValidateParameters.isPasswordValid(password) == true &&
                     ValidateParameters.isUsernameValid(username) == true {
                     
-                    //transfer textfileds text to model
+                    //transfer user data to model
                     self.model.email = email.trimmingCharacters(in: .whitespacesAndNewlines)
                     self.model.password = password
                     self.model.username = username.trimmingCharacters(in: .whitespacesAndNewlines)
+                    self.model.image = image.pngData()
                     
                     return true
                 } else {
@@ -88,6 +90,7 @@ final class RegistrationViewModel: ViewModelType {
 
 extension RegistrationViewModel {
     struct Input {
+        let imageDriver: Driver<UIImage>
         let emailTextDriver: Driver<String>
         let passwordTextDriver: Driver<String>
         let usernameTextDriver: Driver<String>

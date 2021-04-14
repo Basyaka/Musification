@@ -21,16 +21,18 @@ class RegistrationViewController: UIViewController {
     private let scrollView = UIScrollView()
     private let presentationView = UIView()
     
-    private let photoButton: UIButton = {
-        let bt = UIButton()
-        return bt
-    }()
+    private let imagePublishRelay = PublishRelay<UIImage>()
     
-    private let photoImage: UIImageView = {
+    private lazy var photoImage: UIImageView = {
         let iv = UIImageView()
         iv.tintColor = .white
-        iv.contentMode = .scaleAspectFit
         iv.image = UIImage(systemName: K.SystemImageName.addPhoto)
+        iv.contentMode = .scaleAspectFill
+        iv.layer.borderColor = UIColor.white.cgColor
+        iv.layer.borderWidth = 4
+        iv.layer.masksToBounds = false
+        iv.clipsToBounds = true
+        iv.layer.cornerRadius = (view.frame.width/3) / 2
         return iv
     }()
     
@@ -79,6 +81,7 @@ class RegistrationViewController: UIViewController {
     
     var input: RegistrationViewModel.Input {
         return RegistrationViewModel.Input(
+            imageDriver: imagePublishRelay.asDriver(onErrorJustReturn: UIImage()),
             emailTextDriver: emailTextField.rx.text.map { $0 ?? "" }.asDriver(onErrorJustReturn: ""),
             passwordTextDriver: passwordTextField.rx.text.map { $0 ?? "" }.asDriver(onErrorJustReturn: ""),
             usernameTextDriver: usernameTextField.rx.text.map {$0 ?? ""}.asDriver(onErrorJustReturn: ""),
@@ -120,17 +123,8 @@ class RegistrationViewController: UIViewController {
     private func configureController() {
         setActions()
         configureGradientBackground()
-        setGestures()
         setKeyboardNotifications()
         setLayout()
-    }
-    
-    private func setGestures() {
-        presentationView.rx.tapGesture()
-            .when(.recognized)
-            .subscribe(onNext: { [self] _ in
-                presentationView.endEditing(true)
-            }).disposed(by: disposeBag)
     }
     
     private func setKeyboardNotifications() {
@@ -155,10 +149,6 @@ class RegistrationViewController: UIViewController {
                                 trailing: scrollView.contentLayoutGuide.trailingAnchor)
         presentationView.heightAnchor.constraint(equalTo: scrollView.frameLayoutGuide.heightAnchor).isActive = true
         presentationView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor).isActive = true
-        
-        presentationView.addSubview(photoButton)
-        photoButton.setDimensions(width: view.frame.width/3, height: view.frame.width/3)
-        photoButton.centerX(inView: presentationView, topAnchor: presentationView.topAnchor, paddingTop: 16)
         
         presentationView.addSubview(photoImage)
         photoImage.setDimensions(width: view.frame.width/3, height: view.frame.width/3)
@@ -186,13 +176,31 @@ class RegistrationViewController: UIViewController {
 //MARK: - UI Actions
 private extension RegistrationViewController {
     func setActions() {
-        subsribeToLogInButton()
+        subscribeToLogInButton()
+        subscribeToPhotoImageTapGesture()
+        subscribeToPresentationViewTapGesture()
     }
     
-    func subsribeToLogInButton() {
-        signUpButton.rx.tap.subscribe(onNext: {
-            self.signUpHUD.show(in: self.view, animated: true)
+    func subscribeToLogInButton() {
+        signUpButton.rx.tap.subscribe(onNext: { [self] _ in
+            signUpHUD.show(in: view, animated: true)
         }).disposed(by: disposeBag)
+    }
+    
+    func subscribeToPhotoImageTapGesture() {
+        photoImage.rx.tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [self] _ in
+                showImageActionSheet()
+            }).disposed(by: disposeBag)
+    }
+    
+    func subscribeToPresentationViewTapGesture() {
+        presentationView.rx.tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [self] _ in
+                presentationView.endEditing(true)
+            }).disposed(by: disposeBag)
     }
 }
 
@@ -202,5 +210,47 @@ private extension RegistrationViewController {
         let alert = UIAlertController(title: R.string.localizable.error(), message: R.string.localizable.errorMessage(), preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: R.string.localizable.ok(), style: .cancel, handler: nil))
         self.present(alert, animated: true)
+    }
+    
+    func showImageActionSheet() {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.allowsEditing = true
+        
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        actionSheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (action: UIAlertAction) in
+            if UIImagePickerController.isSourceTypeAvailable(.camera) {
+                imagePickerController.sourceType = .camera
+                self.present(imagePickerController, animated: true, completion: nil)
+            } else {
+//                self.infoLabel.text = "Camera not available"
+            }
+        }))
+        
+        actionSheet.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { (action: UIAlertAction) in
+            imagePickerController.sourceType = .photoLibrary
+            self.present(imagePickerController, animated: true, completion: nil)
+        }))
+        
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        present(actionSheet, animated: true, completion: nil)
+    }
+}
+
+//MARK: - UINavigationControllerDelegate, UIImagePickerControllerDelegate
+extension RegistrationViewController: UINavigationControllerDelegate ,UIImagePickerControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        if let editedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+            photoImage.rx.image.onNext(editedImage)
+            imagePublishRelay.accept(editedImage)
+        } else if let originalImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            photoImage.rx.image.onNext(originalImage)
+            imagePublishRelay.accept(originalImage)
+        }
+        
+        picker.dismiss(animated: true, completion: nil)
     }
 }
