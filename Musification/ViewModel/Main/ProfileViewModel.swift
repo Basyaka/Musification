@@ -12,14 +12,16 @@ final class ProfileViewModel: ViewModelType {
     
     private var disposeBag = DisposeBag()
     
+    var model: UserInfo!
     var firebaseService: FirebaseService!
+    var storageService: UserInfoStorageProtocol!
     
     //Sign out to coordinator
     let signOutEventPublishSubject = PublishSubject<Void>()
     
     //User info to view controller
     private let usernameTextReplaySubject = ReplaySubject<String>.create(bufferSize: 1)
-    private let userPhotoPublishSubject = PublishSubject<UIImage>()
+    private let userPhotoReplaySubject = ReplaySubject<UIImage>.create(bufferSize: 1)
     
     //Request handler
     private let endUserInfoReqestPublishSubject = PublishSubject<Void>()
@@ -33,13 +35,16 @@ final class ProfileViewModel: ViewModelType {
                 if firebaseService.signOut() == true {
                     signOutEventPublishSubject.onNext($0)
                 }
+                //Delete user info from database
+                self.storageService.deleteUserInfo()
             }).disposed(by: disposeBag)
-
-        getUserInfo()
+        
+        getUserInfoFromFirebase()
+        getUserInfoFromDatabase()
         
         //User Info data
         let usernameTextDriver = usernameTextReplaySubject.asDriver(onErrorJustReturn: "")
-        let userPhotoDriver = userPhotoPublishSubject.asDriver(onErrorJustReturn: UIImage())
+        let userPhotoDriver = userPhotoReplaySubject.asDriver(onErrorJustReturn: UIImage())
         
         //User Info Request Logic
         let endUserInfoRequestObservable = endUserInfoReqestPublishSubject.asObservable()
@@ -50,17 +55,33 @@ final class ProfileViewModel: ViewModelType {
     }
     
     //MARK: - Work with User Data
-    private func getUserInfo() {
+    //From Firebase
+    private func getUserInfoFromFirebase() {
         //Username
         firebaseService.getUsernameReplaySubject.subscribe(onNext: { username in
+            self.model.username = username
             self.usernameTextReplaySubject.onNext(username)
         }).disposed(by: disposeBag)
         
         //User Photo
-        firebaseService.getUserPhotoPublishSubject.subscribe(onNext: { userPhoto in
-            self.userPhotoPublishSubject.onNext(userPhoto)
-            self.endUserInfoReqestPublishSubject.onNext(self.publishEvent)
+        firebaseService.getUserPhotoPublishSubject.subscribe(onNext: { [self] userPhoto in
+            model.userPhotoData = userPhoto.pngData()
+            userPhotoReplaySubject.onNext(userPhoto)
+            endUserInfoReqestPublishSubject.onNext(self.publishEvent)
+            
+            //Save info to database
+            storageService.saveUserInfo(model)
         }).disposed(by: disposeBag)
+    }
+    
+    //From Database
+    private func getUserInfoFromDatabase() {
+        //if userInfo != nil into db
+        guard let username = model.username else { return }
+        usernameTextReplaySubject.onNext(username)
+        guard let data = model.userPhotoData else { return }
+        guard let userPhoto = UIImage(data: data) else { return }
+        userPhotoReplaySubject.onNext(userPhoto)
     }
 }
 

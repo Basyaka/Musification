@@ -32,6 +32,13 @@
 		366762DD261C413600B80381 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366762DC261C413600B80381 /* UIViewController+Extension.swift */; };
 		366762E1261C455100B80381 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366762E0261C455100B80381 /* RegistrationViewController.swift */; };
 		366762E4261C458A00B80381 /* PasswordRecoveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366762E3261C458A00B80381 /* PasswordRecoveryViewController.swift */; };
+		36690A002629AA59002FC10F /* PersistentStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366909FF2629AA59002FC10F /* PersistentStorage.swift */; };
+		36690A042629AAA2002FC10F /* Musification.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 36690A022629AAA2002FC10F /* Musification.xcdatamodeld */; };
+		36690A072629AAC8002FC10F /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36690A062629AAC8002FC10F /* StorageService.swift */; };
+		36690A0F2629AC4A002FC10F /* CDUserInfo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36690A0D2629AC4A002FC10F /* CDUserInfo+CoreDataClass.swift */; };
+		36690A102629AC4A002FC10F /* CDUserInfo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36690A0E2629AC4A002FC10F /* CDUserInfo+CoreDataProperties.swift */; };
+		36690A162629ACBC002FC10F /* UserInfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36690A152629ACBC002FC10F /* UserInfoRepository.swift */; };
+		36690A1A2629AD2B002FC10F /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36690A192629AD2B002FC10F /* UserInfo.swift */; };
 		3673DA67261CA4960023A2BC /* ValidateParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3673DA66261CA4960023A2BC /* ValidateParameters.swift */; };
 		3673DA6B261CA4CA0023A2BC /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3673DA6A261CA4CA0023A2BC /* LoginViewModel.swift */; };
 		3673DA6F261CA5230023A2BC /* ViewModelType+Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3673DA6E261CA5230023A2BC /* ViewModelType+Protocol.swift */; };
@@ -85,6 +92,13 @@
 		366762DC261C413600B80381 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		366762E0261C455100B80381 /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
 		366762E3261C458A00B80381 /* PasswordRecoveryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRecoveryViewController.swift; sourceTree = "<group>"; };
+		366909FF2629AA59002FC10F /* PersistentStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentStorage.swift; sourceTree = "<group>"; };
+		36690A032629AAA2002FC10F /* Musification.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Musification.xcdatamodel; sourceTree = "<group>"; };
+		36690A062629AAC8002FC10F /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
+		36690A0D2629AC4A002FC10F /* CDUserInfo+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDUserInfo+CoreDataClass.swift"; sourceTree = "<group>"; };
+		36690A0E2629AC4A002FC10F /* CDUserInfo+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDUserInfo+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		36690A152629ACBC002FC10F /* UserInfoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoRepository.swift; sourceTree = "<group>"; };
+		36690A192629AD2B002FC10F /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		3673DA66261CA4960023A2BC /* ValidateParameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidateParameters.swift; sourceTree = "<group>"; };
 		3673DA6A261CA4CA0023A2BC /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		3673DA6E261CA5230023A2BC /* ViewModelType+Protocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewModelType+Protocol.swift"; sourceTree = "<group>"; };
@@ -154,7 +168,8 @@
 		3618D560262060ED00F9F339 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				3618D561262065FA00F9F339 /* FirebaseService.swift */,
+				36690A092629AB28002FC10F /* FirebaseService */,
+				36690A0A2629AB33002FC10F /* StorageService */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -219,6 +234,7 @@
 			isa = PBXGroup;
 			children = (
 				3618D56526206B7200F9F339 /* FirebaseAuthModel.swift */,
+				36690A192629AD2B002FC10F /* UserInfo.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -269,6 +285,7 @@
 				364C513C261C3919004986DE /* View */,
 				364C513B261C390D004986DE /* ViewModel */,
 				3618D560262060ED00F9F339 /* Services */,
+				366909FE2629AA27002FC10F /* CoreData */,
 				364C513E261C3945004986DE /* Extensions */,
 				364C5140261C3969004986DE /* Utilities */,
 				363903AC261C9F980038DC2E /* Helpers */,
@@ -289,6 +306,58 @@
 				366762E3261C458A00B80381 /* PasswordRecoveryViewController.swift */,
 			);
 			path = Authentication;
+			sourceTree = "<group>";
+		};
+		366909FE2629AA27002FC10F /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				366909FF2629AA59002FC10F /* PersistentStorage.swift */,
+				36690A0C2629AC27002FC10F /* CoreDataClass */,
+				36690A022629AAA2002FC10F /* Musification.xcdatamodeld */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		36690A092629AB28002FC10F /* FirebaseService */ = {
+			isa = PBXGroup;
+			children = (
+				3618D561262065FA00F9F339 /* FirebaseService.swift */,
+			);
+			path = FirebaseService;
+			sourceTree = "<group>";
+		};
+		36690A0A2629AB33002FC10F /* StorageService */ = {
+			isa = PBXGroup;
+			children = (
+				36690A142629AC6D002FC10F /* Repositories */,
+				36690A062629AAC8002FC10F /* StorageService.swift */,
+			);
+			path = StorageService;
+			sourceTree = "<group>";
+		};
+		36690A0C2629AC27002FC10F /* CoreDataClass */ = {
+			isa = PBXGroup;
+			children = (
+				36690A132629AC57002FC10F /* UserInfo */,
+			);
+			path = CoreDataClass;
+			sourceTree = "<group>";
+		};
+		36690A132629AC57002FC10F /* UserInfo */ = {
+			isa = PBXGroup;
+			children = (
+				36690A0D2629AC4A002FC10F /* CDUserInfo+CoreDataClass.swift */,
+				36690A0E2629AC4A002FC10F /* CDUserInfo+CoreDataProperties.swift */,
+			);
+			path = UserInfo;
+			sourceTree = "<group>";
+		};
+		36690A142629AC6D002FC10F /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				36690A152629ACBC002FC10F /* UserInfoRepository.swift */,
+			);
+			path = Repositories;
 			sourceTree = "<group>";
 		};
 		3673DA69261CA4B80023A2BC /* Authentication */ = {
@@ -533,6 +602,7 @@
 				364C5146261C39E6004986DE /* View+Extension.swift in Sources */,
 				36D2469026249815009DE3A3 /* Drawable+Protocol.swift in Sources */,
 				366762D3261C409400B80381 /* LoginViewController.swift in Sources */,
+				36690A102629AC4A002FC10F /* CDUserInfo+CoreDataProperties.swift in Sources */,
 				36D2468E26249815009DE3A3 /* Router+Protocol.swift in Sources */,
 				3673DA75261CA5C90023A2BC /* PasswordRecoveryViewModel.swift in Sources */,
 				3673DA6B261CA4CA0023A2BC /* LoginViewModel.swift in Sources */,
@@ -540,6 +610,8 @@
 				366762D6261C40C200B80381 /* UIUtilities.swift in Sources */,
 				36F666E7261F1D3400126898 /* TabBarPage.swift in Sources */,
 				3618D562262065FA00F9F339 /* FirebaseService.swift in Sources */,
+				36690A042629AAA2002FC10F /* Musification.xcdatamodeld in Sources */,
+				36690A0F2629AC4A002FC10F /* CDUserInfo+CoreDataClass.swift in Sources */,
 				36D2468F26249815009DE3A3 /* Router.swift in Sources */,
 				3618D50F26202E3C00F9F339 /* ArtistsCoordinator.swift in Sources */,
 				36E0457B261DB46800A94507 /* RegistrationCoordinator.swift in Sources */,
@@ -550,9 +622,13 @@
 				36E0458A261DEE2400A94507 /* PasswordRecoveryCoordinator.swift in Sources */,
 				36F666D8261F16DC00126898 /* SongsViewController.swift in Sources */,
 				364C5142261C39B8004986DE /* Constants.swift in Sources */,
+				36690A002629AA59002FC10F /* PersistentStorage.swift in Sources */,
+				36690A162629ACBC002FC10F /* UserInfoRepository.swift in Sources */,
+				36690A072629AAC8002FC10F /* StorageService.swift in Sources */,
 				36C8616D261DA2670026E696 /* LoginCoordinator.swift in Sources */,
 				3618D52D262049A800F9F339 /* ProfileViewModel.swift in Sources */,
 				3618D51726202E5C00F9F339 /* AlbumsCoordinator.swift in Sources */,
+				36690A1A2629AD2B002FC10F /* UserInfo.swift in Sources */,
 				3618D50C26202E0E00F9F339 /* SongsCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -761,6 +837,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		36690A022629AAA2002FC10F /* Musification.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				36690A032629AAA2002FC10F /* Musification.xcdatamodel */,
+			);
+			currentVersion = 36690A032629AAA2002FC10F /* Musification.xcdatamodel */;
+			path = Musification.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 365B4293261B1E9F008474D1 /* Project object */;
 }
