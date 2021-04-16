@@ -13,11 +13,18 @@ final class ProfileViewModel: ViewModelType {
     private var disposeBag = DisposeBag()
     
     var firebaseService: FirebaseService!
-    var model: UserInfo!
     
+    //Sign out to coordinator
     let signOutEventPublishSubject = PublishSubject<Void>()
     
-    let usernameTextReplaySubject = ReplaySubject<String>.create(bufferSize: 1)
+    //User info to view controller
+    private let usernameTextReplaySubject = ReplaySubject<String>.create(bufferSize: 1)
+    private let userPhotoPublishSubject = PublishSubject<UIImage>()
+    
+    //Request handler
+    private let endUserInfoReqestPublishSubject = PublishSubject<Void>()
+    
+    private let publishEvent: () = PublishRelay<Void>.Element()
     
     func transform(_ input: Input) -> Output {
         //Sign Out
@@ -30,16 +37,29 @@ final class ProfileViewModel: ViewModelType {
 
         getUserInfo()
         
+        //User Info data
         let usernameTextDriver = usernameTextReplaySubject.asDriver(onErrorJustReturn: "")
+        let userPhotoDriver = userPhotoPublishSubject.asDriver(onErrorJustReturn: UIImage())
         
-        return Output.init(usernameTextDriver: usernameTextDriver)
+        //User Info Request Logic
+        let endUserInfoRequestObservable = endUserInfoReqestPublishSubject.asObservable()
+        
+        return Output(usernameTextDriver: usernameTextDriver,
+                      userPhotoDriver: userPhotoDriver,
+                      endUserInfoRequestObservable: endUserInfoRequestObservable)
     }
     
     //MARK: - Work with User Data
     private func getUserInfo() {
-        firebaseService.getUserInfoReplaySubject.subscribe(onNext: { [self] userInfo in
-            model = userInfo
-            usernameTextReplaySubject.onNext(model.username ?? "Username")
+        //Username
+        firebaseService.getUsernameReplaySubject.subscribe(onNext: { username in
+            self.usernameTextReplaySubject.onNext(username)
+        }).disposed(by: disposeBag)
+        
+        //User Photo
+        firebaseService.getUserPhotoPublishSubject.subscribe(onNext: { userPhoto in
+            self.userPhotoPublishSubject.onNext(userPhoto)
+            self.endUserInfoReqestPublishSubject.onNext(self.publishEvent)
         }).disposed(by: disposeBag)
     }
 }
@@ -51,5 +71,7 @@ extension ProfileViewModel {
     
     struct Output {
         let usernameTextDriver: Driver<String>
+        let userPhotoDriver: Driver<UIImage>
+        let endUserInfoRequestObservable: Observable<Void>
     }
 }

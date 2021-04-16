@@ -41,7 +41,7 @@ private extension LoginCoordinator {
     func moveScreenLogic(viewModel: LoginViewModel) {
         //Tap to Registration
         viewModel.signUpTapPublishSubject.subscribe(onNext: {
-            self.showRegistration()
+            self.finish()
         }).disposed(by: disposeBag)
         
         //Tap to PasswordRecovery
@@ -58,20 +58,10 @@ private extension LoginCoordinator {
 
 //MARK: - Navigation Flow
 private extension LoginCoordinator {
-    func showRegistration() {
-        let coordinator = RegistrationCoordinator(router: router)
-        add(coordinator: coordinator)
-        coordinator.isCompeted = { [weak self, weak coordinator] in
-            guard let coordinator = coordinator else { return }
-            self?.remove(coordinator: coordinator)
-        }
-        coordinator.start()
-    }
-    
     func showPasswordRecovery() {
         let coordinator = PasswordRecoveryCoordinator(router: router)
         add(coordinator: coordinator)
-        coordinator.isCompeted = { [weak self, weak coordinator] in
+        coordinator.isCompleted = { [weak self, weak coordinator] in
             guard let coordinator = coordinator else { return }
             self?.remove(coordinator: coordinator)
         }

@@ -7,17 +7,22 @@
 
 import Firebase
 import RxSwift
+import RxCocoa
 
 class FirebaseService {
     
     private let databaseRef = Database.database().reference(fromURL: "https://musification-85862-default-rtdb.firebaseio.com/")
     
+    //Error Handler
     let successfulEventPublishSubject = PublishSubject<Void>()
     let failureEventPublishSubject = PublishSubject<Void>()
     
+    //Mb to string?
     private let event: () = PublishSubject<Void>.Element()
     
-    let getUserInfoReplaySubject = ReplaySubject<UserInfo>.create(bufferSize: 1)
+    //User Info
+    let getUsernameReplaySubject = ReplaySubject<String>.create(bufferSize: 1)
+    let getUserPhotoPublishSubject = PublishSubject<UIImage>()
     
     //MARK: - Sign In
     func signIn(email: String, password: String) {
@@ -100,15 +105,29 @@ class FirebaseService {
         if Auth.auth().currentUser?.uid != nil {
             let uid = Auth.auth().currentUser?.uid
             let userReference = self.databaseRef.child("users").child(uid!)
-            userReference.observeSingleEvent(of: .value, with: { (snapshot) in
+            userReference.observeSingleEvent(of: .value, with: { [self] (snapshot) in
                 
                 if let dictionary = snapshot.value as? [String: AnyObject] {
                     let username = dictionary["username"] as? String
-                    let userPhotoLink = dictionary["profileImageUrl"] as? String
-                    let userInfo = UserInfo(username: username, userPhotoLink: userPhotoLink)
-                    self.getUserInfoReplaySubject.onNext(userInfo)
+                    guard let userPhotoLink = dictionary["profileImageUrl"] as? String else { return }
+                    
+                    guard let url = URL(string: userPhotoLink) else { return }
+                    getUserPhoto(from: url)
+                    
+                    guard let name = username else { return }
+                    self.getUsernameReplaySubject.onNext(name)
                 }
             }, withCancel: nil)
+        }
+    }
+    
+    private func getUserPhoto(from url: URL) {
+        DispatchQueue.global().async {
+            if let data = try? Data(contentsOf: url) {
+                if let photo = UIImage(data: data) {
+                    self.getUserPhotoPublishSubject.onNext(photo)
+                }
+            }
         }
     }
 }

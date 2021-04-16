@@ -18,6 +18,27 @@ extension UIViewController {
   }
 }
 
+//MARK: - Activity Indicator
+fileprivate var aView: UIView?
+
+extension UIViewController {
+    
+    func startSpinner() {
+        aView = UIView(frame: self.view.bounds)
+        aView?.backgroundColor = .systemBackground
+        let ai = UIActivityIndicatorView(style: .large)
+        ai.center = aView!.center
+        ai.startAnimating()
+        aView?.addSubview(ai)
+        self.view.addSubview(aView!)
+    }
+    
+    func stopSpinner() {
+        aView?.removeFromSuperview()
+        aView = nil
+    }
+}
+
 //MARK: - Drawable
 extension UIViewController: Drawable {
     var viewController: UIViewController? { return self }

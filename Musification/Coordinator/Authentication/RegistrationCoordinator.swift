@@ -8,7 +8,7 @@
 import UIKit
 import RxSwift
 
-class RegistrationCoordinator: Coordinator {
+class RegistrationCoordinator: RootCoordinator {
     
     private let disposeBag = DisposeBag()
     
@@ -19,8 +19,6 @@ class RegistrationCoordinator: Coordinator {
     var type: CoordinatorType { .registration }
     
     private var router: RouterProtocol
-    
-    var isCompeted: (() -> ())?
     
     init(router: RouterProtocol) {
         self.router = router
@@ -33,7 +31,7 @@ class RegistrationCoordinator: Coordinator {
         viewModel.model = FirebaseAuthModel()
         view.viewModel = viewModel
 
-        router.push(view, isAnimated: true, onNavigateBack: isCompeted)
+        router.push(view, isAnimated: false, onNavigateBack: nil)
         
         moveScreenLogic(viewModel: viewModel)
     }
@@ -42,24 +40,15 @@ class RegistrationCoordinator: Coordinator {
 //MARK: - Move Screen Logic
 private extension RegistrationCoordinator {
     func moveScreenLogic(viewModel: RegistrationViewModel) {
-        //Back to login
+        //Tap to login
         viewModel.haveAccountTapPublishSubject.subscribe(onNext: {
-            self.router.pop(true)
+            self.finish()
         }).disposed(by: disposeBag)
 
         //Tap to TabBar
         viewModel.registrationButtonTapPublishSubject.subscribe(onNext: {
-            self.showTabBar()
+            self.finish()
         }).disposed(by: disposeBag)
-    }
-}
-
-//MARK: - Navigation Flow
-private extension RegistrationCoordinator {
-    func showTabBar() {
-        let coordinator = TabCoordinator(router)
-        add(coordinator: coordinator)
-        coordinator.start()
     }
 }
 

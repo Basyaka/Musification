@@ -28,9 +28,10 @@ class ProfileCoordinator: Coordinator {
         let viewModel = ProfileViewModel()
         let firebaseService = FirebaseService()
         viewModel.firebaseService = firebaseService
-        viewModel.model = UserInfo()
         view.viewModel = viewModel
         
+        //User Info request logic
+        view.startSpinner()
         firebaseService.getUserInfo()
         
         router.push(view, isAnimated: false, onNavigateBack: nil)

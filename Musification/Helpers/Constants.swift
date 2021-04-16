@@ -11,6 +11,7 @@ enum K {
         
     enum SystemImageName {
         static let addPhoto = "camera.circle.fill"
+        static let userPhoto = "person.circle.fill"
         
         //container view
         static let emailTextContainerView = "envelope.open"

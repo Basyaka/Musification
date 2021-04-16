@@ -22,8 +22,8 @@ class ProfileViewController: UIViewController {
     //MARK: - Properties
     private lazy var profileImageView: UIImageView = {
         let iv = UIImageView()
-//        iv.image = R.image.profileimage()
         iv.contentMode = .scaleAspectFill
+        iv.tintColor = .white
         iv.layer.borderColor = UIColor.white.cgColor
         iv.layer.borderWidth = 4
         iv.layer.masksToBounds = false
@@ -61,9 +61,21 @@ class ProfileViewController: UIViewController {
     
     //MARK: - Helpers functions
     private func bind(output: ProfileViewModel.Output) {
+        //User Info data
         output.usernameTextDriver
             .drive(usernameLabel.rx.text)
             .disposed(by: disposeBag)
+        
+        output.userPhotoDriver
+            .drive(profileImageView.rx.image)
+            .disposed(by: disposeBag)
+        
+        //User Info request logic
+        output.endUserInfoRequestObservable
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: {
+                self.stopSpinner()
+            }).disposed(by: disposeBag)
     }
     
     private func configureController() {

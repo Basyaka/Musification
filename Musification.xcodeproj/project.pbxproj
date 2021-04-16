@@ -18,7 +18,6 @@
 		3618D5302620588400F9F339 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3618D52F2620588400F9F339 /* GoogleService-Info.plist */; };
 		3618D562262065FA00F9F339 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3618D561262065FA00F9F339 /* FirebaseService.swift */; };
 		3618D56626206B7200F9F339 /* FirebaseAuthModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3618D56526206B7200F9F339 /* FirebaseAuthModel.swift */; };
-		361A49FE2626C13000BE9444 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361A49FD2626C13000BE9444 /* UserInfo.swift */; };
 		3639039B261C6DEA0038DC2E /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3639039A261C6DEA0038DC2E /* R.generated.swift */; };
 		363903A3261C79450038DC2E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 363903A5261C79450038DC2E /* Localizable.strings */; };
 		364C5142261C39B8004986DE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 364C5141261C39B8004986DE /* Constants.swift */; };
@@ -68,7 +67,6 @@
 		3618D52F2620588400F9F339 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3618D561262065FA00F9F339 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		3618D56526206B7200F9F339 /* FirebaseAuthModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthModel.swift; sourceTree = "<group>"; };
-		361A49FD2626C13000BE9444 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		3639039A261C6DEA0038DC2E /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
 		363903A6261C79480038DC2E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		363903A8261C81BB0038DC2E /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -221,7 +219,6 @@
 			isa = PBXGroup;
 			children = (
 				3618D56526206B7200F9F339 /* FirebaseAuthModel.swift */,
-				361A49FD2626C13000BE9444 /* UserInfo.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -552,7 +549,6 @@
 				3639039B261C6DEA0038DC2E /* R.generated.swift in Sources */,
 				36E0458A261DEE2400A94507 /* PasswordRecoveryCoordinator.swift in Sources */,
 				36F666D8261F16DC00126898 /* SongsViewController.swift in Sources */,
-				361A49FE2626C13000BE9444 /* UserInfo.swift in Sources */,
 				364C5142261C39B8004986DE /* Constants.swift in Sources */,
 				36C8616D261DA2670026E696 /* LoginCoordinator.swift in Sources */,
 				3618D52D262049A800F9F339 /* ProfileViewModel.swift in Sources */,

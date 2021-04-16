@@ -47,9 +47,9 @@ protocol CoordinatorFinishDelegate: class {
 // MARK: - CoordinatorType
 /// Using this structure we can define what type of flow we can use in-app.
 enum CoordinatorType {
-    case base, app
-    case login, tab
-    case registration, passwordRecovery
+    case app
+    case login, registration, tab
+    case passwordRecovery
     case songs, artists, albums, profile
 }
 

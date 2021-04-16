@@ -17,7 +17,7 @@ class PasswordRecoveryCoordinator: Coordinator {
 
     private let router: RouterProtocol
     
-    var isCompeted: (() -> ())?
+    var isCompleted: (() -> ())?
 
     init(router: RouterProtocol) {
         self.router = router
@@ -28,7 +28,7 @@ class PasswordRecoveryCoordinator: Coordinator {
         let viewModel = PasswordRecoveryViewModel()
         view.viewModel = viewModel
 
-        router.push(view, isAnimated: true, onNavigateBack: isCompeted)
+        router.push(view, isAnimated: true, onNavigateBack: isCompleted)
 
         moveScreenLogic(viewModel: viewModel)
     }
