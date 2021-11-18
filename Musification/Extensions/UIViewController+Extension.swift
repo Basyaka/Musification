@@ -38,8 +38,3 @@ extension UIViewController {
         aView = nil
     }
 }
-
-//MARK: - Drawable
-extension UIViewController: Drawable {
-    var viewController: UIViewController? { return self }
-}
